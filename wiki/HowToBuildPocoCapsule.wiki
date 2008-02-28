@@ -1,0 +1,34 @@
+# How to build/port PocoCapsule.
+
+1. Untar the source code (pococapsule-cpp-src.tar) into a directory
+(e.g. pococapsule-cpp). for instance:
+
+  % tar -xvf pococapsule-cpp-src.tar
+
+2. Set the POCOCAPSULE_DIR environment to the full path of this directory. For instance:
+
+   % setenv POCOCAPSULE_DIR /home/kjin101/pococapsule-cpp
+
+3. Make sure JAVA_HOME environment variable is set to a JDK (1.4 and up) installation directory. For instance:
+
+   % setenv JAVA_HOME /usr/lib/jvm/java-1.5.0-sun-1.5.0.08
+
+4. Set the JRE_INSTALL_DIR and JRE_CLIENT_DIR environment variables. For instance:
+
+   % setenv JRE_INSTALL_DIR ${JAVA_HOME}
+   % setenv JRE_CLIENT_DIR ${JRE_INSTALL_DIR}/jre/lib/i386/client
+
+5. Install the Apache Xerces and set the XERCES_DIR to the
+installed directory. For instance:
+
+   % setenv XERCES_DIR /home/kjin101/xerces-cpp
+
+6. (*optional*) Install HP Systinet WASP and set the WASP_HOME to the installed directory. If you don't want to build the WebServices helper for Systinet WASP, remove it from the pococapsule-cpp/src/Makefile.
+
+7. Change to the $POCOCAPSULE_CPP/src directory and run the make or gmake commend. for instance:
+   % cd $POCOCAPSULE_CPP/src
+   % make
+
+8. As a result, the PocoCapsule runtime libraries, utility jar files,
+user header files, and XML/DTD/XSLT source files will be copyed to the
+${POCOCAPSULE_DIR}/lib, include, and resources directories.
