@@ -1,5 +1,5 @@
 #labels Phase-Implementation
-# How to build/port PocoCapsule.
+#How to build/port PocoCapsule.
 
 1. Untar the source code (pococapsule-cpp-src.tar) into a directory
 (e.g. pococapsule-cpp). for instance:
