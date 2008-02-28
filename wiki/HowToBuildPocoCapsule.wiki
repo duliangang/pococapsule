@@ -17,6 +17,7 @@
 4. Set the JRE_INSTALL_DIR and JRE_CLIENT_DIR environment variables. For instance:
 
    % setenv JRE_INSTALL_DIR ${JAVA_HOME}
+
    % setenv JRE_CLIENT_DIR ${JRE_INSTALL_DIR}/jre/lib/i386/client
 
 5. Install the Apache Xerces and set the XERCES_DIR to the
