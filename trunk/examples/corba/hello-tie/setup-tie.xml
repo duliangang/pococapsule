@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/corba2poco.xsl"?>
+
+<!DOCTYPE corba-application-context 
+	SYSTEM "http://www.pocomatic.com/corba-application-context.dtd">
+
+<corba-application-context>
+   <bean id="tie-impl" class="POA_sample::Greeting_tie{MyGreetingNativeImpl}">
+      <method-arg>
+         <bean class="MyGreetingNativeImpl"/>
+      </method-arg>
+   </bean>
+
+   <orb id="my-orb">
+      <object uri="my-server" impl-ref="tie-impl"/>
+   </orb>
+
+   <load library="./GreetingImpl.$dll"/>
+   <load library="./reflx.$dll"/>
+</corba-application-context>

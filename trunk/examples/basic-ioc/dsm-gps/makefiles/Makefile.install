@@ -1,0 +1,15 @@
+include ../makefiles/Makefile.inc
+
+FILES = README.html GPSLocatorImpl.C GPSLocatorImpl.h Interfaces.h \
+        NavDisplayImpl.C NavDisplayImpl.h TickGenImpl.C TickGenImpl.h \
+        gps.jpg main.C setup.xml gps-device.dtd gps-device2poco.xsl
+
+REL_DIR = basic-ioc/dsm-gps
+
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MAIN)
+	$(call INSTALL_MK_FILE)
+

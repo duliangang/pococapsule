@@ -1,0 +1,19 @@
+include ../stdmk.tao
+
+FILES = Greeting_c.cc Greeting_s.cc setup_reflx.cc \
+        client.so server.so GreetingImpl.so reflx.so setup.ctx
+
+all: $(FILES) 
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=GreetingImpl.h $< 
+
+GreetingImpl.so: Greeting_c.o Greeting_s.o GreetingImpl.o
+	$(LINK_SLIB)
+
+reflx$(LIB_SUFFIX): setup_reflx$(LIB_SUFFIX)
+	mv setup_reflx$(LIB_SUFFIX) reflx$(LIB_SUFFIX)
+
+clean:
+	$(RM) *.o *.hh $(FILES)
+

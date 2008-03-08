@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Copyright 2006 by Pocomatic Software LLC, All Rights Reserved.
+
+	This example shows how to use a DSL to wire up a Software
+	Defined Radio (SDR) system that comprises of 8 components and 
+	22 inter-component dependencies.
+
+	The original model of this SDR is from CRC's reference implementation 
+	(http://www.crc.ca/scari) of JTRS-SCA 
+	(Software Communication Architecture)
+-->
+
+<?xml-transform type="text/xsl" href="sdr-device2poco.xsl"?>
+
+<!DOCTYPE sdr-device SYSTEM "file:sdr-device.dtd">
+
+<sdr-device>
+	<load library="./AudioEffect.$dll"/>
+	<component id="node1-audio-device"
+	           class="AudioDevice"
+		   name="node1 audio device">
+		<wire receptacle="AudioOut"
+		      facet="AudioIn"
+		      provider="echo-resource"/>
+		<wire receptacle="AudioOutLeftDouble" 
+		      facet="DoubleSeqIn" 
+		      provider="demodulation-FM-resource"/>
+		<wire receptacle="AudioOutLeftDouble"
+		      facet="DoubleSeqIn"
+		      provider="modulation-FM-resource"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+
+	<component id="echo-resource"
+	           class="AudioEchoResource"
+		   name="echo resource">
+		<wire receptacle="AudioOut"
+		      facet="AudioIn"
+		      provider="chorus-resource"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+
+	<component id="chorus-resource"
+	           class="AudioChorusResource"
+		   name="chorus resource">
+		<wire receptacle="AudioOut"
+		      facet="AudioIn"
+		      provider="node1-audio-device"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+		
+	<component id="audio-effect-controller"
+	           class="AudioEffectController"
+	           name="audio effect controller" 
+	           lazy-init="false">
+		<wire receptacle="AudioInControl" provider="node1-audio-device"/>
+		<wire receptacle="AudioOutControl" provider="node1-audio-device"/>
+		<wire receptacle="AudioEchoControl" provider="echo-resource"/>
+		<wire receptacle="AudioChorusControl" provider="chorus-resource"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+
+	<component id="modulation-FM-resource"
+	           class="ModulationFMResource"
+		   name="modulation FM resource">
+		<wire receptacle="DoubleSeqOut"
+		      facet="AudioInLeftDouble"
+		      provider="node1-audio-device"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+
+	<component id="demodulation-FM-resource"
+	           class="DemodulationFMResource"
+		   name="demodulation FM resource">
+		<wire receptacle="DoubleSeqOut"
+		      facet="AudioInRightDouble"
+		      provider="node1-audio-device"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+
+	<load library="./FMTransmitterReceiver.$dll"/>
+	<component id="FM-transmitter-receiver-assembly-controller"
+	           class="FMTransmitterReceiverAssemblyController"
+                   name="FM transmitter/receiver assembly controller"
+	           lazy-init="false">
+		<wire receptacle="ModulationFMControl" provider="modulation-FM-resource"/>
+		<wire receptacle="DemodulationFMControl" provider="demodulation-FM-resource"/>
+		<wire receptacle="OutputDeviceControl" provider="node1-audio-device"/>
+		<wire receptacle="InputDeviceControl" provider="node1-audio-device"/>
+		<wire receptacle="logPort" provider="log"/>
+	</component>
+
+	<component id="log" class="LogImpl"/>
+
+	<load library="./reflx.$dll"/>
+</sdr-device>

@@ -1,0 +1,20 @@
+include ../stdmk
+
+FILES = setup_reflx.cc setup.ctx \
+        $(addsuffix $(LIB_SUFFIX), main reflx RangeScannerComponent \
+        ServoComponent VehicleController BumperSensorComponent)
+
+exe: $(FILES)
+
+all: exe 
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=objImpls.h -h=VehicleController.h \
+	-h=RangeScannerComponent.h -h=ServoComponent.h \
+	-h=BumperSensorComponent.h setup.xml
+
+reflx$(LIB_SUFFIX): setup_reflx$(LIB_SUFFIX)
+	mv setup_reflx$(LIB_SUFFIX) reflx$(LIB_SUFFIX)
+
+clean:
+	$(RM) *.o *.cc $(FILES)

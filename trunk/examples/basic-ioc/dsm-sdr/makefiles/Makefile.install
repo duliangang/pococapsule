@@ -1,0 +1,22 @@
+include ../makefiles/Makefile.inc
+
+FILES = README.html\
+	AudioEffect.C\
+	AudioEffect.h\
+	FMTransmitterReceiver.C\
+	FMTransmitterReceiver.h\
+	sampleImpl.h\
+	sdr.jpg\
+	sdr.h\
+	setup.xml \
+	sdr-device.dtd \
+	sdr-device2poco.xsl
+
+REL_DIR = basic-ioc/dsm-sdr
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MAIN)
+	$(call INSTALL_MK_FILE)
+

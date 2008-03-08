@@ -1,0 +1,21 @@
+include ../stdmkdir/stdmk
+
+all: main foo$(DLL_SUFFIX) reflx$(DLL_SUFFIX)
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=foo.h -H=stdio.h -H=iostream $<
+
+reflx$(DLL_SUFFIX): setup_reflx.o
+	$(LINK_DLL) -o $@ $< $(POCO_LIBPATH) $(LIBPOCO) 
+
+foo.o: foo.C
+	$(CC) $(CCFLAGS) $(PIC) -c $<
+
+foo$(DLL_SUFFIX): foo.o
+	$(LINK_DLL) -o $@ $< 
+
+main: main.o
+	$(LINK) -o $@ $< $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML)
+
+clean:
+	rm -rf *.o *_reflx.* *.so main

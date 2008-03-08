@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Copyright 2007 by Pocomatic Software LLC, All Rights Reserved.
+
+	This example shows how to use a user defined DSL schema to wire up 
+	a robotic vehicle motion control application in PocoCapsule/C++.
+-->
+
+<?xml-transform type="text/xsl" href="robotic-application2poco.xsl"?>
+
+<!DOCTYPE robotic-application SYSTEM "file:robotic-application.dtd">
+
+<robotic-application>
+	<load library="./VehicleController.$dll"/>
+	<load library="./ServoComponent.$dll"/>
+	<load library="./BumperSensorComponent.$dll"/>
+	<load library="./RangeScannerComponent.$dll"/>
+	<load library="./reflx.$dll"/>
+
+	<component id="vehicle-controller"
+	           class="VehicleController"
+		   name="vehicle controller"
+	           lazy-init="false">
+		<controls
+		      receptacle="LeftWheelControlOut"
+		      facet="ControlIn"
+                      type="ServoControl"
+		      device="left-wheel"/>
+		<controls
+		      receptacle="RightWheelControlOut" 
+		      facet="ControlIn" 
+                      type="ServoControl"
+		      device="right-wheel"/>
+		<controls
+		      receptacle="ScanCommandOut"
+		      facet="ControlIn"
+                      type="ScanControl"
+		      device="laser-ranger-finder"/>
+		<controls
+		      receptacle="StatusOut" device="log-and-display"/>
+		<listens
+		      sink="LeftWheelSpeedDataIn"
+		      type="SpeedDataConsumer"
+		      receptacle="SpeedDataOut"
+		      emitter="left-wheel"/> 
+		<listens
+		      sink="RightWheelSpeedDataIn"
+		      type="SpeedDataConsumer"
+		      receptacle="SpeedDataOut"
+		      emitter="right-wheel"/>
+		<listens
+		      sink="FrontBumperDataIn"
+		      receptacle="SensorDataOut"
+		      type="BumperDataConsumer"
+		      emitter="front-bumper"/>
+		<listens
+		      sink="RearBumperDataIn"
+		      type="BumperDataConsumer"
+		      receptacle="SensorDataOut"
+		      emitter="rear-bumper"/>
+		<listens
+		      sink="RangeScanDataIn"
+		      type="RangeScanDataConsumer"
+		      receptacle="RangeScanDataOut"
+		      emitter="laser-ranger-finder"/>
+	</component>
+
+	<component id="left-wheel"
+	           class="ServoComponent"
+		   name="left wheel servo"/>
+
+	<component id="right-wheel"
+	           class="ServoComponent"
+	           name="right wheel servo"/>
+
+	<component id="front-bumper"
+	           class="BumperSensorComponent"
+		   name="front bumper sensor"/>
+		
+	<component id="rear-bumper"
+	           class="BumperSensorComponent"
+	           name="rear bumper sensor"/>
+
+	<component id="laser-ranger-finder"
+	           class="RangeScannerComponent"
+		   name="laser ranger scanner"/>
+
+	<component id="log-and-display"
+	           class="LogAndDisplay"
+	           name="log and display"/>
+
+</robotic-application>

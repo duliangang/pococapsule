@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE poco-application-context 
+	SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
+
+<poco-application-context>
+   <load library="./foo.$dll"/>
+   <load library="./reflx.$dll"/>
+
+   <bean class="Foo" lazy-init="false"
+         factory-method="Foo::create">
+        <method-arg type="short" value="-100"/>
+        <on-error method="Foo::report_error">
+             <method-arg type="string" value="Foo::create(-100)"/>
+        </on-error>
+	<ioc method="okay"/>
+   </bean>
+
+   <bean class="Foo" lazy-init="false"
+         factory-method="Foo::create">
+        <method-arg type="short" value="100"/>
+        <on-error method="Foo::report_error">
+             <method-arg type="string" value="Foo::create(100)"/>
+        </on-error>
+        <ioc method="okay"/>
+   </bean>
+
+</poco-application-context>

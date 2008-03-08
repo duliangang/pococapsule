@@ -1,0 +1,25 @@
+include ../makefiles/Makefile.inc
+
+FILES = README.html\
+	BumperSensorComponent.C\
+	BumperSensorComponent.h\
+	RangeScannerComponent.C\
+	RangeScannerComponent.h\
+	ServoComponent.C\
+	ServoComponent.h\
+	VehicleController.C\
+	VehicleController.h\
+	objImpls.h\
+	robotic-application.dtd\
+	robotic-application2poco.xsl\
+	rtc.jpg\
+	setup.xml
+
+REL_DIR = basic-ioc/robotic-vehicle
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MAIN)
+	$(call INSTALL_MK_FILE)
+

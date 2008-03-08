@@ -1,0 +1,19 @@
+POCO_PROJ=$(POCOCAPSULE_DIR)/bin/pxgenproxy -r=gather
+
+POCO_LIBPATH=-L$(POCOCAPSULE_DIR)/lib
+LIBPOCO=-lpococapsule
+
+WS_HELPER=poco2wasp
+
+WSDL2CPP=${WASPC_HOME}/bin/wsdlc
+WASP_LIBPATH=-L${WASPC_HOME}/lib
+LIBWASP=-lwasp_stl
+
+CCINC=-I. -I$(POCOCAPSULE_DIR)/include -I${WASPC_HOME}/include
+ifeq ($(BUILD_TYPE),debug)
+  DEBUG_CCFLAGS = -g -ggdb -Wall
+else
+  DEBUG_CCFLAGS = -Os
+endif
+CC=gcc $(DEBUG_CCFLAGS) $(CCINC) -DUSE_WASP -Wall
+LIB_CREATION_FLAG=-shared

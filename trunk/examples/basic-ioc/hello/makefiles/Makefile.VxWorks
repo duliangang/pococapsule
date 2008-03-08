@@ -1,0 +1,16 @@
+include ../stdmk
+
+FILES = main$(LIB_SUFFIX) foo$(LIB_SUFFIX) reflx$(LIB_SUFFIX) setup.ctx
+
+exe: $(FILES)
+
+all: exe 
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=foo.h -H=stdio.h -H=iostream setup.xml
+
+reflx$(LIB_SUFFIX): setup_reflx$(LIB_SUFFIX)
+	mv setup_reflx$(LIB_SUFFIX) reflx$(LIB_SUFFIX)
+
+clean:
+	$(RM) *.o *.cc $(FILES)

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Readme for basic-ioc movie-list example</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="CREATED" CONTENT="20061007;12353000">
+	<META NAME="CHANGEDBY" CONTENT="kejin">
+	<META NAME="CHANGED" CONTENT="20070513;11454600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in }
+		P { color: #000000 }
+		H2 { color: #000000 }
+		H3 { color: #000000 }
+		PRE { color: #000000 }
+		A:link { color: #0000ff }
+		A:visited { color: #990066 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#990066" BGCOLOR="#ffffff" DIR="LTR">
+<H2>PocoCapsule/C++ example: Martin Fowler's Movie Lister 
+</H2>
+<P>Copyright(c) 2006, 2007 by <A HREF="http://www.pocomatic.com/">Pocomatic
+Software</A>. All rights reserved.</P>
+<P>This is a trivial and popular example used to explain basic IoC
+(or as Martin Fowler renamed Dependency Injection) concepts to
+beginners. It is originated from <A HREF="http://www.martinfowler.com/articles/injection.html">Martin
+Fowler's well known article</A>, but is converted from Java to C++. 
+</P>
+<H3>Source Files</H3>
+<P><A HREF="main.C">main.C:</A> This is a simple container, used to
+deploy the application. This container should be able to be
+completely application logic independent, by containing no
+application specific code. However, to preserve its original looking
+presented in <A HREF="http://www.martinfowler.com/articles/injection.html">Martin's
+article</A>, we leave some of application logic inside this source
+file. 
+</P>
+<P><A HREF="MovieLister.h">MovieLister.h</A> and <A HREF="MovieLister.C">MovieLister.C:</A>
+The movie lister application class. This class depends on a
+MovieFinder injected through its setter method finder(). From this
+movie finder, this movie lister's moviesDirectedBy() method returns
+an list of movies directed by the specified director. 
+</P>
+<P><A HREF="MyMovieFinder.h">MyMovieFinder.h</A> and <A HREF="MyMovieFinder.C">MyMovieFinder.C:</A>
+The so-called &quot;business logic&quot; implementation class. 
+</P>
+<P><A HREF="setup.xml">setup.xml:</A> This is the application setup
+description. It describes the following instantiation and wiring:</P>
+<UL>
+	<LI><P><FONT SIZE=2>A bean of class <A HREF="MovieLister.h">MovieLister</A>
+	is instantiated. </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>A bean of class <A HREF="MyMovieFinder.h">MyMovieFinder</A>
+	is instantiated and wired to above movie lister instance using its
+	finder() setter method. </FONT>
+	</P>
+</UL>
+<H3>Building this example</H3>
+<P STYLE="font-weight: medium">To build this example, the environment
+variable POCOCAPSULE_DIR should point to the PocoCapsule/C++
+installed directory. Then, this example can be built by simply
+invoking gmake/make on linux/unix or nmake on windows. 
+</P>
+<H3>Running this example</H3>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Before
+starting <FONT FACE="Times New Roman">the application deployment
+container (i.e. the main executable)</FONT>, make sure the
+LD_LIBRARY_PATH (on linux and solaris) or the PATH (on windows)
+environment variable is set correctly to include the
+${POCOCAPSULE_DIR}/lib directory.</FONT></P>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman"><FONT FACE="Times New Roman">start
+the main executable </FONT>: </FONT>
+</P>
+<PRE STYLE="margin-left: 0.79in; margin-bottom: 0.2in"><B>prompt&gt;</B> main </PRE><P STYLE="margin-bottom: 0.2in">
+<FONT FACE="Times New Roman">It will print out the following result:</FONT></P>
+<PRE STYLE="margin-left: 0.79in"><FONT FACE="Nimbus Mono L, monospace">Some movies directed by Ron Howard:</FONT>
+<FONT FACE="Nimbus Mono L, monospace">1. Appollo 13</FONT>
+<FONT FACE="Nimbus Mono L, monospace">2. A Beautiful Mind</FONT>
+<FONT FACE="Nimbus Mono L, monospace">3. The Da Vinci Code</FONT></PRE><P>
+<A HREF="../../README.html">Back to the root page</A></P>
+</BODY>
+</HTML>

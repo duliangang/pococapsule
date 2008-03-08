@@ -1,0 +1,16 @@
+include $(POCOCAPSULE_DIR)/examples/makefiles/Makefile.inc
+
+EXAMPLES = basic-ioc corba
+
+ifneq ($(PLATFORM),Windows_NT)
+  EXAMPLES += web-services
+endif
+
+all:
+	@if [ ! -d $(POCOCAPSULE_DIR)/install/examples ]; then \
+	  mkdir -p $(POCOCAPSULE_DIR)/install/examples;\
+	fi;
+	cp -f README.html $(POCOCAPSULE_DIR)/install/examples
+	@for ex_dir in $(EXAMPLES); do \
+	  $(MAKE) -C $$ex_dir -f makefiles/Makefile.install; \
+	done;

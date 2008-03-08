@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/ws2poco.xsl"?>
+
+<!DOCTYPE ws-application SYSTEM "http://www.pocomatic.com/ws-application.dtd">
+
+<ws-application>
+   <load library="./Components.$dll"/>
+
+   <web-server id="my-ws" config="config.xml">
+     <endpoint name="AccountService"><ref bean="AccountService"/></endpoint>
+   </web-server>
+
+   <!-- the AccountService bean, wired to AccountDataService and StockQuoteService -->
+   <bean id="AccountService"
+         class="AccountServiceImpl">
+     <ioc method="accountDataService">
+        <method-arg ref="AccountDataService"/>
+     </ioc>
+
+     <ioc method="stockQuoteService">
+        <method-arg ref="StockQuoteService"/>
+     </ioc>
+
+     <ioc method="currency">
+        <method-arg type="string" value="EURO"/>
+     </ioc>
+   </bean>
+
+   <!-- the AccountDataService bean -->
+   <bean id="AccountDataService"
+         class="AccountDataService"/>
+
+   <!-- the StockQuoteService, wired to StockQuoteWebService -->
+   <bean id="StockQuoteService"
+         class="StockQuoteService">
+     <ioc method="webService">
+        <method-arg  ref="StockQuoteWebService"/>
+     </ioc>
+   </bean>
+
+   <!-- the StockQuoteWebService bean -->
+   <bean id="StockQuoteWebService"
+         class="StockQuoteSoap"/>
+</ws-application>

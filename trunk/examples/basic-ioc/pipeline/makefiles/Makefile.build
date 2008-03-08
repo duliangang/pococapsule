@@ -1,0 +1,10 @@
+include $(POCOCAPSULE_DIR)/examples/basic-ioc/stdmkdir/stdmk
+
+all:
+	$(POCO_PROJ) -s=_reflx.cc -h=MyNodeImplA.h skelA.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=MyNodeImplB.h skelB.xml
+	$(CC) $(LIB_CREATION_FLAG) -g skelA_reflx.cc -o MyNodeImplA.so
+	$(CC) $(LIB_CREATION_FLAG) -g skelB_reflx.cc -o MyNodeImplB.so
+	$(CC) main.C $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML) -o main
+clean:
+	rm -rf *.o *_reflx.* *.so main

@@ -1,0 +1,34 @@
+include ../makefiles/Makefile.inc
+
+FILES = \
+	README.html\
+	MyDataTypeDefs.idl\
+	EmitterImpl.C\
+	EmitterImpl.h\
+	ListenerImpl.C\
+	ListenerImpl.h\
+	MyDataTypeImpls.h\
+	reader.xml\
+	writer.xml
+
+REL_DIR = corba/dds
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_REPL_MAIN,reader.C)
+	$(call INSTALL_REPL_MAIN,writer.C)
+ifeq ($(PLATFORM),Windows_NT)
+	$(CP) makefiles/Makefile.buildWindows_NT Makefile.tmp
+	sed -e 's/makefiles\/Makefile.vbWindows_NT/Makefile.vb/g' -e 's/makefiles\/Makefile.taoWindows_NT/Makefile.tao/g' Makefile.tmp > $(TGT_DIR)/Makefile
+	$(RM) Makefile.tmp
+	sed -e 's/stdmkdir\/stdmk.vb_win/stdmk.vb/g' makefiles/Makefile.vbWindows_NT > $(TGT_DIR)/Makefile.vb
+	sed -e 's/stdmkdir\/stdmk.tao_win/stdmk.tao/g' makefiles/Makefile.taoWindows_NT > $(TGT_DIR)/Makefile.tao
+else
+	$(CP) makefiles/Makefile.build Makefile.tmp
+	sed -e 's/makefiles\/Makefile.vb/Makefile.vb/g' -e 's/makefiles\/Makefile.tao/Makefile.tao/g' Makefile.tmp > $(TGT_DIR)/Makefile
+	$(RM) Makefile.tmp
+	$(CP) makefiles/Makefile.vb $(TGT_DIR)/Makefile.vb
+	$(CP) makefiles/Makefile.tao $(TGT_DIR)/Makefile.tao
+endif
+	cd pocodds; $(MAKE) -f makefiles/Makefile.install

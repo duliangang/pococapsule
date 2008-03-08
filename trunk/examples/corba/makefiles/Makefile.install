@@ -1,0 +1,29 @@
+
+EXAMPLES = hello hello-tie poa-server dsm-server jtrs-sca event event-classic gps dds rtc
+
+STDMK_FILES = stdmk.vb stdmk.tao
+
+ifeq ($(PLATFORM),Windows_NT)
+  STDMK_PLATFORM_SUFFIX = _win
+endif
+
+ifeq ($(PLATFORM),VxWorks)
+  STDMK_PLATFORM_SUFFIX = _vxWorks
+endif
+
+
+all:
+	@if [ ! -d $(POCOCAPSULE_DIR)/install/examples/corba ]; then \
+	  mkdir -p $(POCOCAPSULE_DIR)/install/examples/corba;\
+	fi;
+	cp $(POCOCAPSULE_DIR)/examples/corba/stdmkdir/stdmk.vb$(STDMK_PLATFORM_SUFFIX) $(POCOCAPSULE_DIR)/install/examples/corba/stdmk.vb
+	cp $(POCOCAPSULE_DIR)/examples/corba/stdmkdir/stdmk.tao$(STDMK_PLATFORM_SUFFIX) $(POCOCAPSULE_DIR)/install/examples/corba/stdmk.tao
+ifeq ($(PLATFORM),Windows_NT)
+	cp $(POCOCAPSULE_DIR)/examples/corba/makefiles/Makefile.buildWindows_NT $(POCOCAPSULE_DIR)/install/examples/corba/Makefile
+else
+	cp $(POCOCAPSULE_DIR)/examples/corba/makefiles/Makefile.build $(POCOCAPSULE_DIR)/install/examples/corba/Makefile
+endif
+	@for ex_dir in $(EXAMPLES); do \
+	  $(MAKE) -C $$ex_dir -f makefiles/Makefile.install; \
+	done;
+

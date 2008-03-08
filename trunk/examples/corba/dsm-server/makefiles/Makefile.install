@@ -1,0 +1,20 @@
+include ../makefiles/Makefile.inc
+
+
+FILES = \
+	README.html\
+	Greeting.idl\
+	GreetingImpl.C\
+	GreetingImpl.h\
+	my-application-context.dtd\
+	myapp2corba.xsl\
+	setup.xml
+
+REL_DIR = corba/dsm-server
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_REPL_MAIN,server.C)
+	$(call INSTALL_REPL_MAIN,client.C)
+	$(call INSTALL_MK_FILE)

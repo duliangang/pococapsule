@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composite SYSTEM "http://www.pocomatic.com/ocsa-composite.dtd">
+
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/ocsa-composite2poco.xsl"?>
+
+<composite name="calculator">
+    <service name="CalculatorService">
+	<interface.wsdl interface="http://sample/calculator#wsdl.interface(Calculator)"/>
+	<binding.ws port="#wsdl.endpoint(CalculatorService)"/>
+	<reference>CalculatorServiceComponent</reference>
+    </service>
+
+    <component name="CalculatorServiceComponent">
+	<implementation.cpp class="MyCalculatorServiceImpl"/>
+	<reference name="addService">AddServiceComponent</reference>
+	<reference name="subtractService">SubtractServiceComponent</reference>
+	<reference name="multiplyService">MultiplyServiceComponent</reference>
+	<reference name="divideService">DivideServiceComponent</reference>
+    </component>
+
+    <component name="AddServiceComponent">
+	<implementation.cpp class="AddServiceImpl"/>
+    </component>
+
+    <component name="SubtractServiceComponent">
+	<implementation.cpp class="SubtractServiceImpl"/>
+    </component>
+
+    <component name="MultiplyServiceComponent">
+	<implementation.cpp class="MultiplyServiceImpl"/>
+    </component>
+
+    <component name="DivideServiceComponent">
+	<implementation.cpp class="DivideServiceImpl"/>
+    </component>
+</composite>
