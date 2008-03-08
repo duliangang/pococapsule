@@ -1,0 +1,15 @@
+include ../stdmkdir/stdmk.win
+
+all: main.exe reflx$(DLL_SUFFIX)
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=shapes.h -h=pits.h -h=add_to_map.h setup.xml
+
+reflx$(DLL_SUFFIX): setup_reflx.obj
+	$(LINK_DLL) /OUT:$@ setup_reflx.obj $(POCO_LIBPATH) $(LIBPOCO) 
+
+main.exe: main.obj
+	$(LINK_EXE) /OUT:$@ main.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+clean:
+	del *.obj *.pdb *.lib *.exe *.dll *.exp *.cc *.exp *.ilk *.manifest

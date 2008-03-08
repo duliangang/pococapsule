@@ -1,0 +1,37 @@
+CC = g++  -D_REENTRANT 
+
+ORBCC=${TAO_ROOT}/bin/tao_idl -g ${TAO_ROOT}/bin/gperf -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -hc _c.hh -hs _s.hh -cs _c.cc -ss _s.cc -si _s.inl -st _s_t.inl -hT _s_t.cc
+
+ifeq ($(BUILD_TYPE),debug)
+  DEBUG = -g -ggdb -Wall
+else
+  DEBUG = -Os 
+endif
+
+LIBPATH = -L$(TAO_ROOT)/lib
+CCINCLUDES = -I. -I$(TAO_ROOT)/include
+LIBORB = -lTAO -lACE -lTAO_AnyTypeCode -lTAO_PortableServer
+LIBORBNTFY = -lTAO_CosNaming -lTAO_CosNotification_Skel -lTAO_CosEvent_Skel -lTAO_CosNotification -lTAO_CosEvent -lTAO_AnyTypeCode
+
+
+CCFLAGS = $(CCINCLUDES) $(DEBUG) -DACE_HAS_NO_THROW_SPEC
+
+DLL_LD_FLAGS = -shared
+
+POCO_PROJ=$(POCOCAPSULE_DIR)/bin/pxgenproxy -r=gather
+
+POCO_LIBPATH=-L$(POCOCAPSULE_DIR)/lib
+LIBPOCO=-lpococapsule
+LIB_POCO_CORBA_HELPER=-lpoco2tao
+
+POCO_INC=-I$(POCOCAPSULE_DIR)/include 
+POCO_CC=$(CC) -DUSE_TAO $(CCFLAGS) $(POCO_INC) 
+
+
+.C.o:
+	$(CC) $(CCFLAGS) -c -o $@ $<
+
+.cc.o:
+	$(CC) $(CCFLAGS) -c -o $@ $<
+.cpp.o:
+	$(CC) $(CCFLAGS) -c -o $@ $<

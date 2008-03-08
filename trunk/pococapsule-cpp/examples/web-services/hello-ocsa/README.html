@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="AUTHOR" CONTENT="kejin">
+	<META NAME="CREATED" CONTENT="20061120;17150100">
+	<META NAME="CHANGEDBY" CONTENT="kejin">
+	<META NAME="CHANGED" CONTENT="20070513;12175800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		H2 { color: #000000 }
+		H3 { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H2>PocoCapsule/C++ example: OASIS-OpenCSA Hello 
+</H2>
+<P>Copyright(c) 2006 by <A HREF="http://www.pocomatic.com/">Pocomatic
+Software</A>. All rights reserved. 
+</P>
+<P>The <A HREF="http://www.oasis-opencsa.org/">OASIS-OpenCSA</A>
+(Open Composite Services Architecture, formerly known as OpenSOA
+Service Component Architecture) is a component model for building
+applications and systems using a Service-Oriented Architecture (SOA).
+</P>
+<P>This is a basic hello example. It consists of one composite which
+exports one web service (defined by <A HREF="Hello.wsdl">Hello.wsdl</A>),
+and contains one HelloServiceComponent components. The
+HelloServiceComponent component is merely a plain old C++ object
+(POCO) of MyHelloServiceImpl class, implemented in
+<A HREF="MyHelloServiceImpl.h">MyHelloServiceImpl.h</A> (inline). 
+</P>
+<P>The assembly schema/model used in this example is <A HREF="http://www.osoa.org/download/abttachments/35/SCA_AssemblyModel_V096.pdf">OASIS-OpenCSA
+assembly model 0.96</A>. PocoCapsule also comes with an equivalent
+non-OpenCSA version of hello example, in
+<A HREF="../hello-ws/README.html">${POCOCAPSULE_DIR}/examples/web-services/hello-ws</A>
+directory, that uses POCO-WebServices assembly schema/model. 
+</P>
+<H3>Source Files</H3>
+<P><A HREF="server.C">server.C:</A> This is a simple container, used
+to setup and assemble the OpenCSA composite. It is notable that this
+container itself neither contains code, nor links with application
+specific bean implementations.</P>
+<P><A HREF="Hello.wsdl">Hello.wsdl</A>: The definition of the web
+service provided by the hello server. 
+</P>
+<P><A HREF="MyHelloServiceImpl.h">MyHelloServiceImpl.h</A>: This file
+provides inline implementation of the POCO class MyHelloServiceImpl. 
+</P>
+<P><A HREF="server.config">server.config</A>: The Pococapsule Web
+Service application descriptor that describes this example's Web
+Service setup.</P>
+<P><A HREF="service.composite">server.composite</A>: The
+OASIS-OpenCSA assembly descriptor that describes the wiring
+(connections) of components/ports in the OASIS-OpenCSA composite.</P>
+<P><A HREF="setup.xml">setup.xml</A>: The main setup descriptors that
+first loads the needed library (the one contains component
+implementation classes) and then instantiates the web service engine
+and wires (connects) the OASIS-OpenCSA composite by importing the
+<A HREF="server.config">server.config</A> and <A HREF="service.composite">server.composite</A>.
+</P>
+<P><A HREF="client.C">client.C</A>: The client application. 
+</P>
+<H3>Building this example</H3>
+<P>To build this example, the environment variable POCOCAPSULE_DIR
+should point to the PocoCapsule/C++ installed directory. Also, this
+example assumes the <A HREF="http://www.systinet.com/products/ssc/overview">Systinet
+server for C++</A> is installed and its runtime and development
+environment (such as WASPC_HOME environment variable pointing to its
+installation directory) are set properly according to its
+specification. 
+</P>
+<P STYLE="font-weight: medium">Once the environment is set and
+required Systinet server for C++ is installed and configured
+accordingly, this example can be built by simply invoking gmake/make
+on linux/unix or nmake on windows. 
+</P>
+<H3>Running this example</H3>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Before
+starting the server, make sure the LD_LIBRARY_PATH (on linux and
+solaris) or the PATH (on windows) environment variable is set
+correctly to include the ${POCOCAPSULE_DIR}/lib directory and <FONT FACE="Times New Roman">the
+${WASPC_HOME}/lib directory</FONT>.</FONT></P>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">start
+the hello service server as: </FONT>
+</P>
+<PRE STYLE="margin-left: 0.79in"><B>prompt&gt;</B> server
+...</PRE><P STYLE="margin-bottom: 0in">
+<FONT FACE="Times New Roman">The, start the client:</FONT></P>
+<PRE STYLE="margin-left: 0.79in"><B>prompt&gt;</B> client [server-URL]
+...</PRE><P STYLE="margin-bottom: 0.2in">
+<FONT FACE="Times New Roman">Here, the server URL is (optional, if
+client is on localhost): http://&lt;server-address&gt;:6070/HelloWorld.</FONT></P>
+<P STYLE="margin-bottom: 0.2in"><FONT FACE="Times New Roman"><A HREF="../../README.html">Back
+to the root page</A></FONT></P>
+</BODY>
+</HTML>

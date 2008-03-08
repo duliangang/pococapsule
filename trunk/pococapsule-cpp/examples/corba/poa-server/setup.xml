@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/corba2poco.xsl"?>
+
+<!DOCTYPE corba-application-context SYSTEM "http://www.pocomatic.com/corba-application-context.dtd">
+
+<corba-application-context>
+  <load library="./GreetingImpl.$dll"/>
+  <load library="./reflx.$dll"/>
+
+  <orb id="my-orb">
+    <!-- 
+        a POA that uses AOM only (this is also the default setting)
+    -->
+    <poa>
+      <!-- as this is the default setting, we don't need to specify it.
+      <policies>
+        <policy name="request-processing" value="use-aom-only"/>
+      </policies>
+      -->
+
+      <!-- activate an object -->
+      <object uri="my-server-use-aom-only">
+        <bean class="GreetingImpl">
+          <method-arg type="string" value="my-servant-in-aom"/>
+        </bean>   
+      </object>
+    </poa>
+
+    <!-- 
+        a POA that uses default servant 
+    -->
+    <poa>
+      <policies>
+        <policy name="request-processing" value="use-default-servant"/>
+      </policies>
+
+      <!-- setup the default servant -->
+      <property name="set_servant">
+        <bean class="GreetingImpl">
+          <method-arg type="string" value="my-default-servant"/>
+        </bean>
+      </property>
+
+      <!-- create and export a URL -->
+      <object uri="my-server-use-default-servant"/>
+    </poa>
+
+    <!-- 
+        a POA that uses a servant locator 
+    -->
+    <poa>
+      <policies>
+        <policy name="request-processing" value="use-servant-manager"/>
+        <policy name="servant-retention" value="non-retain"/>
+      </policies>
+
+      <!-- setup the servant locator -->
+      <property name="set_servant_manager">
+        <bean class="ServantLocatorImpl"/>
+      </property>
+
+      <!-- create and export a URL -->
+      <object uri="my-server-use-servant-locator"/>
+    </poa>
+
+    <!-- 
+        a POA that uses a servant activator 
+    -->
+    <poa>
+      <policies>
+        <policy name="request-processing" value="use-servant-manager"/>
+        <policy name="servant-retention" value="retain"/>
+      </policies>
+
+      <!-- setup the servant activator -->
+      <property name="set_servant_manager">
+        <bean class="ServantActivatorImpl"/>
+      </property>
+
+      <!-- create and export a URL -->
+      <object uri="my-server-use-servant-activator"/>
+    </poa>
+    
+  </orb>
+</corba-application-context>

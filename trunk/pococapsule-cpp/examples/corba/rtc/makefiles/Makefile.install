@@ -1,0 +1,26 @@
+include ../makefiles/Makefile.inc
+
+FILES = \
+	README.html\
+	rtc_lite.idl\
+	sample.idl\
+	BumperSensorComponentImpl.C\
+	BumperSensorComponentImpl.h\
+	RangeScannerComponentImpl.C\
+	RangeScannerComponentImpl.h\
+	ServoComponentImpl.C\
+	ServoComponentImpl.h\
+	VehicleControllerImpl.C\
+	VehicleControllerImpl.h\
+	rtc-application.dtd\
+	rtc-application2poco.xsl\
+	rtc.jpg\
+	setup.xml
+
+REL_DIR = corba/rtc
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_REPL_MAIN,main.C)
+	$(call INSTALL_MK_FILE)

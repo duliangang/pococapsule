@@ -1,0 +1,13 @@
+include $(POCOCAPSULE_DIR)/examples/web-services/makefiles/Makefile.inc
+
+FILES = README.html config.xml setup.xml Makefile Calculator.wsdl \
+        calculator-by-wire.composite calculator-by-ref.composite \
+        ComponentImpls.h ComponentIntfs.h MyCalculatorImpl.h \
+        server.C client.C server.config
+
+REL_DIR = web-services/calculator-ocsa
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+

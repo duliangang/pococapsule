@@ -1,0 +1,26 @@
+include ../stdmk.tao
+
+FILES = Interfaces_c.cc setup_reflx.cc \
+	main.so TickGenImpl.so GPSLocatorImpl.so NavDisplayImpl.so reflx.so \
+        setup.ctx 
+
+all: $(FILES) 
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=GPSLocatorImpl.h \
+	-h=NavDisplayImpl.h -h=TickGenImpl.h $< 
+
+TickGenImpl.so: Interfaces_c.o TickGenImpl.o
+	$(LINK_SLIB)
+
+GPSLocatorImpl.so: Interfaces_c.o GPSLocatorImpl.o
+	$(LINK_SLIB)
+
+NavDisplayImpl.so: Interfaces_c.o NavDisplayImpl.o
+	$(LINK_SLIB)
+
+reflx$(LIB_SUFFIX): setup_reflx$(LIB_SUFFIX)
+	mv setup_reflx$(LIB_SUFFIX) reflx$(LIB_SUFFIX)
+
+clean:
+	$(RM) *.o *.hh $(FILES)

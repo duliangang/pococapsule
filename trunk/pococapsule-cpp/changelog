@@ -1,0 +1,816 @@
+--- begin-of-the-file ---
+
+--------------- log before google code svn --------------------------
+Rev:638 Mar-07-2008 Ke Jin <kjin101@gmail.com>
+	exported to google code svn
+
+Rev:633 Feb-14-2008 Ke Jin <kejin@pocomatic.com>
+	* basic-ioc/pipeline
+	* basic-ioc/pipeline/Node.h
+	* basic-ioc/pipeline/MyNodeImplA.h
+	* basic-ioc/pipeline/MyNodeImplB.h
+	* basic-ioc/pipeline/sig-a.xml
+	* basic-ioc/pipeline/sig-b.xml
+	* basic-ioc/pipeline/setup.xml
+	* basic-ioc/pipeline/main.C
+	* basic-ioc/pipeline/README.html
+
+Rev:631 Jan-23-2008 Ke Jin <kejin@pocomatic.com>
+	* src/tools/com/pocomatic/resources/poco-dsl2xsl.xsl: the poco-dsl 
+          to W3C xsl template transformation stylesheet. (hot)
+	* src/tools/com/pocomatic/tools/Util.java: minor fix.
+
+	Add the hot (higher order transformation example):
+	* basic-ioc/hot
+	* basic-ioc/hot/GPSLocatorImpl.C
+	* basic-ioc/hot/NavDisplayImpl.h
+	* basic-ioc/hot/GPSLocatorImpl.h
+	* basic-ioc/hot/TickGenImpl.C
+	* basic-ioc/hot/TickGenImpl.h
+	* basic-ioc/hot/setup.xml
+	* basic-ioc/hot/README.html
+	* basic-ioc/hot/gps-device.dtd
+	* basic-ioc/hot/makefiles
+	* basic-ioc/hot/makefiles/Makefile.VxWorks
+	* basic-ioc/hot/makefiles/Makefile.install
+	* basic-ioc/hot/makefiles/Makefile.buildWindows_NT
+	* basic-ioc/hot/makefiles/Makefile.build
+	* basic-ioc/hot/main.C
+	* basic-ioc/hot/gps.jpg
+	* basic-ioc/hot/Interfaces.h
+	* basic-ioc/hot/gps-device2poco.dsl
+	* basic-ioc/hot/Makefile
+	* basic-ioc/hot/NavDisplayImpl.C
+
+	* examples/README.html
+
+Rev:630 Jan-07-2008 Ke Jin <kejin@pocomatic.com>
+	* src/corbahelper/poconet.C: Fixed a bug -- create_socket() 
+	  should return -1 on fail to bind.
+	* src/corbahelper/urlmgr.C: Enhanced error message on creating URL mng.
+
+Rev:561 Oct-02-2007 Ke Jin <kejin@pocomatic.com>
+	* add -c option to pxtransform.
+	* have transformation performed on stylesheet also.
+
+Rev:550 Aug-05-2007 Ke Jin <kejin@pocomatic.com>
+	Rename all DSL examples to DSM examples. 
+
+Rev:538 Jun-07-2007 Ke Jin <kejin@pocomatic.com>
+	Added support of native implemenation for typed event consumer (automatically
+	generate TIE code). Changed the corba/event example to illustrate native
+	implementations.
+
+Rev:530 Jun-05-2007 Ke Jin <kejin@pocomatic.com>
+	Added the basic-ioc/examples/basic-ioc/robotic-vehicle
+	* examples/basic-ioc/robotic-vehicle
+	* examples/basic-ioc/robotic-vehicle/RangeScannerComponent.h
+	* examples/basic-ioc/robotic-vehicle/BumperSensorComponent.C
+	* examples/basic-ioc/robotic-vehicle/BumperSensorComponent.h
+	* examples/basic-ioc/robotic-vehicle/setup.xml
+	* examples/basic-ioc/robotic-vehicle/makefiles
+	* examples/basic-ioc/robotic-vehicle/makefiles/Makefile.buildWindows_NT
+	* examples/basic-ioc/robotic-vehicle/makefiles/Makefile.build
+	* examples/basic-ioc/robotic-vehicle/README.html
+	* examples/basic-ioc/robotic-vehicle/ServoComponent.C
+	* examples/basic-ioc/robotic-vehicle/VehicleController.C
+	* examples/basic-ioc/robotic-vehicle/objImpls.h
+	* examples/basic-ioc/robotic-vehicle/main.C
+	* examples/basic-ioc/robotic-vehicle/ServoComponent.h
+	* examples/basic-ioc/robotic-vehicle/rtc.jpg
+	* examples/basic-ioc/robotic-vehicle/VehicleController.h
+	* examples/basic-ioc/robotic-vehicle/RangeScannerComponent.C
+	* examples/basic-ioc/robotic-vehicle/robotic-application2poco.xsl
+	* examples/basic-ioc/robotic-vehicle/robotic-application.dtd
+	* examples/basic-ioc/robotic-vehicle/Makefile
+
+	and, added corba/rtc examples:
+	* examples/corba/rtc/Makefile
+	* examples/corba/rtc/makefiles
+	* examples/corba/rtc/makefiles/Makefile.taoWindows_NT
+	* examples/corba/rtc/makefiles/Makefile.vbWindows_NT
+	* examples/corba/rtc/makefiles/Makefile.vb
+	* examples/corba/rtc/makefiles/Makefile.tao
+	* examples/corba/rtc/BumperSensorComponentImpl.C
+	* examples/corba/rtc/BumperSensorComponentImpl.h
+	* examples/corba/rtc/rtc_lite.idl
+	* examples/corba/rtc/rtc.jpg
+	* examples/corba/rtc/rtc-application2poco.xsl
+	* examples/corba/rtc/sample.idl
+	* examples/corba/rtc/ServoComponentImpl.C
+	* examples/corba/rtc/ServoComponentImpl.h
+	* examples/corba/rtc/setup.xml
+	* examples/corba/rtc/main.C
+	* examples/corba/rtc/rtc-application.dtd
+	* examples/corba/rtc/sampleImpl.h
+	* examples/corba/rtc/RangeScannerComponentImpl.C
+	* examples/corba/rtc/RangeScannerComponentImpl.h
+	* examples/corba/rtc/README.html
+	* examples/corba/rtc/VehicleControllerImpl.C
+	* examples/corba/rtc/VehicleControllerImpl.h
+
+Rev:528 Jun-03-2007 Ke Jin <kejin@pocomatic.com>
+	Added support of destroy void bean.
+
+Rev:527 Jun-02-2007 Ke Jin <kejin@pocomatic.com>
+	Added the factory-wrapper support.
+
+Rev:524 Jun-02-2007 Ke Jin <kejin@pocomatic.com>
+	Added the basic-ioc/on-error example
+	* examples/basic-ioc/on-error
+	* examples/basic-ioc/on-error/setup.xml
+	* examples/basic-ioc/on-error/README.html
+	* examples/basic-ioc/on-error/foo.C
+	* examples/basic-ioc/on-error/main.C
+	* examples/basic-ioc/on-error/foo.h
+
+Rev:522 Jun-01-2007 Ke Jin <kejin@pocomatic.com>
+	* Added <on-error> element.
+
+Rev:514 May-30-2007 Ke Jin <kejin@pocomatic.com>
+	Added hello-tie example, tested on linux with VB and TAO:
+	* examples/corba/hello-tie
+	* examples/corba/hello-tie/client.C
+	* examples/corba/hello-tie/setup.xml
+	* examples/corba/hello-tie/README.html
+	* examples/corba/hello-tie/makefiles
+	* examples/corba/hello-tie/makefiles/Makefile.tao
+	* examples/corba/hello-tie/makefiles/Makefile.vbWindows_NT
+	* examples/corba/hello-tie/makefiles/Makefile.vb
+	* examples/corba/hello-tie/makefiles/Makefile.taoWindows_NT
+	* examples/corba/hello-tie/GreetingImpl.C
+	* examples/corba/hello-tie/server.C
+	* examples/corba/hello-tie/Greeting.idl
+	* examples/corba/hello-tie/GreetingImpl.h
+	* examples/corba/hello-tie/Makefile
+
+Rev:513 May-30-2007 Ke Jin <kejin@pocomatic.com>
+	* Making the <servants> element optional. Simplified all
+	  corba server examples.
+
+Rev:512 May-30-2007 Ke Jin <kejin@pocomatic.com>
+	* Making event participant connection port optional
+	  (default is rir) and simplified the event example.
+
+Rev:506 May-29-2007 Ke Jin <kejin@pocomatic.com>
+	Add basic-ioc/dsl-sdr example:
+	* examples/basic-ioc/dsl-sdr/AudioEffect.C
+	* examples/basic-ioc/dsl-sdr/setup.xml
+	* examples/basic-ioc/dsl-sdr/sdr-device.dtd
+	* examples/basic-ioc/dsl-sdr/README.html
+	* examples/basic-ioc/dsl-sdr/makefiles
+	* examples/basic-ioc/dsl-sdr/makefiles/Makefile.VxWorks
+	* examples/basic-ioc/dsl-sdr/makefiles/Makefile.install
+	* examples/basic-ioc/dsl-sdr/makefiles/Makefile.buildWindows_NT
+	* examples/basic-ioc/dsl-sdr/makefiles/Makefile.build
+	* examples/basic-ioc/dsl-sdr/AudioEffect.h
+	* examples/basic-ioc/dsl-sdr/FMTransmitterReceiver.C
+	* examples/basic-ioc/dsl-sdr/main.C
+	* examples/basic-ioc/dsl-sdr/sampleImpl.h
+	* examples/basic-ioc/dsl-sdr/FMTransmitterReceiver.h
+	* examples/basic-ioc/dsl-sdr/sdr.gif
+	* examples/basic-ioc/dsl-sdr/Makefile
+	* examples/basic-ioc/dsl-sdr/sdr-device2poco.xsl
+	* examples/basic-ioc/dsl-sdr/sdr.h
+
+Rev:498 May-28-2007 Ke Jin <kejin@pocomatic.com>
+	Add basic-ioc/dsl-gps example:
+	* examples/basic-ioc/dsl-gps
+	* examples/basic-ioc/dsl-gps/GPSLocatorImpl.C
+	* examples/basic-ioc/dsl-gps/NavDisplayImpl.h
+	* examples/basic-ioc/dsl-gps/GPSLocatorImpl.h
+	* examples/basic-ioc/dsl-gps/TickGenImpl.C
+	* examples/basic-ioc/dsl-gps/TickGenImpl.h
+	* examples/basic-ioc/dsl-gps/gps.gif
+	* examples/basic-ioc/dsl-gps/setup.xml
+	* examples/basic-ioc/dsl-gps/README.html
+	* examples/basic-ioc/dsl-gps/makefiles
+	* examples/basic-ioc/dsl-gps/makefiles/Makefile.VxWorks
+	* examples/basic-ioc/dsl-gps/makefiles/Makefile.install
+	* examples/basic-ioc/dsl-gps/makefiles/Makefile.buildWindows_NT
+	* examples/basic-ioc/dsl-gps/makefiles/Makefile.build
+	* examples/basic-ioc/dsl-gps/main.C
+	* examples/basic-ioc/dsl-gps/gps-instrument2poco.xsl
+	* examples/basic-ioc/dsl-gps/Interfaces.h
+	* examples/basic-ioc/dsl-gps/gps-instrument.dtd
+	* examples/basic-ioc/dsl-gps/NavDisplayImpl.C
+	* examples/basic-ioc/dsl-gps/Makefile
+
+Rev:496 May-27-2007 Ke Jin <kejin@pocomatic.com>
+	* Added a changelog file.
+
+Rev:490 May-25-2007 xtl <xtl@pocomatic.com>
+	DDS port on windows.
+
+Rev:481 May-20-2007 Ke Jin <kejin@pocomatic.com>
+	Allowing "void" bean with no factory-method.
+
+Rev:475 May-17-2007 Ke Jin <kejin@pocomatic.com>
+	* cleanup memory leaks.
+
+Rev:471 May-16-2007 Ke Jin <kejin@pocomatic.com>
+	* changed memory management from ref-count 
+	  to register-and-final-destroy
+
+Rev:463 May-14-2007 Ke Jin <kejin@pocomatic.com>
+	* Added a "key" attribute to <bean>. 
+	* Added trace.
+
+Rev:450 May-12-2007 Ke Jin <kejin@pocomatic.com>
+	* Ported the demo DDS and DDS example to work for TAO
+
+Rev:446 May-12-2007 Ke Jin <kejin@pocomatic.com>
+	demo DDS work for visibroker on linux
+	* examples/corba/dds/EmitterImpl.h    
+	* examples/corba/dds/DataTypeImpls.h  
+	* examples/corba/dds/ListenerImpl.C   
+	* examples/corba/dds/EmitterImpl.C    
+	* examples/corba/dds/ListenerImpl.h   
+
+Rev:441 May-12-2007 Ke Jin <kejin@pocomatic.com>
+	Add a demo DDS implementation for out-of-the-box 
+	playing the DDS example.
+	* examples/corba/dds/pocodds/publisher.h      
+	* examples/corba/dds/pocodds/subscriber.C     
+	* examples/corba/dds/pocodds/typesupport.idl  
+	* examples/corba/dds/pocodds/factory.C        
+	* examples/corba/dds/pocodds/subscriber.h     
+	* examples/corba/dds/pocodds/dds_dcps.idl     
+	* examples/corba/dds/pocodds/factory.h        
+	* examples/corba/dds/pocodds/participant.C    
+	* examples/corba/dds/pocodds/makefiles/Makefile.tao   
+	* examples/corba/dds/pocodds/makefiles/Makefile.vbWindows_NT  
+	* examples/corba/dds/pocodds/makefiles/stdmk.tao_win  
+	* examples/corba/dds/pocodds/makefiles/Makefile.vb    
+	* examples/corba/dds/pocodds/makefiles/stdmk.tao      
+	* examples/corba/dds/pocodds/makefiles/stdmk.vb_win   
+	* examples/corba/dds/pocodds/makefiles/stdmk.vb       
+	* examples/corba/dds/pocodds/makefiles/Makefile.taoWindows_NT 
+	* examples/corba/dds/pocodds/ddsproxy.h       
+	* examples/corba/dds/pocodds/typesupport.h    
+	* examples/corba/dds/pocodds/topic.h  
+	* examples/corba/dds/pocodds/participant.h    
+	* examples/corba/dds/pocodds/Makefile 
+	* examples/corba/dds/pocodds/unsupported.h    
+	* examples/corba/dds/pocodds/publisher.C      
+
+Rev:428 May-06-2007 Ke Jin <kejin@pocomatic.com>
+	* Support non-member function as IoC.
+	* added <this-bean> element.
+
+Rev:423 Apr-30-2007 Ke Jin <kejin@pocomatic.com>
+	* pre-instantiation destroy-bean to prevent circulated 
+	  destroy-dependency
+
+Rev:416 Apr-19-2007 Ke Jin <kejin@pocomatic.com>
+	* Add set/getValue and set/getArray to POCO_AppEnv.
+
+Rev:411 Apr-15-2007 Ke Jin <kejin@pocomatic.com>
+	* rename all web-services/*-sca examples to
+	  web-services/*-ocsa, and change all "OpenSOA SCA" 
+	  in documents to "OASIS OpenCSA".
+
+Rev:396 Apr-08-2007 Ke Jin <kejin@pocomatic.com>
+	Add web-services/calculator-sca example
+	* examples/web-services/calculator-sca/setup.xml      
+	* examples/web-services/calculator-sca/Calculator.wsdl        
+	* examples/web-services/calculator-sca/config.xml     
+	* examples/web-services/calculator-sca/calculator-by-wire.composite   
+	* examples/web-services/calculator-sca/MyCalculatorImpl.h     
+	* examples/web-services/calculator-sca/server.C       
+	* examples/web-services/calculator-sca/server.config  
+	* examples/web-services/calculator-sca/ComponentIntfs.h       
+	* examples/web-services/calculator-sca/calculator-by-ref.composite    
+	* examples/web-services/calculator-sca/ComponentImpls.h       
+	* examples/web-services/calculator-sca/Makefile       
+
+Rev:388 Apr-03-2007 Ke Jin <kejin@pocomatic.com>
+	Added event pull mode support to corbahelper.
+	* include/corbahelper.h       
+	* src/tools/com/pocomatic/resources/poco2spring.xsl   
+	* src/corbahelper/pococorba.C 
+	* src/corbahelper/pococorba.h 
+	* src/corbahelper/corbahelper.C       
+	
+Rev:385 Apr-02-2007 Ke Jin <kejin@pocomatic.com>
+	Added examples/README.html
+	
+Rev:377 Apr-01-2007 Ke Jin <kejin@pocomatic.com> 
+	Renamed the corba/request-processing-policies example
+	as corba/poa-server.
+
+Rev:375 Apr-01-2007 Ke Jin <kejin@pocomatic.com>
+	DDS example:
+	* examples/corba/dds/setup.xml        
+	* examples/corba/dds/ddshelper.h      
+	* examples/corba/dds/dds2corba.xsl    
+	* examples/corba/dds/corba-dds-application.dtd  
+
+Rev:352 Mar-24-2007 Ke Jin <kejin@pocomatic.com>
+	Rename basic-ioc/user-dsl to bassic-ioc/ext-schema
+
+Rev:345 Mar-20-2007 Ke Jin <kejin@pocomatic.com> 
+	* having corba-*.dtd and ws-*.dtd use ENTITY to include poco-*.dtd
+	  and simplified the dsl DTD.
+	* poco.h and Project.java: per xtl request, added a global function
+	  to generated proxy code for VxWorks 5.5.
+
+Rev:341 Mar-13-2007 Ke Jin <kejin@pocomatic.com>
+	* change pocomatic_register_proxy from a C callback function 
+	  into a class. Using static object instantiation to do the
+	  registration. This change is made to compensate VxWork C++ 
+	  compiler limitation.
+	* changed serveral basic-ioc example to use stdio instead of 
+	  iostream ... for VxWork slim version build.
+
+Rev:340 Mar-11-2007 Ke Jin <kejin@pocomatic.com>
+	* renamed the <inject> to <ioc>,
+	* renamed the <inject-method> to <method>
+
+Rev:338 Feb-21-2007 Ke Jin <kejin@pocomatic.com>
+	Renamed corba/user-schema example to corba/user-dsl.
+
+Rev:331 Feb-07-2007 xtl <xtl@pocomatic.com>
+	Initial port of the core capsule to VxWorks.
+
+Rev:325 Jan-24-2007 Ke Jin <kejin@pocomatic.com>
+	Renamed pxproject to pxgenproxy
+
+Rev:311 Jan-20-2007 Ke Jin <kejin@pocomatic.com>
+	Changed all basic-ioc examples to use JAXP based pocoxsl reader.
+
+Rev:303 Jan-13-2007 Ke Jin <kejin@pocomatic.com>
+	added movie-lsiter example.
+	* examples/basic-ioc/movie-lister/setup.xml   
+	* examples/basic-ioc/movie-lister/README.html 
+	* examples/basic-ioc/movie-lister/MovieLister.C       
+	* examples/basic-ioc/movie-lister/MyMovieFinder.h     
+	* examples/basic-ioc/movie-lister/main.C      
+	* examples/basic-ioc/movie-lister/Makefile.buildWindows_NT    
+	* examples/basic-ioc/movie-lister/MovieLister.h       
+	* examples/basic-ioc/movie-lister/Makefile.build      
+	* examples/basic-ioc/movie-lister/Makefile    
+	* examples/basic-ioc/movie-lister/MovieFinder.h       
+	* examples/basic-ioc/movie-lister/MyMovieFinder.C     
+
+Rev:301 Jan-18-2007 Ke Jin <kejin@pocomatic.com>
+	added corba gps example:
+	* examples/corba/gps/GPSLocatorImpl.C 
+	* examples/corba/gps/NavDisplayImpl.h 
+	* examples/corba/gps/Makefile.vb      
+	* examples/corba/gps/GPSLocatorImpl.h 
+	* examples/corba/gps/TickGenImpl.C    
+	* examples/corba/gps/Interfaces.idl   
+	* examples/corba/gps/TickGenImpl.h    
+	* examples/corba/gps/setup.xml        
+	* examples/corba/gps/Makefile.vbWindows_NT    
+	* examples/corba/gps/Makefile.tao     
+	* examples/corba/gps/README.html      
+	* examples/corba/gps/main.C   
+	* examples/corba/gps/Makefile.taoWindows_NT   
+	* examples/corba/gps/NavDisplayImpl.C 
+	* examples/corba/gps/Makefile 
+
+Rev:295 Jan-17-2007 Ke Jin <kejin@pocomatic.com>
+	* renamed the src/wshelper/wshelper.C to src/wshelper/wasphelper.C
+
+Rev:289 Jan-17-2007 Ke Jin <kejin@pocomatic.com>
+	* consolidate resolve_factory_method() and resolve_inject_method()
+	  into the _resolve_method().
+
+Rev:267 Jan-13-2007 Ke Jin <kejin@pocomatic.com>
+	* relocate the pocodom.h from include/ to src/capsule/
+
+Rev:241 Jan-11-2007 Ke Jin <kejin@pocomatic.com> 
+	* added the launcher and pxproject, pxtransform and pxencode.
+
+Rev:224 Jan-10-2007 xtl <xtl@pocomatic.com>
+	* ported xslreader to windows.
+
+Rev:223 Jan-09-2007 Ke Jin <kejin@pocomatic.com>
+	* added $dll replacement in resource name of  <load>
+
+Rev:210 Jan-08-2007 Ke Jin <kejin@pocomatic.com>
+	* Support JDK 1.4.
+
+Rev:201 Jan-05-2007 Ke Jin <kejin@pocomatic.com>
+	* Support XML input as string buffer.
+
+Rev:194 Jan-04-2007 Ke Jin <kejin@pocomatic.com>
+	* If a XML reader is not find, the capsule will load the xslreader.
+	* Changed examples to directly use the original, untrasformed XML
+	  descriptor. 
+
+Rev:191 Jan-03-2007 Ke Jin <kejin@pocomatic.com>
+	Introduce <transform-error> element for stylesheet to 
+	report error.
+	Add the xslreader, a JNI proxy to JAXP 
+	* src/xslreader/xslreader.h   
+	* src/xslreader/xslreader.C   
+	* src/xslreader/Makefile      
+
+Rev:179 Dec-29-2006 Ke Jin <kejin@pocomatic.com>
+	renamed the web-services/bigbank to web-services/bigbank-sca
+
+Rev:172 Dec-22-2006 Ke Jin <kejin@pocomatic.com>
+	renamed basic-ioc/my-schema to basic-ioc/user-schema
+
+Rev:172 Dec-22-2006 Ke Jin <kejin@pocomatic.com>
+	renamed the corba/object-home example to corba/user-schema.
+
+Rev:160 Dec-18-2006 Ke Jin <kejin@pocomatic.com>
+	renamed the examples/soa/ to examples/web-services/bigbank
+
+Rev:145 Dec-17-2006 Ke Jin <kejin@pocomatic.com>
+	added the web-services/hello-sca example
+	*  examples/web-services/hello-sca/client.C   
+	*  examples/web-services/hello-sca/setup.xml  
+	*  examples/web-services/hello-sca/Hello.composite    
+	*  examples/web-services/hello-sca/config.xml 
+	*  examples/web-services/hello-sca/server.C   
+	*  examples/web-services/hello-sca/mySvcImpl.h
+	*  examples/web-services/hello-sca/Hello.wsdl 
+	*  examples/web-services/hello-sca/Makefile
+
+Rev:134 Dec-15-2006 Ke Jin <kejin@pocomatic.com>
+	Renamed the web-services/hello example to web-service/hello-ws example.
+
+Rev:133 Dec-15-2006 Ke Jin <kejin@pocomatic.com>
+	Enhanced error report of corbahelper:
+	Enhanced error report of corba examples:
+	
+Rev:130 Dec-15-2006 xtl <xtl@pocomatic.com>
+	removed the sub-directory corbahelper/util. All code are 
+	consolidated into the parent directory.
+
+Rev:126 Dec-14-2006 Ke Jin <kejin@pocomatic.com>
+	Add wshelper and web-services/hello example:
+	* include/wshelper.h
+	* include/pocotypes.h
+	* src/tools/com/pocomatic/resources/ws2poco.xsl   
+	* src/tools/com/pocomatic/resources/ws-application.dtd    
+	* src/wshelper/wshelper.C 
+	* src/wshelper/Makefile   
+	* examples/web-services/stdmk
+	* examples/web-services/hello/client.C    
+	* examples/web-services/hello/setup.xml   
+	* examples/web-services/hello/config.xml  
+	* examples/web-services/hello/server.C    
+	* examples/web-services/hello/mySvcImpl.h 
+	* examples/web-services/hello/Hello.wsdl  
+	* examples/web-services/hello/Makefile    
+
+Rev:115 Dec-10-2006 xtl <xtl@pocomatic.com>
+	Enhanced error report by pushing error(s) to AppEnv.
+
+Rev:101 Dec-03-2006 Ke Jin <kejin@pocomatic.com>
+	Add the corba/jtrs-sca example
+	* examples/corba/jtrs-sca/CF.idl      
+	* examples/corba/jtrs-sca/setup.xml   
+	* examples/corba/jtrs-sca/Makefile.vb 
+	* examples/corba/jtrs-sca/sampleImpl.C        
+	* examples/corba/jtrs-sca/main.C      
+	* examples/corba/jtrs-sca/sad.xml     
+	* examples/corba/jtrs-sca/SCAHelper.C 
+	* examples/corba/jtrs-sca/sample.idl  
+	* examples/corba/jtrs-sca/jtrs-sca-lite2poco.xsl      
+	* examples/corba/jtrs-sca/sampleImpl.h        
+	* examples/corba/jtrs-sca/srv.xml     
+	* examples/corba/jtrs-sca/jtrs-sca-lite.dtd   
+	* examples/corba/jtrs-sca/SCAHelper.h 
+	* examples/corba/jtrs-sca/Makefile    
+
+Rev:100 Dec-03-2006 Ke Jin <kejin@pocomatic.com>
+	Rewrote the basic-ioc/sdr example based on the CRC's SCA-RI example:
+	* examples/basic-ioc/sdr/AudioEffect.C        
+	* examples/basic-ioc/sdr/setup.xml    
+	* examples/basic-ioc/sdr/AudioEffect.h        
+	* examples/basic-ioc/sdr/FMTransmitterReceiver.C      
+	* examples/basic-ioc/sdr/main.C       
+	* examples/basic-ioc/sdr/sampleImpl.h 
+	* examples/basic-ioc/sdr/FMTransmitterReceiver.h      
+	* examples/basic-ioc/sdr/Makefile.build       
+	* examples/basic-ioc/sdr/Makefile     
+	* examples/basic-ioc/sdr/sdr.h        
+
+Rev:96 Dec-03-2006 xtl <xtl@pocomatic.com>
+	Ported corbahlper to support TAO
+
+Rev:95 Dec-02-2006 xtl <xtl@pocomatic.com>
+	Moved all files in src/corbahelper/vbroker to src/corbahelper
+
+Rev:94 Nov-30-2006 Ke Jin <kejin@pocomatic.com>
+	Renamed examples/corba/poa/*/ to examples/corba/*/
+
+Rev:82 Nov-29-2006 Ke Jin <kejin@pocomatic.com>
+	Renamed examples/sca/ to examples/soa/
+	Renamed examples/ioc/ to examples/basic-ioc/
+	Renamed examples/corba/vbroker/*/ examples/corba/*/
+
+Rev:74 Nov-28-2006 Ke Jin <kejin@pocomatic.com>
+	Add the schema transformation example:
+	* examples/ioc/my-schema/setup.xml    
+	* examples/ioc/my-schema/main.C       
+	* examples/ioc/my-schema/pits.h       
+	* examples/ioc/my-schema/shapes.h     
+	* examples/ioc/my-schema/Makefile.build       
+	* examples/ioc/my-schema/trans.xsl    
+	* examples/ioc/my-schema/Makefile     
+	* examples/ioc/my-schema/my-schema.dtd        
+	* examples/ioc/my-schema/ltstr.h      
+
+Rev:72 Nov-27-2006 Ke Jin <kejin@pocomatic.com>
+	Add "cstring" type.
+	* src/tools/com/pocomatic/tools/ArgumentDesc.java     
+	* src/tools/com/pocomatic/resources/corba-application-context.dtd     
+	* src/tools/com/pocomatic/resources/poco-application-context.dtd      
+	* src/xmlreader/dtd.C 
+	* src/xmlreader/poco-application-context.dtd  
+	* src/capsule/descs.C 
+	* src/capsule/util.C  
+	* src/capsule/util.h  
+	* src/capsule/appctxtimp.C    
+	* examples/ioc/hello/setup.xml        
+	* examples/ioc/hello/hello.C  
+	
+Rev:70 Nov-27-2006 Ke Jin <kejin@pocomatic.com>
+	Enhanced the capsule parser and the genproxy parser to
+	resolve method-arg class from the referenced bean:
+	* src/tools/com/pocomatic/tools/Parser.java   
+	* src/capsule/appctxtimp.C    
+	* examples/corba/vbroker/event/EmitterImpl.C  
+	* examples/ioc/movielister/setup.xml  
+	* examples/ioc/sdr/setup.xml  
+	* examples/ioc/gps/setup.xml  
+	* examples/ioc/stl-map/setup.xml      
+ 
+Rev:51 Nov-25-2006 xtl <xtl@pocomatic.com>
+	Port the capsule to Windows:
+	* include/pocodom.h   
+	* include/pocoapp.h   
+	* src/xmlreader/xmlreader.h   
+	* src/xmlreader/Makefile      
+	* src/Makefile.inc    
+	* src/corbahelper/corbahelper.h       
+	* src/capsule/pocostr.h       
+	* src/capsule/libloader.h     
+	* src/capsule/domreader.C     
+	* src/capsule/util.h  
+	* src/capsule/appctxtimp.C    
+	* src/capsule/pocotypes.h     
+	* src/capsule/Makefile        
+	* src/capsule/table.h 
+	* src/capsule/libloader.C     
+	* src/Makefile        
+	* envs/buildenv.bat   
+
+Rev:49 Nov-24-2006 xtl <xtl@pocomatic.com>
+	Checked-in all corbahelper related code:
+	* src/corbahelper/vbroker/vbc_policy.h        
+	* src/corbahelper/vbroker/vbc_orb.h   
+	* src/corbahelper/vbroker/giopmsg.C   
+	* src/corbahelper/vbroker/poco_corba.C        
+	* src/corbahelper/vbroker/dynstub.C   
+	* src/corbahelper/vbroker/urlmgr.C    
+	* src/corbahelper/vbroker/vbc_policy.C        
+	* src/corbahelper/vbroker/giopmsg.h   
+	* src/corbahelper/vbroker/Makefile    
+	* src/corbahelper/vbroker/vbc_orb.C   
+	* src/corbahelper/vbroker/dynstub.h   
+	* src/corbahelper/vbroker/urlmgr.h    
+	* src/corbahelper/corbahelper.h       
+	* src/corbahelper/POCO_POAPolicyFactory.h     
+	* src/util/hashtable.h        
+	* src/util/pocoarray.h        
+	* src/util/pocodefs.h 
+	* src/util/poconet.C  
+	* src/util/thread.C   
+	* src/util/pocovar.C  
+	* src/util/pocombuf.C 
+	* src/util/pocoerror.C        
+	* src/util/list.C     
+	* src/util/poconet.h  
+	* src/util/thread.h   
+	* src/util/pocodbg.C  
+	* src/util/pococonn.C 
+	* src/util/pocovar.h  
+	* src/util/pocoerror.h        
+	* src/util/pocombuf.h 
+	* src/util/list.h     
+	* src/util/pocodbg.h  
+	* src/util/threadlocal.C      
+	* src/util/pococonn.h 
+	* src/util/hash.C     
+	* src/util/pocopoll.C 
+	* src/util/pocostring.C       
+	* src/util/threadlocal.h      
+	* src/util/hash.h     
+	* src/util/hashtable.C        
+	* src/util/Makefile   
+	* src/util/pocopoll.h 
+	* src/util/pocostring.h       
+	
+Rev:46 Nov-21-2006 Ke Jin <kejin@pocomatic.com> 
+	Add sdr example in examples/ioc/
+	* examples/ioc/sdr/
+	* examples/ioc/sdr/DataChannelImpl.C
+	* examples/ioc/sdr/DataChannelImpl.h
+	* examples/ioc/sdr/Interfaces.h
+	* examples/ioc/sdr/Makefile
+	* examples/ioc/sdr/Makefile.build
+	* examples/ioc/sdr/RxDeviceImpl.C
+	* examples/ioc/sdr/RxDeviceImpl.h
+	* examples/ioc/sdr/TxDeviceImpl.C
+	* examples/ioc/sdr/TxDeviceImpl.h
+	* examples/ioc/sdr/main.C
+	* examples/ioc/sdr/setup.xml
+	
+Rev:43 Nov-19-2006 Ke Jin <kejin@pocomatic.com> 
+	Imported the src directory, with following new directories and files:
+	* src
+	* src/capsule
+	* src/capsule/appctxtimp.C
+	* src/capsule/appctxtimp.h
+	* src/capsule/convert.C
+	* src/capsule/convert.h
+	* src/capsule/descs.C
+	* src/capsule/descs.h
+	* src/capsule/domreader.C
+	* src/capsule/domreader.h
+	* src/capsule/hashtable.C
+	* src/capsule/hashtable.h
+	* src/capsule/libloader.C
+	* src/capsule/libloader.h
+	* src/capsule/licmgr.C
+	* src/capsule/Makefile
+	* src/capsule/pocoapp.C
+	* src/capsule/pocodom.C
+	* src/capsule/pocoenv.C
+	* src/capsule/pocoenv.h
+	* src/capsule/pocoreflx.C
+	* src/capsule/pocoreflx.h
+	* src/capsule/pocostr.C
+	* src/capsule/pocostr.h
+	* src/capsule/pocotypes.h
+	* src/capsule/table.C
+	* src/capsule/table.h
+	* src/capsule/util.C
+	* src/capsule/util.h
+	* src/corbahelper
+	* src/corbahelper/Makefile
+	* src/corbahelper/NativeEventImpl.C
+	* src/Makefile
+	* src/tools
+	* src/tools/com
+	* src/tools/com/pocomatic
+	* src/tools/com/pocomatic/resources
+	* src/tools/com/pocomatic/resources/corba2poco.xsl
+	* src/tools/com/pocomatic/resources/corba-application-context.dtd
+	* src/tools/com/pocomatic/resources/poco-application-context.dtd
+	* src/tools/com/pocomatic/resources/sca2poco.xsl
+	* src/tools/com/pocomatic/resources/sca-composite.dtd
+	* src/tools/com/pocomatic/resources/utils.xsl
+	* src/tools/com/pocomatic/tools
+	* src/tools/com/pocomatic/tools/ArgumentDesc.java
+	* src/tools/com/pocomatic/tools/CharEncodeStream.java
+	* src/tools/com/pocomatic/tools/Decode.java.draft
+	* src/tools/com/pocomatic/tools/DescEncode.java
+	* src/tools/com/pocomatic/tools/DocBuilder.java
+	* src/tools/com/pocomatic/tools/DtdResolver.java
+	* src/tools/com/pocomatic/tools/Encode.java
+	* src/tools/com/pocomatic/tools/ErrorHandlerImpl.java
+	* src/tools/com/pocomatic/tools/HexEncodeStream.java
+	* src/tools/com/pocomatic/tools/Makefile
+	* src/tools/com/pocomatic/tools/MethodDesc.java
+	* src/tools/com/pocomatic/tools/Parser.java
+	* src/tools/com/pocomatic/tools/Project.java
+	* src/tools/com/pocomatic/tools/ProxyGen.java
+	* src/tools/com/pocomatic/tools/URIResolverImpl.java
+	* src/tools/com/pocomatic/tools/Util.java
+	* src/xmlreader
+	* src/xmlreader/dtd.C
+	* src/xmlreader/Makefile
+	* src/xmlreader/poco-application-context.dtd
+	* src/xmlreader/pocodtdres.C
+	* src/xmlreader/pocodtdres.h
+	* src/xmlreader/xmlreader.C
+	* src/xmlreader/xmlreader.h
+
+Rev:42 Nov-19-2006 Ke Jin <kejin@pocomatic.com> 
+	Imported PocoCapsule/C++ external header files:
+	* include
+	* include/corbahelper.h
+	* include/pocoapp.h
+	* include/pocodom.h
+	* include/poco.h
+
+Rev:38 Nov-19-2006 Ke Jin <kejin@pocomatic.com>
+	Imported PocoCapsule/C++ examples
+	* examples/
+	* examples/corba/
+	* examples/corba/vbroker/
+	* examples/corba/vbroker/Makefile
+	* examples/corba/vbroker/event/
+	* examples/corba/vbroker/event/EmitterImpl.C
+	* examples/corba/vbroker/event/EmitterImpl.h
+	* examples/corba/vbroker/event/ListenerImpl.C
+	* examples/corba/vbroker/event/ListenerImpl.h
+	* examples/corba/vbroker/event/Makefile
+	* examples/corba/vbroker/event/Makefile.build
+	* examples/corba/vbroker/event/MyTypedEvent.idl
+	* examples/corba/vbroker/event/emitters.xml
+	* examples/corba/vbroker/event/event.html
+	* examples/corba/vbroker/event/listeners.xml
+	* examples/corba/vbroker/event/publisher.C
+	* examples/corba/vbroker/event/subscriber.C
+	* examples/corba/vbroker/hello/
+	* examples/corba/vbroker/hello/Greeting.idl
+	* examples/corba/vbroker/hello/GreetingImpl.C
+	* examples/corba/vbroker/hello/GreetingImpl.h
+	* examples/corba/vbroker/hello/Makefile
+	* examples/corba/vbroker/hello/Makefile.build
+	* examples/corba/vbroker/hello/client.C
+	* examples/corba/vbroker/hello/hello.html
+	* examples/corba/vbroker/hello/server.C
+	* examples/corba/vbroker/hello/setup.xml
+	* examples/corba/vbroker/poa/
+	* examples/corba/vbroker/poa/Makefile
+	* examples/corba/vbroker/poa/object-home/
+	* examples/corba/vbroker/poa/object-home/Greeting.idl
+	* examples/corba/vbroker/poa/object-home/GreetingImpl.C
+	* examples/corba/vbroker/poa/object-home/GreetingImpl.h
+	* examples/corba/vbroker/poa/object-home/Makefile
+	* examples/corba/vbroker/poa/object-home/Makefile.build
+	* examples/corba/vbroker/poa/object-home/client.C
+	* examples/corba/vbroker/poa/object-home/my-application-context.dtd
+	* examples/corba/vbroker/poa/object-home/myapp2corba.xsl
+	* examples/corba/vbroker/poa/object-home/object-home.html
+	* examples/corba/vbroker/poa/object-home/server.C
+	* examples/corba/vbroker/poa/object-home/setup.xml
+	* examples/corba/vbroker/poa/request-processing-policies/
+	* examples/corba/vbroker/poa/request-processing-policies/Greeting.idl
+	* examples/corba/vbroker/poa/request-processing-policies/GreetingImpl.C
+	* examples/corba/vbroker/poa/request-processing-policies/GreetingImpl.h
+	* examples/corba/vbroker/poa/request-processing-policies/Makefile
+	* examples/corba/vbroker/poa/request-processing-policies/Makefile.build
+	* examples/corba/vbroker/poa/request-processing-policies/client.C
+	* examples/corba/vbroker/poa/request-processing-policies/poa-request-processing-policies.html
+	* examples/corba/vbroker/poa/request-processing-policies/server.C
+	* examples/corba/vbroker/poa/request-processing-policies/setup.xml
+	* examples/corba/vbroker/stdmk
+	* examples/ioc/
+	* examples/ioc/Makefile
+	* examples/ioc/README
+	* examples/ioc/gps/
+	* examples/ioc/gps/GPSLocatorImpl.C
+	* examples/ioc/gps/GPSLocatorImpl.h
+	* examples/ioc/gps/Interfaces.h
+	* examples/ioc/gps/Makefile
+	* examples/ioc/gps/Makefile.build
+	* examples/ioc/gps/NavDisplayImpl.C
+	* examples/ioc/gps/NavDisplayImpl.h
+	* examples/ioc/gps/TickGenImpl.C
+	* examples/ioc/gps/TickGenImpl.h
+	* examples/ioc/gps/gps.html
+	* examples/ioc/gps/gps.jpg
+	* examples/ioc/gps/main.C
+	* examples/ioc/gps/setup.xml
+	* examples/ioc/hello/
+	* examples/ioc/hello/Makefile
+	* examples/ioc/hello/Makefile.build
+	* examples/ioc/hello/hello.C
+	* examples/ioc/hello/hello.h
+	* examples/ioc/hello/main.C
+	* examples/ioc/hello/setup.xml
+	* examples/ioc/movielister/
+	* examples/ioc/movielister/Makefile
+	* examples/ioc/movielister/Makefile.build
+	* examples/ioc/movielister/MovieFinder.h
+	* examples/ioc/movielister/MovieLister.C
+	* examples/ioc/movielister/MovieLister.h
+	* examples/ioc/movielister/MyMovieFinder.C
+	* examples/ioc/movielister/MyMovieFinder.h
+	* examples/ioc/movielister/README
+	* examples/ioc/movielister/main.C
+	* examples/ioc/movielister/setup.xml
+	* examples/ioc/stdmk
+	* examples/ioc/stl-map/
+	* examples/ioc/stl-map/Makefile
+	* examples/ioc/stl-map/Makefile.build
+	* examples/ioc/stl-map/README
+	* examples/ioc/stl-map/ltstr.h
+	* examples/ioc/stl-map/main.C
+	* examples/ioc/stl-map/reader.C
+	* examples/ioc/stl-map/reader.h
+	* examples/ioc/stl-map/setup.xml
+	* examples/sca/
+	* examples/sca/BigBank/
+	* examples/sca/BigBank/AccountDataService.h
+	* examples/sca/BigBank/AccountDataServiceImpl.C
+	* examples/sca/BigBank/AccountDataServiceImpl.h
+	* examples/sca/BigBank/AccountService.h
+	* examples/sca/BigBank/AccountServiceImpl.C
+	* examples/sca/BigBank/setup.xml
+	* examples/sca/setup.xml
+
+--- end-of-the-file---

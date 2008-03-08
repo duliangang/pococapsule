@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="AUTHOR" CONTENT="kejin">
+	<META NAME="CREATED" CONTENT="20070529;10350290">
+	<META NAME="CHANGEDBY" CONTENT="kejin">
+	<META NAME="CHANGED" CONTENT="20070612;22371300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		H2 { color: #000000 }
+		H3 { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H2>PocoCapsule/C++ CORBA example: OMG RTC</H2>
+<P>Copyright(c) 2006 by <A HREF="http://www.pocomatic.com/">Pocomatic
+Software</A>. All rights reserved.</P>
+<P>OMG RTC (Robotic Technology Component) is a component model
+designed for robotic applications. The RTC specification itself only
+defines programming models (namely interfaces and signatures in
+either PIM or PSM) and leaves assembly, deployment and configuration
+models to applications. This example illustrates a domain specific
+assembly, deployment and configuration framework for RTC based on
+PocoCapsule/C++ IoC and DSM. 
+</P>
+<P>The modeled RTC robotic vehicle motion control application
+consists of the following seven component instances:</P>
+<UL>
+	<LI><P><FONT SIZE=2>Two ServoComponent: the left and right wheels </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>Two BumperSensorComponent: the front and rear
+	bumper</FONT></P>
+	<LI><P><FONT SIZE=2>A VehicleController: the central motion
+	controller</FONT></P>
+	<LI><P><FONT SIZE=2>A RangerScannerComponent: the laser range finder</FONT></P>
+	<LI><P><FONT SIZE=2>A LogAndDisplayComponent: logger and display
+	status.</FONT></P>
+</UL>
+<P>For simplicity of the example, these components are defined as
+CORBA local objects. They and wired up using the PocoCapsule/C++ IoC
+Container according to the <A HREF="setup.xml">setup.xml</A>
+description. The assembled RTC application is illustrated in the
+following diagram: 
+</P>
+<H3><A HREF="rtc.jpg"><IMG SRC="rtc.jpg" NAME="RTC.JPG" ALIGN=LEFT WIDTH=552 HEIGHT=394 BORDER=0><BR CLEAR=LEFT></A>Source
+Files</H3>
+<P><A HREF="main.C">main.C:</A> This is a mini container, used by
+PocoCapsule/C++ to assemble/deploy this RTC application. 
+</P>
+<P><FONT COLOR="#000000"><A HREF="rtc_lite.idl">rtc_lite.idl:</A>
+This is simplified version of OMG RTC IDL, sufficient to build this
+example. </FONT>
+</P>
+<P><FONT COLOR="#000000"><A HREF="sample.idl">sample.idl</A>: The
+interface IDL definitions of all RTC components used in this example.</FONT></P>
+<P><A HREF="ServoComponentImpl.h">ServoComponentImpl.h</A> and
+<A HREF="ServoComponentImpl.C">ServoComponentImpl.C:</A> The
+implementation of ServoComponent. 
+</P>
+<P><FONT COLOR="#000000"><A HREF="BumperSensorComponentImpl.h">BumperSensorComponentImpl.h</A>
+and <A HREF="BumperSensorComponentImpl.C">BumperSensorComponentImpl.C:</A>
+The implementation of BumperSensorComponent. </FONT>
+</P>
+<P><FONT SIZE=2><FONT COLOR="#000000"><A HREF="RangeScannerComponentImpl.h"><FONT SIZE=3>RangeScannerComponentImpl.h</FONT></A>
+<FONT SIZE=3>and </FONT><A HREF="RangeScannerComponentImpl.C"><FONT SIZE=3>RangeScannerComponentImpl.C:</FONT></A>
+<FONT SIZE=3>The implementation of laser RangeScannerComponent. </FONT></FONT></FONT>
+</P>
+<P><FONT SIZE=2><FONT COLOR="#000000"><A HREF="VehicleControllerImpl.h"><FONT SIZE=3>VehicleControllerImpl.h</FONT></A>
+<FONT SIZE=3>and </FONT><A HREF="VehicleControllerImpl.C"><FONT SIZE=3>VehicleControlImpl.C:</FONT></A>
+<FONT SIZE=3>The implementation of VehicleController. </FONT></FONT></FONT>
+</P>
+<P><A HREF="setup.xml">setup.xml:</A> This is the application context
+described the setup of this RTC application.</P>
+<P><A HREF="rtc-application.dtd">rtc-application.dtd</A>: This is the
+document type definition specifying the DSM schema. 
+</P>
+<P><A HREF="rtc-application2poco.xsl">rtc-application2poco.xsl</A>:
+This is the DSM schema to the core schema of PocoCapsule/C++
+transformation stylesheet. 
+</P>
+<H3>Building this example</H3>
+<P STYLE="font-weight: medium">To build this example, the environment
+variable POCOCAPSULE_DIR should point to the PocoCapsule/C++
+installed directory. Then, this example can be built by simply
+invoking gmake/make on linux/unix or nmake on windows. 
+</P>
+<H3>Running this example</H3>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Before
+starting <FONT FACE="Times New Roman">the application deployment
+container (i.e. the main executable)</FONT>, make sure the
+LD_LIBRARY_PATH (on linux and solaris) or the PATH (on windows)
+environment variable is set correctly to include the
+${POCOCAPSULE_DIR}/lib directory.</FONT></P>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">start
+the main executable: </FONT>
+</P>
+<PRE STYLE="margin-left: 0.79in; margin-bottom: 0.2in"><FONT FACE="Courier 10 Pitch"><FONT SIZE=2 STYLE="font-size: 11pt"><B>prompt&gt;</B> main </FONT></FONT></PRE><P STYLE="margin-bottom: 0.2in">
+<FONT FACE="Times New Roman">It will display the following component
+instantiation and wiring operations made during the assembling:</FONT></P>
+<PRE><FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the vehicle controller is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the left wheel servo is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The Control facet of the left wheel servo is connected to the LeftWheelControlOut port of the vehicle controller</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the right wheel servo is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The Control facet of the right wheel servo is connected to the RightWheelControlOut port of the vehicle controller</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the laser ranger scanner is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The Control facet of laser ranger scanner is connected to the ScanCommandOut port of the vehicle controller</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the log and display is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The log and display is connected to the StatusOut port of the vehicle controller</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The LeftWheelDataIn sink port of the vehicle controller is connected to the SpeedDataOut port of left wheel servo</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The RightWheelDataIn sink port of the vehicle controller is connected to the SpeedDataOut port of right wheel servo</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the front bumper sensor is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The FrontBumperDataIn sink port of the vehicle controller is connected to the BumperDataOut port of the front bumper sensor</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[init]: the rear bumper sensor is initialized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The RearBumperDataIn sink port of the vehicle controller is connected to the BumperDataOut port of rear the bumper sensor</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[wire]: The RangeScanDataIn sink port of the vehicle controller is connected to the RangeScanDataOut port of laser ranger scanner</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>The robotic vehicle is ready to work .................</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Terminating the robotic vehicle now ..................</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the rear bumper sensor is finalized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the front bumper sensor is finalized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the log and display is finalized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the laser ranger scanner is finalized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the right wheel servo is finalized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the left wheel servo is finalized</B></FONT></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=1 STYLE="font-size: 8pt"><B>[fini]: the vehicle controller is finalized</B></FONT></FONT></PRE><P STYLE="margin-bottom: 0.2in">
+<A HREF="../../README.html"><FONT FACE="Times New Roman">Back to the
+root page</FONT></A></P>
+</BODY>
+</HTML>

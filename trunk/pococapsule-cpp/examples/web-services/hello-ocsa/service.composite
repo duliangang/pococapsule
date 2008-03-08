@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE composite SYSTEM "http://www.pocomatic.com/ocsa-composite.dtd">
+
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/ocsa-composite2poco.xsl"?>
+
+<composite name="Services">
+  <service name="HelloService">
+    <interface.cpp interface="HelloService"/>
+    <binding.ws port="#wsdl.endpoint(HelloWorld/HelloService)"/>
+    <reference>HelloServiceComponent</reference>
+  </service>
+
+  <component name="HelloServiceComponent">
+    <implementation.cpp class="MyHelloServiceImpl"/>
+    <property name="whoami" type="xsd:string">SCA hello service</property>
+  </component>
+</composite>

@@ -1,0 +1,14 @@
+include ../makefiles/Makefile.inc
+
+FILES = README.html Node.h MyNodeImplA.h MyNodeImplB.h \
+        pipeline.jpg main.C setup.xml skelA.xml skelB.xml 
+
+REL_DIR = basic-ioc/pipeline
+
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MAIN)
+	$(call INSTALL_MK_FILE)
+

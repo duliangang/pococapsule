@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!ELEMENT gps-device (load*, tick-generator, gps-locator, navigation-display*)>
+
+<!ELEMENT load EMPTY>
+<!ATTLIST load library			CDATA #REQUIRED>
+
+<!ELEMENT gps-locator EMPTY>
+<!ATTLIST gps-locator use 		CDATA #REQUIRED>
+
+<!ELEMENT tick-generator EMPTY>
+<!ATTLIST tick-generator use		CDATA #REQUIRED>
+<!ATTLIST tick-generator count		CDATA #REQUIRED>
+<!ATTLIST tick-generator interval	CDATA #REQUIRED>
+
+<!ELEMENT navigation-display EMPTY>
+<!ATTLIST navigation-display use	CDATA #REQUIRED>

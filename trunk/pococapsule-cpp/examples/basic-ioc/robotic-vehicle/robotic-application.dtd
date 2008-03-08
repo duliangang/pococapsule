@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+  including the poco-application-context.dtd
+-->
+
+<!ELEMENT robotic-application ((load|component)*)>
+
+<!ELEMENT load EMPTY>
+<!ATTLIST load library CDATA #REQUIRED>
+
+<!ELEMENT component (controls|listens)*>
+<!ATTLIST component id		ID	#REQUIRED>
+<!ATTLIST component class	CDATA	#REQUIRED>
+<!ATTLIST component name	CDATA	#IMPLIED>
+<!ATTLIST component lazy-init	(true|false) "true">
+
+<!ELEMENT controls EMPTY>
+<!ATTLIST controls receptacle	CDATA	#REQUIRED>
+<!ATTLIST controls facet	CDATA	#IMPLIED>
+<!ATTLIST controls type		CDATA	#IMPLIED>
+<!ATTLIST controls device	IDREF	#REQUIRED>
+
+<!ELEMENT listens EMPTY>
+<!ATTLIST listens sink		CDATA	#IMPLIED>
+<!ATTLIST listens type		CDATA	#IMPLIED>
+<!ATTLIST listens receptacle	CDATA	#REQUIRED>
+<!ATTLIST listens emitter	IDREF   #REQUIRED>

@@ -1,0 +1,85 @@
+include ../stdmkdir/stdmk.tao_win
+
+RTC_EXPORT = /DRTC_EXPORT=__declspec(dllexport)
+RTC_IMPORT = /DRTC_EXPORT=__declspec(dllimport)
+
+APP_DLLS =  RangeScannerComponentImpl$(DLL_SUFFIX) ServoComponentImpl$(DLL_SUFFIX) \
+	VehicleControllerImpl$(DLL_SUFFIX) BumperSensorComponentImpl$(DLL_SUFFIX) 
+APP_LIBS = RangeScannerComponentImpl$(LIB_SUFFIX) ServoComponentImpl$(LIb_SUFFIX) \
+	VehicleControllerImpl$(LIB_SUFFIX) BumperSensorComponentImpl$(LIB_SUFFIX) 
+EXE = main.exe stubs$(DLL_SUFFIX) $(APP_DLLS) reflx$(DLL_SUFFIX)
+
+all: rtc_lite_c.cc sample_c.cc $(EXE)
+
+rtc_lite_c.cc: rtc_lite.idl
+	$(ORBCC) -Wb,stub_export_macro=RTC_EXPORT rtc_lite.idl
+
+rtc_lite_c.obj: rtc_lite_c.cc
+	$(CC) $(CCFLAGS) $(RTC_EXPORT) /c /Tp rtc_lite_c.cc
+
+sample_c.cc: sample.idl
+	$(ORBCC) -Wb,stub_export_macro=RTC_EXPORT sample.idl
+
+sample_c.obj: sample_c.cc
+	$(CC) $(CCFLAGS) $(RTC_EXPORT) /c /Tp sample_c.cc
+
+stubs$(DLL_SUFFIX): rtc_lite_c.obj sample_c.obj 
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	rtc_lite_c.obj sample_c.obj $(ORB_LIBPATH) $(LIBORB)	
+
+RangeScannerComponentImpl.obj: RangeScannerComponentImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(RTC_IMPORT) /c /Tp \
+	RangeScannerComponentImpl.C
+
+RangeScannerComponentImpl$(DLL_SUFFIX): RangeScannerComponentImpl.obj 
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	RangeScannerComponentImpl.obj $(ORB_LIBPATH) $(LIBORB) \
+	stubs$(LIB_SUFFIX)
+ 
+ServoComponentImpl.obj: ServoComponentImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(RTC_IMPORT) /c /Tp \
+	ServoComponentImpl.C
+
+ServoComponentImpl$(DLL_SUFFIX): ServoComponentImpl.obj 
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	ServoComponentImpl.obj $(ORB_LIBPATH) $(LIBORB) \
+	stubs$(LIB_SUFFIX)
+
+VehicleControllerImpl.obj: VehicleControllerImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(RTC_IMPORT) /c /Tp \
+	VehicleControllerImpl.C
+
+VehicleControllerImpl$(DLL_SUFFIX): VehicleControllerImpl.obj 
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	VehicleControllerImpl.obj $(ORB_LIBPATH) $(LIBORB) \
+	stubs$(LIB_SUFFIX)
+
+BumperSensorComponentImpl.obj: BumperSensorComponentImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(RTC_IMPORT) /c /Tp \
+	BumperSensorComponentImpl.C
+
+BumperSensorComponentImpl$(DLL_SUFFIX): BumperSensorComponentImpl.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	BumperSensorComponentImpl.obj $(ORB_LIBPATH) $(LIBORB) \
+	stubs$(LIB_SUFFIX)
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=VehicleControllerImpl.h \
+		-h=RangeScannerComponentImpl.h -h=ServoComponentImpl.h \
+		-h=BumperSensorComponentImpl.h setup.xml
+
+setup_reflx.obj: setup_reflx.cc
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(RTC_IMPORT) /c /Tp \
+	setup_reflx.cc
+
+reflx$(DLL_SUFFIX): setup_reflx.obj 
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ setup_reflx.obj \
+	$(POCO_LIBPATH) $(LIBPOCO) $(ORB_LIBPATH) $(LIBORB) $(APP_LIBS) \
+	stubs$(LIB_SUFFIX)
+
+main.exe: main.obj
+	$(LINK_EXE) /OUT:$@ main.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+clean:
+	del *.obj *.cc *.hh *.inl *_T.cpp *.exe *.dll *.lib *.exp *.ilk \
+	*.pdb *.manifest

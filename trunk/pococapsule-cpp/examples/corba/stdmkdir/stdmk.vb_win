@@ -1,0 +1,65 @@
+
+!IFNDEF VBROKERDIR
+!ERROR VBROKERDIR is not set
+!ENDIF
+
+!IFNDEF POCOCAPSULE_DIR
+!ERROR POCOCAPSULE_DIR is not set
+!ENDIF
+
+!include $(VBROKERDIR)/examples/vbroker/stdmk_nt
+
+CC = CL.exe /nologo
+
+LINK_EXE = LINK $(LDFLAGS)
+LINK_DLL = LINK $(LDFLAGS) /DLL
+
+ORBCC = $(VBROKERDIR:/=\)\bin\idl2cpp -I$(VBROKERDIR)/idl
+
+POCO_PROJ=$(POCOCAPSULE_DIR:/=\)\bin\pxgenproxy -r=gather
+
+CC_MACROS = /DWIN32 /DSTRICT /DALIGNED /D_CRT_SECURE_NO_DEPRECATE /DUSE_VBROKER
+
+CCFLAGS_COMMON = /EHsc 
+
+!IF "$(BUILD_TYPE)" == "debug" || "$(BUILD_TYPE)" == "DEBUG"
+
+DEBUG_CCFLAGS = /Zi /D_DEBUG
+THREAD_CCFLAG = /MDd
+DEBUG_LDFLAGS = /DEBUG
+LIB_SUFFIX = d.lib
+DLL_SUFFIX = d.dll
+
+!ELSE
+
+DEBUG_CCFLAGS = 
+THREAD_CCFLAG = /MD
+DEBUG_LDFLAGS =
+LIB_SUFFIX = .lib
+DLL_SUFFIX = .dll
+
+!ENDIF
+
+CCFLAGS = $(CCFLAGS_COMMON) $(CC_MACROS) $(DEBUG_CCFLAGS) \
+          $(THREAD_CCFLAG) $(CCINCLUDES)
+
+POCO_EXPORT = /DPOCO_EXPORT=__declspec(dllexport)
+POCO_IMPORT = /DPOCO_EXPORT=__declspec(dllimport)
+ 
+POCO_LIBPATH = /LIBPATH:$(POCOCAPSULE_DIR)/lib
+
+LIBPOCO = pococapsule$(LIB_SUFFIX)
+LIBPOCOXML = pocoxml$(LIB_SUFFIX)
+
+LIB_POCO_CORBA_HELPER= poco2vb$(LIB_SUFFIX)
+ORB_LIBPATH=/LIBPATH:$(VBROKERDIR)/lib
+
+CCINCLUDES = /I. /I$(POCOCAPSULE_DIR)/include /I$(VBROKERDIR)/include \
+             /I$(VBROKERDIR)/include/visinotify
+
+
+.C.obj:
+        $(CC) $(CCFLAGS) /c /Tp $<
+
+.cc.obj:
+        $(CC) $(CCFLAGS) /c /Tp $<

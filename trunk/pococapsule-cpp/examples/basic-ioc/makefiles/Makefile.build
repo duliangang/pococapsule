@@ -1,0 +1,43 @@
+all:
+	@echo 
+	@echo "*********** hello example ************"
+	cd hello; $(MAKE) all
+	@echo 
+	@echo "*********** stl-map example **********"
+	cd stl-map; $(MAKE) all
+	@echo 
+	@echo "*********** movie list example *******"
+	cd movie-lister; $(MAKE) all
+	@echo 
+	@echo "*********** gps example **************"
+	cd gps; $(MAKE) all
+	@echo
+	@echo "*********** sdr example **************"
+	cd sdr; $(MAKE) all
+	@echo
+	@echo "*********** ext-schema example ******"
+	cd ext-schema; $(MAKE) all
+	@echo
+	@echo "*********** dsm-gps example **********"
+	cd dsm-gps; $(MAKE) all
+	@echo
+	@echo "*********** dsm-sdr example **********"
+	cd dsm-sdr; $(MAKE) all
+	@echo 
+	@echo "*********** robotic vehicle***********"
+	cd robotic-vehicle; $(MAKE) all
+	@echo 
+	@echo "*********** on-error *****************"
+	cd on-error; $(MAKE) all
+
+clean:
+	cd hello; $(MAKE) clean
+	cd stl-map; $(MAKE) clean
+	cd movie-lister; $(MAKE) clean
+	cd gps; $(MAKE) clean
+	cd sdr; $(MAKE) clean
+	cd ext-schema; $(MAKE) clean
+	cd dsm-gps; $(MAKE) clean
+	cd dsm-sdr; $(MAKE) clean
+	cd robotic-vehicle; $(MAKE) clean
+	cd on-error; $(MAKE) clean

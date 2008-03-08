@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composite SYSTEM "http://www.pocomatic.com/ocsa-composite.dtd">
+
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/ocsa-composite2poco.xsl"?>
+
+<composite name="calculator">
+    <service name="CalculatorService">
+	<interface.wsdl interface="http://sample/calculator#wsdl.interface(Calculator)"/>
+	<binding.ws port="#wsdl.endpoint(CalculatorService)"/>
+	<reference>CalculatorServiceComponent</reference>
+    </service>
+
+    <component name="CalculatorServiceComponent">
+	<implementation.cpp class="MyCalculatorServiceImpl"/>
+    </component>
+
+    <component name="AddServiceComponent">
+	<implementation.cpp class="AddServiceImpl"/>
+    </component>
+
+    <component name="SubtractServiceComponent">
+	<implementation.cpp class="SubtractServiceImpl"/>
+    </component>
+
+    <component name="MultiplyServiceComponent">
+	<implementation.cpp class="MultiplyServiceImpl"/>
+    </component>
+
+    <component name="DivideServiceComponent">
+	<implementation.cpp class="DivideServiceImpl"/>
+    </component>
+
+    <wire>
+	<source.uri>AddServiceComponent</source.uri>
+	<target.uri>CalculatorServiceComponent/addService</target.uri>
+    </wire>
+
+    <wire>
+	<source.uri>SubtractServiceComponent</source.uri>
+	<target.uri>CalculatorServiceComponent/subtractService</target.uri>
+    </wire>
+
+    <wire>
+	<source.uri>MultiplyServiceComponent</source.uri>
+	<target.uri>CalculatorServiceComponent/multiplyService</target.uri>
+    </wire>
+
+    <wire>
+	<source.uri>DivideServiceComponent</source.uri>
+	<target.uri>CalculatorServiceComponent/divideService</target.uri>
+    </wire>
+</composite>

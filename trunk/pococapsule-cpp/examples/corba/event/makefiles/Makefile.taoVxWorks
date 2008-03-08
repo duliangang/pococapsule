@@ -1,0 +1,17 @@
+include ../stdmk.tao
+
+FILES = MyTypedEvent_c.cc MyTypedEvent_s.cc \
+        $(addsuffix .so, publisher subscriber EmitterImpl ListenerImpl \
+	publish_reflx subscribe_reflx) \
+        publish.ctx subscribe.ctx publish_reflx.cc subscribe_reflx.cc
+
+all: $(FILES)
+
+publish_reflx.cc: publish.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=EmitterImpl.h $<
+
+subscribe_reflx.cc: subscribe.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=ListenerImpl.h $<
+
+clean:
+	$(RM) *.o *.hh $(FILES)

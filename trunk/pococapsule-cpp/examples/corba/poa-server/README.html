@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Readme for POA request-processing policy example</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="CREATED" CONTENT="20060627;17353000">
+	<META NAME="CHANGEDBY" CONTENT="kejin">
+	<META NAME="CHANGED" CONTENT="20070513;12003500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in }
+		P { color: #000000 }
+		H2 { color: #000000 }
+		H3 { color: #000000 }
+		PRE { color: #000000 }
+		A:link { color: #0000ff }
+		A:visited { color: #990066 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#990066" BGCOLOR="#ffffff" DIR="LTR">
+<H2>PocoCapsule/C++ CORBA example: POA Server 
+</H2>
+<P>Copyright(c) 2006, 2007 by <A HREF="http://www.pocomatic.com/">Pocomatic
+Software LLC</A>. All rights reserved.</P>
+<P>Portable Object Adapter (POA) is the portable programming model
+for CORBA server applications. A POA instance encapsulates and scopes
+server policy settings of all its objects. These policies determine
+service qualities, properties and behaviors. The PocoCapsule/CORBA
+supports POA server application deployment with all OMG standardized
+POA policies. Non-OMG policies introduced by ORB vendors can also be
+added easily. Among a handful of OMG standardized POA policies, the
+most important policy is the <I>request-processing</I> policy. This
+policy determines the scenario that a POA server resolves target
+object servants on processing received requests. 
+</P>
+<P>The CORBA server application in this example covers all possible
+POA request-processing policy settings by the following four POAs: 
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>POA
+	1: The request-processing policy is &quot;<I>use-aom-only</I>&quot;,
+	and an object is activated with its servant. This policy means that
+	servants of activated objects in this POA are registered to POA's
+	&quot;Active-Object-Map&quot; (AOM). On processing requests,
+	servants are resolved from this map.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>POA
+	2: The request-processing policy is &quot;<I>use-default-servant</I>&quot;,
+	and a servant is set as the default one for the POA. This policy
+	means that on processing a request, if the POA can't resolve the
+	servant from AOM, the request will be sent to the default servant. </FONT></FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>POA
+	3: The request-processing policy is &quot;<I>use-servant-manager</I>&quot;,
+	the servant-retention policy is &quot;non-retain&quot;, and a
+	servant locator is set on this POA. This setting indicates that
+	servants are resolved for each individual request from an user
+	servant pool by calling the given servant locator. </FONT></FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>POA
+	4: The request-processing policy is &quot;<I>use-servant-manager</I>&quot;,
+	the servant-retention policy is &quot;retain&quot;, and a servant
+	activator is set on this POA. This setting indicates that request
+	processing servants are resolved on demand by calling the servant
+	activator, and then, the servants are cached by AOM for later use. </FONT></FONT>
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=3>Object
+references from this server are exported as corbaloc URLs, with URIs
+declared in the deployment descriptor.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans Mono, monospace">T<I>he
+core CORBA server application deployment model of PocoCapsule/CORBA
+is almost explicitly mapped from the OMG POA programming model. This
+does not imply PocoCapsule/CORBA could not be comparable or <FONT FACE="DejaVu Sans Mono, monospace">more
+abstract </FONT>than CCM. In fact, with PocoCapsule/C++'s DSM
+feature, users can easily define customized CORBA server application
+deployment models that abstract out the POA concept largely, if this
+abstraction is desirable. An example of this user defined CORBA
+server deployment model can be found in the
+</I><A HREF="../dsm-server/README.html"><I>${POCOCAPSULE_DIR}/examples/corba/dsm-server</I></A>
+<I>directory.</I></FONT></P>
+<H3>Source Files</H3>
+<P><A HREF="Greeting.idl">Greeting.idl:</A> The IDL definition of the
+server's remote interface<B>.</B> 
+</P>
+<UL>
+	<LI><P><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>This
+	interface only declares one operation, <I>string hello(in string s)</I>.
+	A client can invoke this operation to send a greeting message to
+	server, and receive a reply greeting from server, as the return
+	value. </FONT></FONT>
+	</P>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>Client
+	stub and server skeleton classes source code from this IDL can be
+	generated using a given ORB's IDL-to-C++ pre-compiler, for instance,
+	the idl2cpp of VisiBroker/C++. </FONT></FONT>
+	</P>
+</UL>
+<P><A HREF="server.C">server.C:</A> A simple container, used to
+deploy the server application. 
+</P>
+<P><A HREF="client.C">client.C:</A> A client application. 
+</P>
+<UL>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>The
+	client application assume the server IOR or URL is provided as the
+	first main() argument. The string IOR or URL is converted into an
+	CORBA object reference using ORB's string_to_object(), </FONT></FONT>
+	</P>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>and
+	then, this reference is narrowed to the type specific client stub
+	class, namely, the <I>sample::Greeting_ptr</I>. </FONT></FONT>
+	</P>
+</UL>
+<P><A HREF="GreetingImpl.h">GreetingImpl.h</A> and <A HREF="GreetingImpl.C">GreetingImpl.C:</A>
+These files implement following plain old C++ CORBA artifacts:</P>
+<UL>
+	<LI><P><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>A
+	<I>servant</I> implementation, namely, a POCO class inheriting from
+	and implementing the POA_sample::Greeting. The instances of this
+	servant class are used as the servant to activate object for POA1,
+	the default servant for POA 2, the servants in the servants pool for
+	POA 3 and the servant activated on demand and cached by POA 4.</FONT></FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>A
+	<I>servant locator</I> implementation. This servant locator is used
+	by POA 3 to resolve servants from the servants pool on each
+	individual request. </FONT></FONT>
+	</P>
+	<LI><P><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>A
+	servant activator implementation. This activator is used by a POA 4
+	to instantiate servant on demand. Servants instantiated by this
+	activator will be cached in the AOM of this POA. </FONT></FONT>
+	</P>
+</UL>
+<P><A HREF="setup.xml">setup.xml:</A> This is the server's deployment
+descriptor. It describes following server structure:</P>
+<UL>
+	<LI><P><FONT SIZE=2><FONT FACE="DejaVu Sans Mono, monospace">A bean
+	of class </FONT><A HREF="GreetingImpl.h"><FONT FACE="DejaVu Sans Mono, monospace">GreetingImpl</FONT></A>
+	<FONT FACE="DejaVu Sans Mono, monospace">is allocated, and used as
+	the servant for activating a server object on a POA with
+	request-processing policy equals to “use-aom-only”. The URI of
+	this object is “my-server-use-aom-only”. </FONT></FONT>
+	</P>
+	<LI><P><FONT SIZE=2><FONT FACE="DejaVu Sans Mono, monospace">Another
+	bean of class </FONT><A HREF="GreetingImpl.h"><FONT FACE="DejaVu Sans Mono, monospace">GreetingImpl</FONT></A>
+	<FONT FACE="DejaVu Sans Mono, monospace">is allocated, and used as
+	the default servant for a POA with request-processing policy equals
+	to “use-default-servant”. An object reference is created on this
+	POA, and the URI of this object is “my-server-use-default-servant”.
+	</FONT></FONT>
+	</P>
+	<LI><P><FONT SIZE=2><FONT FACE="DejaVu Sans Mono, monospace">Another
+	POA with request-processing policy equals to “use-servant-manager”
+	and servant-retention policy equals to “non-retain” is created.
+	A bean of the class </FONT><A HREF="GreetingImpl.h"><FONT FACE="DejaVu Sans Mono, monospace">ServantLocatorImpl</FONT></A>
+	<FONT FACE="DejaVu Sans Mono, monospace">class is allocated and
+	passed to this POA as the servant manager. An object reference is
+	created from this POA, with URI of “my-server-use-servant-locator”.
+	</FONT></FONT>
+	</P>
+	<LI><P><FONT SIZE=2><FONT FACE="DejaVu Sans Mono, monospace">One
+	more POA is created, with request-processing policy equals to
+	“use-servant-manager” and servant-retention policy equals to
+	“retain”. A bean of the class </FONT><A HREF="GreetingImpl.h"><FONT FACE="DejaVu Sans Mono, monospace">ServantActivatorImpl</FONT></A>
+	<FONT FACE="DejaVu Sans Mono, monospace">class is allocated and
+	passed to this POA as the servant manager. An object reference is
+	created from this POA, with URI of
+	“my-server-use-servant-activator”. </FONT></FONT>
+	</P>
+	<LI><P><FONT FACE="DejaVu Sans Mono, monospace"><FONT SIZE=2>The ORB
+	node is declared with an user specified id, “<B><I>my-orb</I></B>”.
+	This will let POCO to generate a lazy-init'ed ORB runnner bean, with
+	the id of “pocomatic.dispatcher:<B><I>my-orb</I></B>”.
+	Initiating this runner bean (such as by calling
+	getBean(“pocomatic.dispatcher:<B><I>my-orb</I></B>”) on the bean
+	deployed application context), will start the server's request
+	dispatching loop, after printing out all declared object URLs.</FONT></FONT></P>
+</UL>
+<H3>Building this example</H3>
+<P STYLE="font-weight: medium">To build this example, the environment
+variable POCOCAPSULE_DIR should point to the PocoCapsule/C++
+installed directory. Also, this example assumes an underneath ORB
+(e.g. VisiBroker/C++, TAO, etc.) is installed and its runtime and
+development environment (such as POCOCAPSULE_DIR, VBROKER_DIR or
+TAO_ROOT, etc. env variable) are set according to its product
+specification. Then, this example can be built by simply invoking
+gmake/make on linux/unix or nmake on windows. 
+</P>
+<H3>Running this example</H3>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Before
+starting the server, make sure the LD_LIBRARY_PATH (on linux and
+solaris) or the PATH (on windows) environment variable is set
+correctly to include the ${POCOCAPSULE_DIR}/lib directory and the
+${VBROKREDIR}/lib (if VisiBroker is used) or the ${TAO_ROOT}/lib
+directory (if TAO is used).</FONT></P>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Start
+the server as:</FONT></P>
+<PRE STYLE="margin-left: 0.79in; margin-bottom: 0.2in"><FONT FACE="Courier 10 Pitch"><B>prompt&gt;</B> server </FONT></PRE><P STYLE="margin-bottom: 0in; font-weight: medium">
+By default setting, on successful startup, server will print out all
+declared corbaloc URLs (namely, &lt;object&gt; elements, with
+specified uri attribute). In this server, object elements are
+declared with their uri attribute equal to “<B><FONT SIZE=2><FONT FACE="Nimbus Sans L">my-server-use-...</FONT></FONT></B>”,
+the print out will be, for instance:</P>
+<PRE STYLE="margin-left: 0.79in"><FONT FACE="Courier 10 Pitch">Server is ready, with URLs:</FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-aom-only</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-default-servant</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-servant-locator</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-servant-activator</B></FONT></PRE><P STYLE="margin-bottom: 0in">
+<FONT FACE="Times New Roman"><FONT FACE="Times New Roman">Here, the
+URI values “my-server-use-...” are declared in the beans
+descriptor <A HREF="setup.xml">setup.xml</A> file.</FONT> </FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman"><FONT FACE="Symbol">&middot;
+</FONT>Start client: The server's corbaloc URLs should be used as the
+first command line argument when starting the client. For instance: </FONT>
+</P>
+<PRE STYLE="margin-left: 0.79in"><FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-aom-only</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-default-servant</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-servant-locator</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-servant-activator</B></FONT>
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=2><B>....</B></FONT></FONT></PRE><P STYLE="margin-bottom: 0in">
+On success, the client sends multiple greeting messages to the
+server, and the server replies one to client on receiving each of
+them. Both sides will print out the greeting messages they received.</P>
+<P STYLE="margin-bottom: 0in; font-weight: medium"><A HREF="../../README.html">Back
+to the root page</A></P>
+</BODY>
+</HTML>

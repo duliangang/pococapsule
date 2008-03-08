@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+	A example of user defined domain-specific-language (DSL) schema
+
+-->
+
+<!ELEMENT my-application-context
+	((header|load)*,
+         (home-with-object-map-only
+         |home-with-object-default
+	 |home-with-object-locator
+	 |home-with-object-activator)*)
+>
+
+<!ELEMENT header (#PCDATA)>
+
+<!ELEMENT load EMPTY>
+<!ATTLIST load library CDATA #REQUIRED>
+
+<!ELEMENT home-with-object-map-only
+	(object-activation*)
+>
+
+<!ELEMENT home-with-object-default
+	(servant, 
+         (object-activation|object-reference)*)
+>
+
+<!ELEMENT home-with-object-locator
+	(servant-locator, 
+         object-reference*)
+>
+
+<!ELEMENT home-with-object-activator
+	(servant-activator, 
+         (object-activation|object-reference)*)
+>
+
+<!ELEMENT object-activation
+	(servant)
+>
+<!ATTLIST object-activation
+	uri	CDATA	#IMPLIED
+>
+
+<!ELEMENT servant
+	EMPTY
+>
+<!ATTLIST servant
+	class	CDATA	#REQUIRED
+>
+<!ATTLIST servant
+	name	CDATA	#IMPLIED
+>
+
+<!ELEMENT object-reference
+	EMPTY
+>
+<!ATTLIST object-reference
+	uri	CDATA	#REQUIRED
+>
+
+<!ELEMENT servant-locator
+	EMPTY
+>
+<!ATTLIST servant-locator
+	class	CDATA	#REQUIRED
+>
+
+<!ELEMENT servant-activator
+	EMPTY
+>
+<!ATTLIST servant-activator
+	class	CDATA	#REQUIRED
+>

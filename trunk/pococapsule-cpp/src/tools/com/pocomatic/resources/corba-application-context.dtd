@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+	Copyright 2006, by Pocomatic Software, LLC. All Rights Reserved.  
+
+	PocoCapsule/C++ IoC Container XML Beans DTD 
+	(with CORBA application support extension) 
+-->
+
+<!--
+	include the poco-application-context.dtd
+-->
+<!ENTITY % include-poco-application-context-dtd
+	SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
+%include-poco-application-context-dtd;
+
+<!--
+	<corba-application-context> element is the root of a 
+	corba-application-context xml document.
+-->
+<!ELEMENT corba-application-context ((header|bean|import|load|orb)*)>
+
+<!--
+	id to prevent duplicated import
+-->
+<!ATTLIST corba-application-context id CDATA	#IMPLIED>
+
+<!ELEMENT orb (args?, (bean|object|poa|event-consumer-adapter|event-supplier-adapter|dds-participant)*)>
+<!ATTLIST orb	id	ID	#IMPLIED>
+<!ATTLIST orb	label	CDATA	#IMPLIED>
+
+<!ELEMENT args	(arg*)>
+
+<!ELEMENT arg	EMPTY>
+<!ATTLIST arg	value	CDATA	#REQUIRED>
+
+<!ELEMENT poa	(poa-manager?, on-error?, policies?, (property|ioc)*, (object|poa)*)>
+<!ATTLIST poa	id	ID	#IMPLIED>
+<!ATTLIST poa	name	CDATA	#IMPLIED>
+<!ATTLIST poa	label	CDATA	#IMPLIED>
+<!ATTLIST poa	destroy-method 
+			CDATA	#IMPLIED>
+
+<!ELEMENT property (bean|ref|array)?>
+<!ATTLIST property name		CDATA		#REQUIRED>
+<!ATTLIST property type		(%poco-basic-types;|array)  'bean'>
+<!ATTLIST property class	CDATA	#IMPLIED>
+<!ATTLIST property ref		IDREF	#IMPLIED>
+<!ATTLIST property value	CDATA	#IMPLIED>
+<!ATTLIST property pass		(%syntax;)      #IMPLIED>
+
+<!ELEMENT poa-manager	((bean|ref)?)>
+<!ATTLIST poa-manager	ref	IDREF	#IMPLIED>
+
+<!ELEMENT policies	(policy*)>
+
+<!ELEMENT policy	EMPTY>
+<!ATTLIST policy	name	CDATA	#REQUIRED>
+<!ATTLIST policy	value	CDATA	#REQUIRED>
+
+<!ELEMENT object	(on-error|bean|ref|ioc*)?>
+<!ATTLIST object	impl-ref IDREF	#IMPLIED>
+<!ATTLIST object	impl-type (servant|native) "servant">
+<!ATTLIST object	interface CDATA #IMPLIED>
+<!ATTLIST object	id	ID	#IMPLIED>
+<!ATTLIST object	oid	CDATA	#IMPLIED>
+<!ATTLIST object	uri	CDATA	#IMPLIED>
+<!ATTLIST object	bind-name	CDATA	#IMPLIED>
+<!ATTLIST object	repid	CDATA	#IMPLIED>
+<!ATTLIST object	label	CDATA	#IMPLIED>
+<!ATTLIST object	destroy-method
+				CDATA	#IMPLIED>
+
+<!ENTITY % conn-ports 'admin|channel|service'>
+<!ENTITY % event-types 'typed|structured|sequence|untyped'>
+
+<!ELEMENT event-consumer-adapter	((%conn-ports;)?, event-consumer?, props?)>
+<!ATTLIST event-consumer-adapter	id	ID	#IMPLIED>
+<!ATTLIST event-consumer-adapter	type	(%event-types;)	 #REQUIRED>
+<!ATTLIST event-consumer-adapter	topic	CDATA	#IMPLIED>
+<!ATTLIST event-consumer-adapter	disconnect	(auto|manual)	"auto">
+<!ATTLIST event-consumer-adapter	lazy-init	(true|false)	"false">
+<!ATTLIST event-consumer-adapter	label	CDATA	#IMPLIED>
+
+<!ELEMENT event-supplier-adapter	((%conn-ports;)?, event-supplier?, props?)>
+<!ATTLIST event-supplier-adapter	id	ID	#IMPLIED>
+<!ATTLIST event-supplier-adapter	type	(%event-types;)	#REQUIRED>
+<!ATTLIST event-supplier-adapter	topic	CDATA	#IMPLIED>
+<!ATTLIST event-supplier-adapter	disconnect	(auto|manual)	"auto">
+<!ATTLIST event-supplier-adapter	lazy-init	(true|false)	"false">
+<!ATTLIST event-supplier-adapter	label	CDATA	#IMPLIED>
+
+<!-- an admin bean must be able to cast to CORBA::Object_ptr -->
+<!ELEMENT admin	((bean|ref)?)>
+<!ATTLIST admin	ior	CDATA	#IMPLIED>
+<!ATTLIST admin ref	IDREF	#IMPLIED>
+
+<!-- a channel bean must be able to cast to CORBA::Object_ptr -->
+<!ELEMENT channel ((bean|ref)?)>
+<!ATTLIST channel ior	CDATA	#IMPLIED>
+<!ATTLIST channel ref	IDREF	#IMPLIED>
+
+<!-- a service bean must be able to cast to CORBA::Object_ptr -->
+<!ELEMENT service ((bean|ref)?)>
+<!ATTLIST service ior	CDATA	#IMPLIED>
+<!ATTLIST service ref	IDREF	#IMPLIED>
+
+<!ELEMENT event-consumer	(bean|ref)?>
+<!ATTLIST event-consumer	impl-ref	IDREF	#IMPLIED>
+<!ATTLIST event-consumer	impl-type	(object|servant|native)	#REQUIRED>
+<!ATTLIST event-consumer	interface	CDATA	#IMPLIED>
+
+<!ELEMENT event-supplier	(bean|ref)?>
+<!ATTLIST event-supplier	impl-ref	IDREF	#IMPLIED>
+<!ATTLIST event-supplier	impl-type	(object|servant|native)	#REQUIRED>
+
+<!ELEMENT props (prop)*>
+<!ELEMENT prop	EMPTY>
+<!ATTLIST prop	name	CDATA	#REQUIRED>
+<!ATTLIST prop	value	CDATA	#REQUIRED>

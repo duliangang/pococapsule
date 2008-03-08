@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/corba2poco.xsl"?>
+
+<!DOCTYPE corba-application-context SYSTEM "http://www.pocomatic.com/corba-application-context.dtd">
+
+<corba-application-context>
+   <load library="./ListenerImpl.$dll"/>
+   <load library="./subscribe_reflx.$dll"/>
+
+   <bean id="my-listener" class="EventListenerImpl"/>
+
+   <orb id="my-orb">
+      <!-- subscribe to typed events -->
+      <event-consumer-adapter
+            id="typed-event-adapter"
+            type="typed"
+            topic="IDL:sample/MyTypedEvent:1.0"
+            lazy-init="true">
+         <event-consumer impl-type="native" interface="sample::MyTypedEvent" impl-ref="my-listener"/>
+      </event-consumer-adapter>
+
+      <!-- subscribe to structured events -->
+      <event-consumer-adapter
+            id="structured-event-adapter"
+            type="structured"
+            lazy-init="true">
+         <event-consumer impl-type="native" impl-ref="my-listener"/>
+      </event-consumer-adapter>
+
+      <!-- subscribe to sequence events -->
+      <event-consumer-adapter
+            id="sequence-event-adapter"
+            type="sequence"
+            lazy-init="true">
+         <event-consumer impl-type="native" impl-ref="my-listener"/>
+      </event-consumer-adapter>
+
+      <!-- subscribe to untyped events -->
+      <event-consumer-adapter
+            id="untyped-event-adapter"
+            type="untyped"
+            lazy-init="true">
+         <event-consumer impl-type="native" impl-ref="my-listener"/>
+      </event-consumer-adapter>
+
+      <!-- subscribe to typed events with a filter -->
+      <event-consumer-adapter
+            id="typed-filter-event-adapter"
+            type="typed"
+            topic="IDL:sample/MyTypedEvent:1.0"
+            lazy-init="true">
+         <event-consumer impl-type="native" interface="sample::MyTypedEvent" impl-ref="my-listener"/>
+         <props>
+            <prop name="filter" value="($type_name == 'headlinenews')
+                                    or ($type_name == 'stockquote')"/>
+         </props>
+      </event-consumer-adapter>
+
+      <!-- subscribe to structured events with a filter -->
+      <event-consumer-adapter
+            id="structured-filter-event-adapter"
+            type="structured"
+            lazy-init="true">
+         <event-consumer impl-type="native" impl-ref="my-listener"/>
+         <props>
+            <prop name="filter" value="$event_name == 'headlinenews'"/>
+         </props> 
+      </event-consumer-adapter>
+   </orb>
+</corba-application-context>

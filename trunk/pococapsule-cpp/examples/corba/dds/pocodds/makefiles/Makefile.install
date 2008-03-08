@@ -1,0 +1,25 @@
+include ../../makefiles/Makefile.inc
+
+FILES = \
+	typesupport.idl\
+	dds_dcps.idl\
+	publisher.h\
+	publisher.C\
+	participant.h\
+	participant.C\
+	subscriber.C\
+	typesupport.h\
+	unsupported.h\
+	subscriber.h\
+	ddsproxy.h\
+	factory.C\
+	pocodds.h\
+	topic.h\
+	factory.h
+
+REL_DIR = corba/dds/pocodds
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MK_FILE)

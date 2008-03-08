@@ -1,0 +1,353 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+	PocoCapsule/C++ IoC Container XML Beans DTD
+
+	This document type is used by most Spring functionality, including
+	web application contexts, which are based on bean factories.
+
+	Typically, each 'bean' element in a poco-application-context XML document 
+	defines a plain old C++ object (a.k.a POCO). The bean class is specified,
+	along with an optional bean factory (that will be used by PocoCapsule)
+	to create this POCO bean), method arguments for calling this factory,
+	and ioc methods that will be invoked after the bean's instantiation.
+
+	As the format is simple, a DTD is sufficient and better, and there's 
+	no need and advantage for a schema at this point.
+
+	XML documents that conform to this DTD should declare the following
+	doctype:
+
+	<!DOCTYPE poco-appliation-context SYSTEM 'http://www.pocomatic.com/poco-application-context.dtd'>
+-->
+
+<!--
+	<poco-application-context> element is the root of a poco-application-context 
+	document.
+-->
+<!ELEMENT poco-application-context ((header|bean|import|load)*)>
+
+<!--
+	id to prevent duplicated import
+-->
+<!ATTLIST poco-application-context id CDATA	#IMPLIED>
+
+<!--
+	A given bean's definition can optionally specify arguments, that
+	will be used to invoke the factory method (or the constructor)
+-->
+<!ELEMENT bean (method-arg|ioc|bean)*>
+
+<!--
+	id of this bean.  
+-->
+<!ATTLIST bean id	ID	#IMPLIED>
+
+<!-- 
+	The C++ class name of this bean. It can be:
+	1. A normal class name (as well as its typedef), such as 
+	   "std::fstream", "MyServantImpl".
+	2. A C/C++ marco that defines a class name, such as 
+           "STD_MAP(string, CORBA::Object_ptr)"
+	3. A class template name, such as:
+	   "std::map%lt;string, CORBA::Object_ptr*%gt;", or equivlantly 
+	   "std::map{string, CORBA::Object_ptr}". 
+	4. A dereferenced typedef'ed pointer class name, such as
+	   "*CORBA::ORB_ptr".
+	5. "void": it is equivalent to a ioc method using the factory-method
+           on the factory-bean, without creating a returned bean.
+-->
+<!ATTLIST bean class CDATA	#REQUIRED>
+
+<!-- 
+	the id of the factory bean on which the factory method
+	is invoked. if this attribute is missing, it implies the
+	factory method is a static or global method.
+-->
+<!ATTLIST bean factory-bean	IDREF	#IMPLIED>
+
+<!--
+	The factory method to be invoked. if this attribute
+	is missing, the constructor of the bean class will be 
+	used.
+-->
+<!ATTLIST bean factory-method	CDATA	#IMPLIED>
+
+<!--
+	For singleton bean only, and will be safely ignored by non-singleton
+	beans. If specified, the ApplicationContext::getBean(...) will return
+	the returned value of the_dup_method((the_bean_class*)the_bean);
+
+	Also, if this singleton bean is used by a method or index argument
+	that has the 'pass' attribute equal to "dup", the duplicated bean
+	will be used as the argument.  
+-->
+<!ATTLIST bean dup-method CDATA	#IMPLIED>
+
+<!--
+        For singleton bean only, and will be safely ignored by non-singleton
+        beans. If specified, the ApplicationContext::getBean(...) will
+        invoke the_bean->the_self_dup_method(), before return the bean
+
+        Also, if this singleton bean is used by a method or index argument
+        that has the 'pass' attribute equal to "dup", the dup method will
+        also be invoked before passing the bean.
+-->
+<!ATTLIST bean self-dup-method  CDATA   #IMPLIED>
+
+<!--
+	the id of the destroy bean on which the destroy method
+	is invoked. three supported destroy method calling scenarios:
+	1. the self-destroy-method is specified: this implies the destroy
+           method is on the bean itself and will be invoked as
+		the_bean->the_self_destroy_method();
+        otherwise,
+	2. the destdestroy-bean attribute is empty: this implies the
+	destroy method is a static, global method or the delete
+	operator, and will be invoked as 
+		the_destroy_method(the_bean);
+	otherwise,
+	3. the destroy-bean is another bean, the method will be invoked as
+		the_destroy_bean->the_destroy_method(the_bean);
+-->
+<!ATTLIST bean destroy-bean     IDREF   #IMPLIED>
+
+<!--
+	If the bean is non-singleton and is used as an argument of a
+	method (constructor, factory or ioc), the container will
+	invoke the bean's destroy-method (if it is specified) after
+	return from the method.
+
+	On closing the application context (ApplicationContext::close()),
+	the container will the invoke destroy methods (if specified) of all 
+	singleton beans.
+-->
+<!ATTLIST bean destroy-method CDATA  #IMPLIED>
+<!ATTLIST bean self-destroy-method CDATA	#IMPLIED>
+
+<!--
+	This attribute specifies the bean's instantiate sharing
+	policy. A bean with singleton policy will only be 
+	instantiated as one single instance, and shared by all 
+	references to it. A bean with non-singleton policy will 
+	be instantiated separately for each individual reference 
+	to it.
+-->
+<!ATTLIST bean singleton (true|false) 'true'>
+
+<!--
+	This attribut specifies the bean's instantiate defering
+	policy. A bean of lazy-init will be not instantiated until
+	it is needed, such as ApplicationContext::getBean() on that
+	bean's id is invoked, or, another bean depends-on this bean
+	is instantiated, or when it is used as method-arg. 
+-->
+<!ATTLIST bean lazy-init (true|false) 'true'>
+
+<!--
+	This attribute specifies whether this bean will ever be
+	instantiated. An abstract bean will never be instantiated,
+	depended by or used by any non-abstracted beans.
+-->
+<!ATTLIST bean abstract  (true|false) 'false'>
+
+<!--
+	This attribute specifies the invesiable dependency.
+	The container will instantiate (if not yet) the depended
+	bean before instantiate this bean.
+--> 
+<!ATTLIST bean depends-on IDREF #IMPLIED>
+
+<!--
+	This attribute is for diagnostic purpose. If this attribute
+	is specified and a deployment error occures in deploying
+	this bean, the error message will indicate the location of
+	the error by this label. 
+-->
+<!ATTLIST bean label	  CDATA #IMPLIED>
+
+<!--
+	This element specifies an method (constructor, factory or
+	ioc method) invocation argument. 
+-->
+<!ELEMENT method-arg (bean|ref|array)?>
+
+<!--
+	basic parameter types supported
+-->
+<!ENTITY % type	'byte|char|uchar|short|ushort|long|ulong|float|double|string|cstring|bean'>
+
+<!--
+	This attribute specifies the type of the argument. It can be
+	basic type, and array (see definition on <array> element). 
+-->
+<!ATTLIST method-arg type	(%type;|array)	'bean'>
+
+<!--
+	If the argument type is 'bean', this attribute specifies
+	the class of this bean. Otherwise, this attribute is ignored.
+	See the definition on class attribute of <bean> element.
+-->
+<!ATTLIST method-arg class	CDATA		#IMPLIED>
+
+<!--
+	If the argument type is 'bean', this attribute specifies
+	the id of this bean. The container use this id to resolve
+	the bean when it is needed. If the argument type is not 'bean',
+	this attribute is ignored.
+-->
+<!ATTLIST method-arg ref	IDREF		#IMPLIED>
+
+<!--
+	This attribute specifies the value of an argument, if it
+	is not a bean or array. If this attribute is not specified
+	and the argument is not a bean, container default value will
+	be used (e.g. 0, or NULL, ...).
+-->
+<!ATTLIST method-arg value	CDATA		#IMPLIED>
+
+<!-- 
+	This attribute is only meaningful for bean type of argument, and
+	will be ignored if the argument is not a bean. It specifies how
+	this argument will be passed to the method:
+	  "ptr": the bean object is passed by pointer
+	  "dup": the bean object is passed by pointer. For singleton bean,
+	         if a duplicate method is specified by bean's dup-method
+	         attribute, the duplicated bean is passed.
+	  "deref": the bean is passed as dereferenced object, namely by
+	         object value or reference.
+
+	See the defintion of the 'pass' attribute of <method-arg>.
+-->
+<!ENTITY % syntax 'ptr|dup|deref'>
+
+<!--
+	This attribute specifies the bean argument passing syntax.
+	See above
+-->
+<!ATTLIST method-arg pass	(%syntax;)	'ptr'>
+
+<!--
+	This element is used as a child of a <bean> element. It 
+	specifies an inversion of control (ioc) on the bean of the
+	parent <bean> element. An ioc method is called in the 
+	specified order, immediately after the bean is instantiated .
+-->
+<!ELEMENT ioc (index-arg?, method-arg*)>
+
+<!--
+	An ioc method can optionally has its first argument
+	as an index argument. If an index argument appears, the
+	ioc call will be made on the returned object of index
+	operator. Namely, if method-arg list does not has a
+	index-arg, the ioc call will be made as:
+	
+	the_bean->the_ioc_method(arg-list);
+
+	otherwise, if the first argument in the list is an index-arg,
+	the ioc call will be made as:
+
+	the_bean->operator[](the-idx-arg).the_ioc_method(rest-arg-list);
+-->
+<!ELEMENT index-arg (bean|ref)?>
+
+<!--
+	Same as the type attribute of method-arg, except that
+	array can't be used as index-arg
+-->
+<!ATTLIST index-arg type	(%type;)	#REQUIRED>
+
+<!--
+	Same as the class attribute of method-arg.
+-->
+<!ATTLIST index-arg class	CDATA		#IMPLIED>
+
+<!--
+	Same as the ref attribute of method-arg.
+-->
+<!ATTLIST index-arg ref		IDREF		#IMPLIED>
+
+<!-- 
+	same as the value attribute of a method-arg.
+-->
+<!ATTLIST index-arg value	CDATA		#IMPLIED>
+
+<!--
+	same as the pass attribute of a method-arg.
+-->
+<!ATTLIST index-arg pass	(%syntax;)	'ptr'>
+
+<!--
+	the name of the ioc method.
+-->
+<!ATTLIST ioc method CDATA		#REQUIRED>
+
+<!--
+	this element is used as a child element of a type='bean' 
+	method argument. The bean value of this element specifies 
+	the id of the bean, to be used as the argument. The
+	effect of this structure is same as using the ref attribute
+	of the method-arg or index-arg element. 
+-->
+<!ELEMENT ref EMPTY>
+<!ATTLIST ref bean		IDREF		#IMPLIED>
+
+<!--
+	An <array> element specifies the value of an array argument 
+	of a method. An array argument is actually passed as two 
+	parameters in invoking the POCO object. The first one, an
+	'int' parameter, is the length of the array. The second one 
+	is the array (or pointer) itself. 
+-->
+<!ELEMENT array (item)*>
+
+<!--
+	The type attribute of an <array> element specifies the
+	type of this array.
+-->
+<!ATTLIST array type		(%type;|namevalue)	'bean'>
+
+<!--
+	The class attribute of an <array> element is used to
+	specifies the bean class of this array, if the type
+	attribute is 'bean'. 
+-->
+<!ATTLIST array class		CDATA		#IMPLIED>
+
+<!--
+	The <item> elements are used to specifies the values of
+	an array items. If an <array> has no <item> child element,
+	it implies an empty (length = 0) array.
+-->
+<!ELEMENT item (bean|ref)?>
+<!ATTLIST item name 		CDATA #IMPLIED>
+<!ATTLIST item ref 		IDREF #IMPLIED>
+<!ATTLIST item value		CDATA #IMPLIED>
+
+<!--
+	<import> imports another resource as a child context of the
+	current context. On initSingleton() all eager in child context
+	will also be instantiated. On getBean(), if the bean with the
+	given id is not found in the parent context, the child contexts
+	will be searched by their importing order. 
+-->
+<!ELEMENT import EMPTY>
+
+<!ATTLIST import resource CDATA #REQUIRED>
+
+<!--
+	A <header> element specifies text to be prepended in 
+	the generated proxy file, for instance:
+
+	<header>#include "corba.h"</header>
+	<header>#define STD_MAP(a, b) std::map%lt;a, b%gt;<header>
+-->
+<!ELEMENT header (#PCDATA)>
+
+<!--
+	A <load> element specifies a dynamic library to be loaded 
+	by the application context immediately. 
+-->
+<!ELEMENT load EMPTY>
+
+<!ATTLIST load library CDATA #REQUIRED>

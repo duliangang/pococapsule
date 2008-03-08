@@ -1,0 +1,69 @@
+include ../stdmkdir/stdmk.vb_win
+
+EXE = publisher.exe subscriber.exe EmitterImpl$(DLL_SUFFIX) \
+      ListenerImpl$(DLL_SUFFIX) \
+      publish_reflx$(DLL_SUFFIX) subscribe_reflx$(DLL_SUFFIX)
+
+all: publish_reflx.cc subscribe_reflx.cc $(EXE)
+
+MyTypedEvent_c.cc MyTypedEvent_s.cc: MyTypedEvent.idl
+	$(ORBCC) -export_skel POCO_EXPORT MyTypedEvent.idl
+
+MyTypedEvent_c.obj: MyTypedEvent_c.cc
+	$(CC) $(CCFLAGS) $(POCO_EXPORT) /c /Tp MyTypedEvent_c.cc
+
+MyTypedEvent_s.obj: MyTypedEvent_s.cc
+	$(CC) $(CCFLAGS) $(POCO_EXPORT) /c /Tp MyTypedEvent_s.cc
+
+EmitterImpl.obj: EmitterImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(POCO_EXPORT) /c /Tp EmitterImpl.C
+
+EmitterImpl$(DLL_SUFFIX): MyTypedEvent_c.obj EmitterImpl.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	EmitterImpl.obj MyTypedEvent_c.obj \
+	$(ORB_LIBPATH) $(LIBORB) $(VBNTFYLIB)
+
+ListenerImpl.obj: ListenerImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(POCO_EXPORT) /c /Tp ListenerImpl.C
+
+ListenerImpl$(DLL_SUFFIX): ListenerImpl.obj MyTypedEvent_c.obj \
+                           MyTypedEvent_s.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	ListenerImpl.obj MyTypedEvent_c.obj MyTypedEvent_s.obj \
+	$(ORB_LIBPATH) $(LIBORB) $(VBNTFYLIB)
+
+publish_reflx.cc: publish.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=EmitterImpl.h publish.xml
+
+publish_reflx.obj: publish_reflx.cc
+	$(CC) $(CCFLAGS) $(POCO_IMPORT) /c /Tp publish_reflx.cc
+
+publish_reflx$(DLL_SUFFIX): publish_reflx.obj EmitterImpl$(DLL_SUFFIX)
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ publish_reflx.obj \
+	$(POCO_LIBPATH) $(LIBORB) $(LIBPOCO) $(LIB_POCO_CORBA_HELPER) \
+	EmitterImpl$(LIB_SUFFIX)
+
+subscribe_reflx.cc: subscribe.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=ListenerImpl.h subscribe.xml
+
+subscribe_reflx.obj: subscribe_reflx.cc
+	$(CC) $(CCFLAGS) $(POCO_IMPORT) /c /Tp subscribe_reflx.cc
+
+subscribe_reflx$(DLL_SUFFIX): subscribe_reflx.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ subscribe_reflx.obj \
+	$(POCO_LIBPATH) $(LIBORB) $(VBNTFYLIB) $(LIBPOCO) \
+	$(LIB_POCO_CORBA_HELPER) ListenerImpl$(LIB_SUFFIX)
+ 	
+publisher.exe: publisher.obj
+	$(LINK_EXE) /OUT:$@ publisher.obj \
+	$(POCO_LIBPATH) $(LIBPOCO) \
+	$(ORB_LIBPATH) $(LIBORB)
+
+subscriber.exe: subscriber.obj
+	$(LINK_EXE) /OUT:$@ subscriber.obj \
+	$(POCO_LIBPATH) $(LIBPOCO) \
+	$(ORB_LIBPATH) $(LIBORB)
+
+clean:
+	del *.obj *.cc *.hh *.exe *.dll *.lib *.exp *.ilk *.pdb *.manifest
+

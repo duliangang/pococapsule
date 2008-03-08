@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/corba2poco.xsl"?>
+
+<!DOCTYPE corba-application-context SYSTEM "http://www.pocomatic.com/corba-application-context.dtd">
+
+<corba-application-context>
+   <load library="./EmitterImpl.$dll"/>
+   <load library="./publish_reflx.$dll"/>
+
+   <bean id="my-emitter" class="EventEmitterImpl" destroy-method="delete"/>
+
+   <orb>
+      <!-- setup connection from the emitter to typed event service -->
+      <event-supplier-adapter
+            id="typed-event-adapter"
+            type="typed"
+            topic="IDL:sample/MyTypedEvent:1.0"
+            lazy-init="true">
+         <event-supplier impl-type="native" impl-ref="my-emitter"/>
+      </event-supplier-adapter>
+
+      <!-- setup connection from the emitter to structured event service -->
+      <event-supplier-adapter
+            id="structured-event-adapter"
+            type="structured"
+            lazy-init="true">
+         <event-supplier impl-type="native" impl-ref="my-emitter"/>
+      </event-supplier-adapter>
+
+      <!-- setup connection from the emitter to sequence event service -->
+      <event-supplier-adapter
+            id="sequence-event-adapter"
+            type="sequence"
+            lazy-init="true">
+         <event-supplier impl-type="native" impl-ref="my-emitter"/>
+      </event-supplier-adapter>
+
+      <!-- setup connection from the emitter to untyped event service -->
+      <event-supplier-adapter
+            id="untyped-event-adapter"
+            type="untyped"
+            lazy-init="true">
+         <event-supplier impl-type="native" impl-ref="my-emitter"/>
+      </event-supplier-adapter>
+   </orb>
+</corba-application-context>
