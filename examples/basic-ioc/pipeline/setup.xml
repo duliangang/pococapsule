@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE poco-application-context 
+	SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
+
+<!--
+	This configuration is only used in the deployment time.
+	In this example, it is illustrated that proxies do not
+	need to be re-generated from this configuration.
+-->
+
+<poco-application-context>
+   <load library="./MyNodeImplA.$dll"/>
+   <load library="./MyNodeImplB.$dll"/>
+
+   <bean id="upstream"
+        class="Node" factory-method="new MyNodeImplA">
+	<method-arg type="string" value="upstream"/>
+        <ioc method="next">
+		<method-arg class="Node" ref="downstream"/>
+	</ioc>
+   </bean>
+
+   <bean id="downstream" 
+         class="Node" factory-method="new MyNodeImplB">
+	<method-arg type="string" value="downstream"/>
+	<ioc method="next">
+        	<method-arg class="Node" ref="upstream"/>
+	</ioc>
+   </bean>
+</poco-application-context>

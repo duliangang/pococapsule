@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-transform type="text/xsl" href="jtrs-sca-lite2poco.xsl"?>
+
+<!DOCTYPE softwareassembly SYSTEM "file:jtrs-sca-lite.dtd">
+
+<softwareassembly id="sca-sad-example">
+	<connections>
+		<!-- connections of AudioEffect0 -->
+
+		<connectinterface id="Node1AudioToEchoResource0">
+			<usesport>
+				<usesidentifier>AudioOut</usesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"/>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>AudioIn</providesidentifier>
+				<findby>
+					<namingservice name="AudioEchoResource"/>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="EchoResource0ToChorusResource0">
+			<usesport>
+				<usesidentifier>AudioOut</usesidentifier>
+				<findby>
+					<namingservice name="AudioEchoResource"/>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>AudioIn</providesidentifier>
+				<findby>
+					<namingservice name="AudioChorusResource"/>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="ChorusResource0ToNode1Audio">
+			<usesport>
+				<usesidentifier>AudioOut</usesidentifier>
+				<findby>
+					<namingservice name="AudioChorusResource"/>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>AudioIn</providesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"/>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="InController0ToNode1AudioDevice">
+			<usesport>
+				<usesidentifier>AudioInControl</usesidentifier>
+				<findby>
+					<namingservice name="AudioEffectController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="Node1AudioDevice"></namingservice>
+			</findby>
+		</connectinterface>
+		<connectinterface id="OutController0ToNode1AudioDevice">
+			<usesport>
+				<usesidentifier>AudioOutControl</usesidentifier>
+				<findby>
+					<namingservice name="AudioEffectController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="Node1AudioDevice"/>
+			</findby>
+		</connectinterface>
+		<connectinterface id="AudioEffectApplication0ToLog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="AudioEffectController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="Node1AudioDevice0ToLog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="EchoResource0ToLog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="AudioEchoResource"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="ChorusResource0ToLog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="AudioChorusResource"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="AudioEffectController0ToEchoResource0">
+			<usesport>
+				<usesidentifier>AudioEchoControl</usesidentifier>
+				<findby>
+					<namingservice name="AudioEffectController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="AudioEchoResource"></namingservice>
+			</findby>
+		</connectinterface>
+		<connectinterface id="AudioEffectController0ToChorusResource0">
+			<usesport>
+				<usesidentifier>AudioChorusControl</usesidentifier>
+				<findby>
+					<namingservice name="AudioEffectController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="AudioChorusResource"/>
+			</findby>
+		</connectinterface>
+
+		<!-- connections of FMTransmitterReceiver -->
+
+		<connectinterface id="DemodulationFMResourceTonode1AudioDevice">
+			<usesport>
+				<usesidentifier>DoubleSeqOut</usesidentifier>
+				<findby>
+					<namingservice name="DemodulationFMResource"/>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>AudioInRightDouble</providesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"/>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="node1AudioDeviceToDemodulationFMResource">
+			<usesport>
+				<usesidentifier>AudioOutLeftDouble</usesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"/>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>DoubleSeqIn</providesidentifier>
+				<findby>
+					<namingservice name="DemodulationFMResource"/>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="ModulationFMTolog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="ModulationFMResource"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="FMTransmitterReceiverAssemblyControllerTolog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="FMTransmitterReceiverAssemblyController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="ModulationFMTonode1AudioDevice">
+			<usesport>
+				<usesidentifier>DoubleSeqOut</usesidentifier>
+				<findby>
+					<namingservice name="ModulationFMResource"/>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>AudioInLeftDouble</providesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"></namingservice>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="FMTransmitterReceiverAssemblyControllerTonode1AudioDevice_1">
+			<usesport>
+				<usesidentifier>InputDeviceControl</usesidentifier>
+				<findby>
+					<namingservice name="FMTransmitterReceiverAssemblyController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="Node1AudioDevice"/>
+			</findby>
+		</connectinterface>
+		<connectinterface id="FMTransmitterReceiverAssemblyControllerToModulationFM_49">
+			<usesport>
+				<usesidentifier>ModulationFMControl</usesidentifier>
+				<findby>
+					<namingservice name="FMTransmitterReceiverAssemblyController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="ModulationFMResource"/>
+			</findby>
+		</connectinterface>
+		<connectinterface id="DemodulationFMResourceTolog">
+			<usesport>
+				<usesidentifier>LogPort</usesidentifier>
+				<findby>
+					<namingservice name="DemodulationFMResource"/>
+				</findby>
+			</usesport>
+			<findby>
+				<domainfinder
+					name="log"
+					type="log"></domainfinder>
+			</findby>
+		</connectinterface>
+		<connectinterface id="FMTransmitterReceiverAssemblyControllerTonode1AudioDevice_2">
+			<usesport>
+				<usesidentifier>OutputDeviceControl</usesidentifier>
+				<findby>
+					<namingservice name="FMTransmitterReceiverAssemblyController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="Node1AudioDevice"></namingservice>
+			</findby>
+		</connectinterface>
+		<connectinterface id="node1AudioDeviceToModulationFM">
+			<usesport>
+				<usesidentifier>AudioOutLeftDouble</usesidentifier>
+				<findby>
+					<namingservice name="Node1AudioDevice"></namingservice>
+				</findby>
+			</usesport>
+			<providesport>
+				<providesidentifier>DoubleSeqIn</providesidentifier>
+				<findby>
+					<namingservice name="ModulationFMResource"/>
+				</findby>
+			</providesport>
+		</connectinterface>
+		<connectinterface id="FMTransmitterReceiverAssemblyControllerToDemodulationFMResource">
+			<usesport>
+				<usesidentifier>DemodulationFMControl</usesidentifier>
+				<findby>
+					<namingservice name="FMTransmitterReceiverAssemblyController"/>
+				</findby>
+			</usesport>
+			<findby>
+				<namingservice name="DemodulationFMResource"></namingservice>
+			</findby>
+		</connectinterface>
+	</connections>
+</softwareassembly>

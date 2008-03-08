@@ -1,0 +1,33 @@
+/****************************************************************************/
+/*									    */
+/*  Copyright 2006, by Pocomatic Software, LLC.	All Rights Reserved.        */
+/*									    */
+/****************************************************************************/
+#ifndef _Interfaces_idl_
+# define _Interfaces_idl_
+
+local interface EventListener {
+	void refresh();
+};
+
+local interface EventEmitter {
+	void subscribe(in EventListener listener);
+	void unsubscribe(in EventListener listener);
+};
+
+local interface TickGen : EventEmitter
+{
+	void start();
+};
+
+local interface GPSLocator : EventEmitter, EventListener
+{
+	long get_pos_x();
+	long get_pos_y();
+};
+
+local interface NavDisplay : EventListener 
+{
+};
+
+#endif

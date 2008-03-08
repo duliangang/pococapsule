@@ -1,0 +1,11 @@
+#include "CF.idl"
+
+module sample {
+	interface PushPort : CF::Base {
+		// other methods ...
+	};
+
+	interface Log : CF::Base { 
+		// other methods ...
+	};
+};

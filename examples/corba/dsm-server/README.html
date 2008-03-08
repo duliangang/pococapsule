@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Readme for user-schema object-home example</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="CREATED" CONTENT="20060627;17353000">
+	<META NAME="CHANGEDBY" CONTENT="kejin">
+	<META NAME="CHANGED" CONTENT="20070513;12021700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in }
+		P { color: #000000 }
+		H2 { color: #000000 }
+		H3 { color: #000000 }
+		PRE { color: #000000 }
+		A:link { color: #0000ff }
+		A:visited { color: #990066 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#990066" BGCOLOR="#ffffff" DIR="LTR">
+<H2>PocoCapsule/C++ CORBA example: User DSM CORBA server deployment
+model 
+</H2>
+<P>Copyright(c) 2006, 2007 by <A HREF="http://www.pocomatic.com/">Pocomatic
+Software</A>. All rights reserved.</P>
+<P><FONT FACE="DejaVu Sans Mono, monospace"><FONT FACE="DejaVu Sans, sans-serif">The
+core CORBA server application deployment model of PocoCapsule/CORBA
+is directly mapped from the POA programming model. The use of this
+core deployment model is illustrated in the example of
+</FONT><A HREF="../poa-server/README.html"><FONT FACE="DejaVu Sans, sans-serif">${POCOCAPSULE_DIR}/examples/corba/poa-server</FONT></A><FONT FACE="DejaVu Sans, sans-serif">.
+However, in certain cases, users may like to use a deployment model
+that is more expressive than the core model and abstracts away the
+POA concept. With PocoCapsule/C++'s DSM support, users can easily
+define such a a customized CORBA server application deployment model
+as illustrated in this example. </FONT></FONT><FONT FACE="DejaVu Sans, sans-serif">This
+example shows how application developers can define their own </FONT><A HREF="http://en.wikipedia.org/wiki/Domain-specific_modeling"><FONT FACE="DejaVu Sans, sans-serif">domain
+specific modeling (DSM)</FONT></A> <FONT FACE="DejaVu Sans, sans-serif">to
+more intuitively and expressively describe their application
+configuration and assembly structure. </FONT>
+</P>
+<P><FONT FACE="DejaVu Sans, sans-serif">In the example, a CORBA
+server's configuration/assembly structure is described in the
+</FONT><A HREF="setup.xml"><FONT FACE="DejaVu Sans, sans-serif">setup.xml</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">that uses a user defined DSM
+specified in </FONT><A HREF="my-application-context.dtd"><FONT FACE="DejaVu Sans, sans-serif">my-application-context.dtd</FONT></A><FONT FACE="DejaVu Sans, sans-serif">.
+The transformation from this user defined DSM to
+corba-application-context.dtd is defined in </FONT><A HREF="myapp2corba.xsl"><FONT FACE="DejaVu Sans, sans-serif">myapp2corba.xsl</FONT></A><FONT FACE="DejaVu Sans, sans-serif">.
+</FONT>
+</P>
+<P><FONT FACE="DejaVu Sans, sans-serif">On processing this </FONT><A HREF="setup.xml"><FONT FACE="DejaVu Sans, sans-serif">setup.xml</FONT></A><FONT FACE="DejaVu Sans, sans-serif">,
+PocoCapsule/C++ first transforms the the given user defined model,
+into the corba-application-context.dtd description model, and then,
+transforms it again to the poco-application-context.dtd description
+model. This chain of description model transformations is transparent
+to application developers. </FONT>
+</P>
+<H3>Source Files</H3>
+<P><A HREF="Greeting.idl">Greeting.idl:</A> This is the IDL
+definition of the server's remote interface<B>.</B> 
+</P>
+<UL>
+	<LI><P><FONT SIZE=2>This interface only declares one operation,
+	<I><FONT FACE="Nimbus Sans L">string hello(in string s)</FONT></I>.
+	<FONT FACE="Nimbus Roman No9 L">A client can invoke this operation
+	to send a greeting message to server, and receive a reply greeting
+	from server, as the return value. </FONT></FONT>
+	</P>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="Nimbus Roman No9 L"><FONT SIZE=2>Client
+	stub and server skeleton classes source code from this IDL can be
+	generated using the given ORB's IDL-to-C++ pre-compiler, for
+	instance, the idl2cpp of VisiBroker. </FONT></FONT>
+	</P>
+</UL>
+<P><A HREF="server.C">server.C:</A> This is a simple container, used
+to deploy the server application POCO beans. 
+</P>
+<P><A HREF="client.C">client.C:</A> This is the client application. 
+</P>
+<UL>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="Nimbus Roman No9 L"><FONT SIZE=2>The
+	client application assume the server IOR or URL is provided as the
+	first main() argument. The string IOR or URL is converted into an
+	CORBA object reference using ORB's string_to_object(), </FONT></FONT>
+	</P>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="Nimbus Roman No9 L"><FONT SIZE=2>and
+	then, this reference is narrowed to the type specific client stub
+	class, namely, the <I><FONT FACE="Nimbus Sans L">sample::Greeting_ptr</FONT></I>.
+	</FONT></FONT>
+	</P>
+</UL>
+<P><A HREF="GreetingImpl.h">GreetingImpl.h</A> and <A HREF="GreetingImpl.C">GreetingImpl.C:</A>
+These files defines all need plain old C++ object implementations,
+including:</P>
+<UL>
+	<LI><P>The server's servant implementation<FONT FACE="Nimbus Roman No9 L">,
+	namely, a POCO class inheriting from and implementing the
+	POA_sample::Greeting.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Serif, serif">The servant locator's
+	implementation. This servant locator is used by a POA with
+	request-processing policy equals to “use-servant-manager” and
+	servant-retention policy equals to “non-retain”. </FONT>
+	</P>
+	<LI><P><FONT FACE="DejaVu Serif, serif">The servant activator's
+	implementation. This activator is used by a POA with
+	request-processing policy equals to “use-servant-manager” and
+	servant-retention policy equals to “retain”. </FONT>
+	</P>
+</UL>
+<P><FONT FACE="DejaVu Serif, serif"><A HREF="my-application-context.dtd"><FONT FACE="DejaVu Serif, serif">my-application-context.dtd:</FONT></A>
+The document type definition of the user defined schema. </FONT>
+</P>
+<P><FONT FACE="DejaVu Serif, serif"><A HREF="myapp2corba.xsl"><FONT FACE="DejaVu Serif, serif">myapp2corba.xsl:</FONT></A>
+The user-defined schema to corba deployment schema transformation
+stylesheet. </FONT>
+</P>
+<P><A HREF="setup.xml">setup.xml:</A> This is the server's deployment
+descriptor expressed in the user defined schema. It describes
+the following server structure:</P>
+<UL>
+	<LI><P><FONT SIZE=2>An application node of
+	&lt;home-with-object-map-only&gt; contains two object activations
+	(&lt;object-activation&gt;s). </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>An application node of
+	&lt;home-with-object-default&gt; contains an object activation
+	(&lt;object-activation&gt;) and an object reference
+	(&lt;object-reference&gt;). </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>An application node of
+	&lt;home-with-object-locator&gt; with a bean of the class
+	<A HREF="GreetingImpl.h"><FONT FACE="DejaVu Serif, serif">ServantLocatorImpl</FONT></A>
+	as its servant locator (&lt;servant-locator&gt;), and an object
+	reference (&lt;object-reference&gt;). </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>An application node of
+	&lt;home-with-object-activator&gt; with a bean of the class
+	<A HREF="GreetingImpl.h"><FONT FACE="DejaVu Serif, serif">ServantActivatorImpl</FONT></A>
+	as its servant activator (&lt;servant-activator&gt;), a
+	pre-activated object (&lt;object-activation&gt;), and an object
+	reference (&lt;object-reference&gt;). </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>The ORB node is declared with an user specified
+	id, “<B><I>my-orb</I></B>”. This will let POCO to generate a
+	lazy-init'ed ORB runnner bean, with the id of
+	“pocomatic.dispatcher:<B><I>my-orb</I></B>”. Initiating this
+	runner bean (such as by calling
+	getBean(“pocomatic.dispatcher:<B><I>my-orb</I></B>”) on the bean
+	deployed factory), will start the server's request dispatching loop,
+	after printing out all declared object URLs.</FONT></P>
+</UL>
+<H3>Building this example</H3>
+<P STYLE="font-weight: medium">To build this example, the environment
+variable POCOCAPSULE_DIR should point to the PocoCapsule/C++
+installed directory. Also, this example assumes an underneath ORB
+(e.g. VisiBroker/C++, TAO, etc.) is installed and its runtime and
+development environment (such as POCOCAPSULE_DIR, VBROKER_DIR or
+TAO_ROOT, etc. env variable) are set according to its product
+specification. Then, this example can be built by simply invoking
+gmake/make on linux/unix or nmake on windows. 
+</P>
+<H3>Running this example</H3>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Before
+starting the server, make sure the LD_LIBRARY_PATH (on linux and
+solaris) or the PATH (on windows) environment variable is set
+correctly to include the ${POCOCAPSULE_DIR}/lib directory and the
+${VBROKREDIR}/lib (if VisiBroker is used) or the ${TAO_ROOT}/lib
+directory (if TAO is used).</FONT></P>
+<P><FONT FACE="Symbol">&middot; </FONT><FONT FACE="Times New Roman">Start
+the server as:</FONT></P>
+<PRE STYLE="margin-left: 0.79in; margin-bottom: 0.2in"><FONT FACE="Courier 10 Pitch"><B>prompt&gt;</B> server </FONT></PRE><P STYLE="font-weight: medium">
+By default setting, on successful startup, server will print out all
+declared corbaloc URLs (namely, &lt;object&gt; elements, with
+specified uri attribute). In this server, as object elements are
+declared with their uri attribute equal to “<B><FONT SIZE=2><FONT FACE="Nimbus Sans L">my-server-use-...</FONT></FONT></B>”,
+the print out will be, for instance:</P>
+<PRE STYLE="margin-left: 0.79in"><FONT FACE="Courier 10 Pitch">Server is ready, with URLs:</FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-aom-only</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-aom-too</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-non-default-servant</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-default-servant</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-servant-locator</B></FONT>
+<FONT FACE="Courier 10 Pitch">corbaloc::192.168.2.3:2809/<B>my-server-use-servant-activator</B></FONT></PRE><P>
+<FONT FACE="Times New Roman"><FONT FACE="Times New Roman">Here, the
+URI values “my-server-use-...” are declared in the beans
+descriptor <A HREF="setup.xml">setup.xml</A> file.</FONT> </FONT>
+</P>
+<P><FONT FACE="Times New Roman"><FONT FACE="Symbol">&middot; </FONT>Start
+client: The server's corbaloc URLs should be used as the first main
+command line argument when starting the client. For instance: </FONT>
+</P>
+<PRE STYLE="margin-left: 0.79in"><FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-aom-only</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-aom-too</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-non-default-servant</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-default-servant</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; client corbaloc::192.168.2.3:2809/<B>my-server-use-servant-locator</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT>
+<FONT FACE="Courier 10 Pitch">prompt&gt; java Client corbaloc::192.168.2.3:2809/<B>my-server-use-servant-activator</B></FONT>
+<FONT FACE="Courier 10 Pitch">....</FONT></PRE><P>
+On success, the client sends multiple greeting messages to the
+server, and the server replies one to client on receiving each of
+them. Both sides will print out the greeting messages they received.</P>
+<P STYLE="font-weight: medium"><A HREF="../../README.html">Back to
+the root page</A></P>
+</BODY>
+</HTML>

@@ -1,0 +1,11 @@
+include $(POCOCAPSULE_DIR)/examples/web-services/makefiles/Makefile.inc
+
+FILES = README.html config.xml setup.xml Makefile \
+        Hello.wsdl client.C server.C MyHelloServiceImpl.h
+
+REL_DIR = web-services/hello-ws
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+

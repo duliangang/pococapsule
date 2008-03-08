@@ -1,0 +1,20 @@
+include ../stdmkdir/stdmk.win
+
+all: main.exe MyNodeImplA$(DLL_SUFFIX) MyNodeImplB$(DLL_SUFFIX) 
+
+MyNodeImplA$(DLL_SUFFIX): skelA.xml MyNodeImplA.h
+	$(POCO_PROJ) -s=_reflx.cc -h=MyNodeImplA.h skelA.xml
+	$(CC) $(CCFLAGS) /DBUILD_DLL /c /Tp skelA_reflx.cc
+	$(LINK_DLL) /OUT:$@ skelA_reflx.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+MyNodeImplB$(DLL_SUFFIX): skelB.xml MyNodeImplB.h
+	$(POCO_PROJ) -s=_reflx.cc -h=MyNodeImplB.h skelB.xml
+	$(CC) $(CCFLAGS) /DBUILD_DLL /c /Tp skelB_reflx.cc
+	$(LINK_DLL) /OUT:$@ skelB_reflx.obj $(POCO_LIBPATH) $(LIBPOCO) 
+
+main.exe: main.obj
+	$(LINK_EXE) /Out:$@ main.obj \
+	$(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML)
+
+clean:
+	del *.obj *.pdb *.lib *.exe *.dll *.exp *.cc *.exp *.ilk *.manifest

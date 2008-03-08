@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composite SYSTEM "http://www.pocomatic.com/ocsa-composite.dtd">
+
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/ocsa-composite2poco.xsl"?>
+
+<composite name="bigbank.account">
+	<service name="AccountService">
+		<binding.ws port="http://www.bigbank.com/AccountService#wsdl.endpoint(AccountService)"/>
+		<reference>AccountServiceComponent</reference>
+	</service>
+
+	<component name="AccountServiceComponent">
+		<implementation.cpp class="AccountServiceImpl"/>
+		<reference name="accountDataService">AccountDataServiceComponent</reference>
+		<reference name="stockQuoteService">StockQuoteServiceComponent</reference>
+		<property type="xsd:string" name="currency">EURO</property>
+	</component>
+
+	<component name="AccountDataServiceComponent">
+		<implementation.cpp class="AccountDataService"/>
+	</component>
+
+	<component name="StockQuoteServiceComponent">
+		<implementation.cpp class="StockQuoteService"/>
+		<reference name="webService">StockQuoteWebService</reference>
+	</component>
+
+	<reference name="StockQuoteWebService">
+		<interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(StockQuoteSoap)"/>
+	</reference>
+</composite>

@@ -1,0 +1,10 @@
+include $(POCOCAPSULE_DIR)/examples/basic-ioc/stdmkdir/stdmk
+
+all: 
+	$(CC) $(LIB_CREATION_FLAG) -g reader.C -o reader.so
+	$(CC) main.C $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML) -o main
+	$(POCO_PROJ) -s=_reflx.cc -h=reader.h -h=add_to_map.h setup.xml
+	$(CC) $(LIB_CREATION_FLAG) -g setup_reflx.cc -o reflx.so
+
+clean:
+	rm -rf *.o *_reflx.* *.so main

@@ -1,0 +1,22 @@
+include ../stdmkdir/stdmk.win
+
+all: main.exe reader$(DLL_SUFFIX) reflx$(DLL_SUFFIX)
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=reader.h -h=add_to_map.h setup.xml
+
+reflx$(DLL_SUFFIX): setup_reflx.obj
+	$(LINK_DLL) /OUT:$@ setup_reflx.obj \
+	$(POCO_LIBPATH) $(LIBPOCO) reader$(LIB_SUFFIX)
+
+reader.obj: reader.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL /c /Tp reader.C 
+
+reader$(DLL_SUFFIX): reader.obj
+	$(LINK_DLL) /OUT:$@ reader.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+main.exe: main.obj
+	$(LINK_EXE) /OUT:$@ main.obj $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML)
+
+clean:
+	del *.obj *.pdb *.lib *.exe *.dll *.exp *.cc *.exp *.ilk *.manifest

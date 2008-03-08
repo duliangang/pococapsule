@@ -1,0 +1,14 @@
+include ../../stdmk.tao
+
+FILES = dds_dcps_c.cc typesupport_c.cc libpocodds.so
+
+all: $(FILES) 
+
+libpocodds.so: factory.o participant.o publisher.o subscriber.o dds_dcps_c.o
+	$(LINK_SLIB)
+
+reflx$(LIB_SUFFIX): setup_reflx$(LIB_SUFFIX)
+	mv setup_reflx$(LIB_SUFFIX) reflx$(LIB_SUFFIX)
+
+clean:
+	$(RM) *.o *.hh $(FILES)

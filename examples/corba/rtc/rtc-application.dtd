@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+  including the poco-application-context.dtd
+-->
+
+<!ELEMENT rtc-application ((load|component)*)>
+
+<!ELEMENT load EMPTY>
+<!ATTLIST load library CDATA #REQUIRED>
+
+<!ELEMENT component (uses|listens)*>
+<!ATTLIST component id		ID	#REQUIRED>
+<!ATTLIST component class	CDATA	#REQUIRED>
+<!ATTLIST component name	CDATA	#IMPLIED>
+<!ATTLIST component lazy-init	(true|false) "true">
+
+<!ELEMENT uses EMPTY>
+<!ATTLIST uses receptacle	CDATA	#REQUIRED>
+<!ATTLIST uses facet		CDATA	#IMPLIED>
+<!ATTLIST uses type		CDATA	#IMPLIED>
+<!ATTLIST uses provider		IDREF	#REQUIRED>
+
+<!ELEMENT listens EMPTY>
+<!ATTLIST listens sink		CDATA	#IMPLIED>
+<!ATTLIST listens type		CDATA	#IMPLIED>
+<!ATTLIST listens receptacle	CDATA	#REQUIRED>
+<!ATTLIST listens emitter	IDREF   #REQUIRED>

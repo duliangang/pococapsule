@@ -1,0 +1,23 @@
+include ../stdmk.tao
+
+FILES = MyDataTypeDefs_c.cc \
+	writer_reflx.cc reader_reflx.cc \
+	$(addsuffix .so, reader writer EmitterImpl ListenerImpl \
+	writer_reflx reader_reflx)
+
+all: $(FILES) 
+
+reader_reflx.cc: reader.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=MyDataTypeImpls.h -h=ListenerImpl.h $<
+
+writer_reflx.cc: writer.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=MyDataTypeImpls.h -h=EmitterImpl.h $<
+
+EmitterImpl.so: EmitterImpl.o MyDataTypeDefs_c.o
+	$(LINK_SLIB)
+
+ListenerImpl.so: ListenerImpl.o MyDataTypeDefs_c.o
+	$(LINK_SLIB)
+
+clean:
+	$(RM) *.o *.hh $(FILES)

@@ -1,0 +1,68 @@
+!IFNDEF POCOCAPSULE_DIR
+!ERROR POCOCAPSULE_DIR is not set
+!ENDIF
+
+!IFNDEF TAO_ROOT
+!ERROR TAO_ROOT is not set
+!ENDIF
+
+CC = CL.exe /nologo
+
+LINK_EXE = LINK $(LDFLAGS)
+LINK_DLL = LINK $(LDFLAGS) /DLL
+
+ORBCC=$(TAO_ROOT)\bin\tao_idl -g $(TAO_ROOT)\bin\gperf -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -hc _c.hh -hs _s.hh -cs _c.cc -ss _s.cc -si _s.inl -st _s_t.inl -hT _s_t.cc
+
+POCO_PROJ=$(POCOCAPSULE_DIR:/=\)\bin\pxgenproxy -r=gather
+
+CC_MACROS = /DWIN32 /DSTRICT /DALIGNED /D_CRT_SECURE_NO_DEPRECATE /DUSE_TAO
+
+CCFLAGS_COMMON = /EHsc 
+
+!IF "$(BUILD_TYPE)" == "debug" || "$(BUILD_TYPE)" == "DEBUG"
+
+DEBUG_CCFLAGS = /Zi /D_DEBUG
+THREAD_CCFLAG = /MDd
+DEBUG_LDFLAGS = /DEBUG
+LIB_SUFFIX = d.lib
+DLL_SUFFIX = d.dll
+
+!ELSE
+
+DEBUG_CCFLAGS = 
+THREAD_CCFLAG = /MD
+DEBUG_LDFLAGS =
+LIB_SUFFIX = .lib
+DLL_SUFFIX = .dll
+
+!ENDIF
+
+CCFLAGS = $(CCFLAGS_COMMON) $(CC_MACROS) $(DEBUG_CCFLAGS) \
+          $(THREAD_CCFLAG) $(CCINCLUDES)
+
+POCO_EXPORT = /DPOCO_EXPORT=__declspec(dllexport)
+POCO_IMPORT = /DPOCO_EXPORT=__declspec(dllimport)
+ 
+POCO_LIBPATH = /LIBPATH:$(POCOCAPSULE_DIR)/lib
+
+LIBPOCO = pococapsule$(LIB_SUFFIX)
+LIBPOCOXML = pocoxml$(LIB_SUFFIX)
+
+LIB_POCO_CORBA_HELPER = poco2tao$(LIB_SUFFIX)
+ORB_LIBPATH = /LIBPATH:$(TAO_ROOT)/lib
+
+LIBORB = TAO$(LIB_SUFFIX) ACE$(LIB_SUFFIX) TAO_AnyTypeCode$(LIB_SUFFIX)
+LIBORBSERVER = TAO_PortableServer$(LIB_SUFFIX) 
+LIBNOTIFY = TAO_CosEvent$(LIB_SUFFIX) \
+            TAO_CosNotification$(LIB_SUFFIX) \
+            TAO_CosEvent_Skel$(LIB_SUFFIX) \
+            TAO_CosNotification_Skel$(LIB_SUFFIX)
+
+CCINCLUDES = /I. /I$(POCOCAPSULE_DIR)/include /I$(TAO_ROOT)/include
+
+
+.C.obj:
+        $(CC) $(CCFLAGS) /c /Tp $<
+
+.cc.obj:
+        $(CC) $(CCFLAGS) /c /Tp $<

@@ -1,0 +1,14 @@
+include ../makefiles/Makefile.inc
+
+FILES = README.html ext-appctxt.dtd ext2poco.xsl pits.h shapes.h add_to_map.h \
+	setup.xml
+
+REL_DIR = basic-ioc/ext-schema
+
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MAIN)
+	$(call INSTALL_MK_FILE)
+

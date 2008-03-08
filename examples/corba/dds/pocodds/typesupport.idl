@@ -1,0 +1,15 @@
+#ifndef _simple_type_support
+# define _simple_type_support
+
+#include "dds_dcps.idl"
+
+#define DDS_TYPE(XYZ) \
+local interface XYZ##DataWriter : DDS::DataWriter {\
+    DDS::ReturnCode_t write(in XYZ val, in DDS::InstanceHandle_t h); \
+}; \
+\
+local interface XYZ##DataReader : DDS::DataReader {\
+    DDS::ReturnCode_t take_next_sample(inout XYZ val,  inout DDS::SampleInfo info);\
+};
+
+#endif

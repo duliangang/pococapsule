@@ -1,0 +1,17 @@
+include ../makefiles/Makefile.inc
+
+FILES = README.html\
+	add_to_map.h\
+	reader.C\
+	reader.h\
+	setup.xml
+
+REL_DIR = basic-ioc/stl-map
+
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_MAIN)
+	$(call INSTALL_MK_FILE)
+

@@ -1,0 +1,68 @@
+include ../stdmkdir/stdmk.tao_win
+
+CF_EXPORT = /DCF_EXPORT=__declspec(dllexport)
+CF_IMPORT = /DCF_EXPORT=__declspec(dllimport)
+
+SAMPLE_EXPORT = /DSAMPLE_EXPORT=__declspec(dllexport)
+SAMPLE_IMPORT = /DSAMPLE_EXPORT=__declspec(dllimport)
+
+EXE = main.exe scahelper$(DLL_SUFFIX) sampleImpl$(DLL_SUFFIX) \
+      reflx$(DLL_SUFFIX)
+
+all: CF_c.cc CF_s.cc sample_c.cc sample_s.cc $(EXE)
+
+CF_c.cc CF_s.cc: CF.idl
+	$(ORBCC) -Wb,skel_export_macro=CF_EXPORT \
+                 -Wb,stub_export_macro=CF_EXPORT CF.idl
+
+CF_c.obj: CF_c.cc
+	$(CC) $(CCFLAGS) $(CF_EXPORT) /c /Tp CF_c.cc
+
+CF_s.obj: CF_s.cc
+	$(CC) $(CCFLAGS) $(CF_EXPORT) /c /Tp CF_s.cc
+
+scahelper.obj: scahelper.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(CF_EXPORT) /c /Tp  scahelper.C
+
+scahelper$(DLL_SUFFIX): scahelper.obj CF_c.obj CF_s.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	scahelper.obj CF_c.obj CF_s.obj \
+	$(ORB_LIBPATH) $(LIBORB) $(LIBORBSERVER)
+
+sample_c.cc sample_s.cc: sample.idl
+	$(ORBCC) -Wb,skel_export_macro=SAMPLE_EXPORT sample.idl
+
+sample_c.obj: sample_c.cc
+	$(CC) $(CCFLAGS) $(SAMPLE_EXPORT) $(CF_IMPORT) /c /Tp sample_c.cc
+
+sample_s.obj: sample_s.cc
+	$(CC) $(CCFLAGS) $(SAMPLE_EXPORT) $(CF_IMPORT) /c /Tp sample_s.cc
+
+sampleImpl.obj: sampleImpl.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL $(SAMPLE_EXPORT) $(CF_IMPORT) /c /Tp \
+	sampleImpl.C
+
+sampleImpl$(DLL_SUFFIX): sampleImpl.obj sample_c.obj sample_s.obj CF_c.obj CF_s.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ \
+	sampleImpl.obj sample_c.obj sample_s.obj CF_c.obj CF_s.obj \
+	$(ORB_LIBPATH) $(LIBORB) $(LIBORBSERVER)
+
+setup_reflx.cc: setup.xml srv.xml sad.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=scahelper.h -h=sampleImpl.h setup.xml
+
+setup_reflx.obj: setup_reflx.cc
+	$(CC) $(CCFLAGS) $(POCO_IMPORT) $(CF_IMPORT) $(SAMPLE_IMPORT) /c /Tp \
+	setup_reflx.cc
+
+reflx$(DLL_SUFFIX): setup_reflx.obj
+	$(LINK_DLL) $(DLL_LD_FLAGS) /OUT:$@ setup_reflx.obj \
+	$(POCO_LIBPATH) $(LIBPOCO) $(LIB_POCO_CORBA_HELPER) \
+	$(ORB_LIBPATH) $(LIBORB) $(LIBORBSERVER) \
+	scahelper$(LIB_SUFFIX) sampleImpl$(LIB_SUFFIX)
+
+main.exe: main.obj
+	$(LINK_EXE) /OUT:$@ main.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+clean:
+	del *.obj *.cc *.hh *.inl *_T.cpp *.exe *.dll *.lib *.exp *.ilk \
+	*.pdb *.manifest

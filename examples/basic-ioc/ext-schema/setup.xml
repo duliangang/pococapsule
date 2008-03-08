@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Copyright(c) 2006, by Pocomatic Software, LLC. All Rights Reserved.
+
+	This example demonistrates how to extend the pococapsule, to support
+	<property> setter and <map>s, through a user defined domain specific
+	language (DSL).
+
+	The my-schema.dtd defines a DSL scheam extended from basic
+	poco-application-context. This DSL introduces following two new 
+	features: 
+
+	1. a <property> element with "name" and "value" (and "type") attributes.
+	   This is handy way to call setter, as a special case of <ioc> 
+	   element.
+
+	2. a <map> element that can be used for any map with string as key-type
+	   and a arbitrary class as value-type.
+
+	   Two such <map> elements are instantiated in this setup. The first one 
+	   uses Pit (class) instances as value-type and the second one has Shape 
+	   (class) instances as its values. The two classes, Pit and Shape, are 
+	   completely independent, without common base class. 
+
+	The myschema2poco.xsl specified in the processing-instruction (PI) defines 
+	templates that map this user defined schema into the underline 
+	poco-application-context schema. 
+-->
+
+<?xml-transform type="text/xsl" href="ext2poco.xsl"?>
+
+<!DOCTYPE ext-appctxt SYSTEM "file:ext-appctxt.dtd">
+
+<ext-appctxt id="my-map">
+   <load library="./reflx.$dll"/>
+
+   <bean class="void"
+	factory-method="::see_pits"
+        lazy-init="false">
+	<method-arg pass="deref">
+		 <map class="Pit">
+			<entry key="cat">
+				<bean class="Cat">
+					<method-arg type="string" value="Tom"/>
+				</bean>
+			</entry>
+			<entry key="dog">
+				<bean class="Dog">
+					<method-arg type="string" value="Pluto"/>
+				</bean>
+			</entry>
+			<entry key="bird">
+				<bean class="Bird">
+					<method-arg type="string" value="Jerry"/>
+				</bean>
+			</entry>
+		</map>
+	</method-arg>
+   </bean>
+
+   <bean class="void"
+	factory-method="::print_shapes"
+        lazy-init="false">
+	<method-arg pass="deref">
+		 <map class="Shape">
+			<entry key="square">
+				<bean class="Square">
+					<method-arg type="string" value="a-by-a"/>
+					<property name="a" type="short" value="3"/>
+				</bean>
+			</entry>
+			<entry key="triangle">
+				<bean class="Triangle">
+					<method-arg type="string" value="a-b-c"/>
+					<property name="a" type="short" value="3"/>
+					<property name="b" type="short" value="4"/>
+					<property name="c" type="short" value="5"/>
+				</bean>
+			</entry>
+			<entry key="circle">
+				<bean class="Circle">
+					<method-arg type="string" value="c-r"/>
+					<property name="r" type="short" value="2"/>
+				</bean>
+			</entry>
+		</map>
+	</method-arg>
+   </bean>
+
+</ext-appctxt>

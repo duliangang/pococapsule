@@ -1,0 +1,13 @@
+include ../stdmkdir/stdmk.win
+
+all: main.exe 
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=MyMovieFinder.h -h=MovieLister.h setup.xml
+
+main.exe: main.obj setup_reflx.obj MyMovieFinder.obj MovieLister.obj
+	$(LINK_EXE) /OUT:$@ main.obj setup_reflx.obj MyMovieFinder.obj \
+        MovieLister.obj $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML)
+
+clean:
+	del *.obj *.pdb *.lib *.exe *.dll *.exp *.cc *.exp *.ilk *.manifest

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Readme for extend schema example</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="CREATED" CONTENT="20061027;1353000">
+	<META NAME="CHANGEDBY" CONTENT="kejin">
+	<META NAME="CHANGED" CONTENT="20070510;19265400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in }
+		P { color: #000000 }
+		H2 { color: #000000 }
+		H3 { color: #000000 }
+		PRE { color: #000000 }
+		A:link { color: #0000ff }
+		A:visited { color: #990066 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#990066" BGCOLOR="#ffffff" DIR="LTR">
+<H2>PocoCapsule/C++ example: Extend the PocoCapsule/C++ core schema 
+</H2>
+<P>Copyright(c) 2006, 2007 by <A HREF="http://www.pocomatic.com/">Pocomatic
+Software LLC</A>. All rights reserved.</P>
+<P>This example illustrates the scenario to extend the core schema of
+PocoCapsule/C++ to support user defined &lt;property&gt; and the
+&lt;map&gt; elements. 
+</P>
+<P><FONT COLOR="#4c4c4c"><FONT SIZE=2><I>Although &lt;property&gt;
+and &lt;map&gt; are defined in most Java IoC containers, they are
+only referred but not defined in PocoCapsule/C++ container's core
+schema (i.e. poco-application-context.dtd). This is because:</I></FONT></FONT></P>
+<UL>
+	<LI><P><FONT COLOR="#4c4c4c"><FONT SIZE=2><I>Unlike their
+	counterpart in Java, setter methods in C++ have nothing so special
+	comparing to other post-instantiation &lt;ioc&gt; methods or
+	operators (such as direct data member assignment).</I></FONT></FONT></P>
+	<LI><P><FONT COLOR="#4c4c4c"><FONT SIZE=2><I>Unlike Java, C++ data
+	types have no generic common parent and no generic applicable memory
+	management mechanism. Defining a generic &lt;map&gt; element in
+	PocoCapsule/C++ core schema, however, would force its key-type and
+	value-type to use (void*). This would undermine typesafety and is
+	considered to be a poor practice in general. Besides, to support
+	&lt;map&gt; in the core, the container would either undermine the
+	POCO premise (by defining a map class) or tie itself to STL and
+	template. As map is a non-critical aggregate bean in declarative XML
+	deployment description, above sacrifices for this syntactic sugar is
+	not worthwhile.</I></FONT></FONT></P>
+</UL>
+<P><FONT COLOR="#4c4c4c"><FONT SIZE=2><I>Therefore, instead of
+pre-defining &lt;property&gt; and &lt;map&gt; (as well as &lt;set&gt;,
+&lt;list&gt; etc.), PocoCapsule/C++ only refers these elements and
+preserves them for application developers to provide their own
+favorite definitions through customized deployment schema, as
+illustrated in this example. </I></FONT></FONT>
+</P>
+<P>In this example, an user defined schema, namely the
+<A HREF="ext-appctxt.dtd">ext-appctxt.dtd</A>, extends the
+poco-application-context core schema and provides the definitions of
+&lt;property&gt; and &lt;map&gt;. The &lt;map&gt; element declares a
+std::map&lt;key, value&gt; bean that has std::string as key-type and
+an arbitrary class as value-type. Two such maps are declared in this
+example. The first one uses Pit (class) as value's type and the
+second has Shape (class) instances as its values' type. Although
+these two classes, Pit and Shape, are completely independent without
+common base class, their maps are strong typed without using (void*).</P>
+<P>The <A HREF="ext2poco.xsl">ext2poco.xsl</A> specified in the
+processing-instruction (PI) of <A HREF="setup.xml">setup.xml</A>
+specifies templates that map this user defined schema into the
+underline poco-application-context schema.</P>
+<H3>Source Files</H3>
+<P><A HREF="main.C"><FONT FACE="DejaVu Sans, sans-serif">main.C:</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">This is a simple container, used
+to deploy the application. This container is completely application
+logic independent. It contains no application specific code. Its
+executable, after build, does not depends on (by linking to) any
+application specific component modules (dynamic libraries).</FONT></P>
+<P><A HREF="pits.h"><FONT FACE="DejaVu Sans, sans-serif">pits.h:</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">This file declares an abstract
+Pit class, and defines/implements Cat, Dog and Bird as its child
+classes. A see_pits() global inline function is also defined, that
+take a std::map&lt;std::string, Pit*&gt; as input parameter and
+invokes voice() method on all pit objects contained. </FONT>
+</P>
+<P><A HREF="shapes.h"><FONT FACE="DejaVu Sans, sans-serif">shapes.h:</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">This file declares an abstract
+Shape class, and defines/implements Square, Triangle and Circle as
+its child classes. A print_shapes() global inline function is also
+defined, that take a std::map&lt;std::string, Shape*&gt; as input
+parameter and invokes print() method on all shape objects contained.</FONT></P>
+<P><A HREF="ext-appctxt.dtd"><FONT FACE="DejaVu Sans, sans-serif">ext-appctxt.dtd:</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">The document type definition of
+the user defined schema. </FONT>
+</P>
+<P><A HREF="ext2poco.xsl"><FONT FACE="DejaVu Sans, sans-serif">ext2poco.xsl:</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">The user-defined schema to poco
+deployment schema transformation stylesheet. </FONT>
+</P>
+<P><A HREF="setup.xml"><FONT FACE="DejaVu Sans, sans-serif">setup.xml:</FONT></A>
+<FONT FACE="DejaVu Sans, sans-serif">This is the application setup
+description using user defined schema. It describes the following
+structures:</FONT></P>
+<UL>
+	<LI><P><FONT SIZE=2>The global function see_pits() is called, with a
+	bean instance of Pit map as parameter. </FONT>
+	</P>
+	<LI><P><FONT SIZE=2>This map is populated by this XML description
+	using user defined schema (namely, &lt;entry&gt; elements as
+	children of &lt;map&gt;).</FONT></P>
+	<LI><P><FONT SIZE=2>The global function print_shapes() is called,
+	with a bean instance of Shape map as parameter.</FONT></P>
+	<LI><P><FONT SIZE=2>This map is also populated by this XML
+	description in user defined schema (namely, &lt;entry&gt; elements
+	as children of &lt;map&gt;). </FONT>
+	</P>
+</UL>
+<H3>Building this example</H3>
+<P STYLE="font-weight: medium">To build this example, the environment
+variable POCOCAPSULE_DIR should point to the PocoCapsule/C++
+installed directory. Then, this example can be built by simply
+invoking gmake/make on linux/unix or nmake on windows. 
+</P>
+<H3>Running this example</H3>
+<P><FONT FACE="DejaVu Sans, sans-serif">&middot; Before starting the
+application deployment container (i.e. the main executable), make
+sure the LD_LIBRARY_PATH (on linux and solaris) or the PATH (on
+windows) environment variable is set correctly to include the
+${POCOCAPSULE_DIR}/lib directory.</FONT></P>
+<P><FONT FACE="DejaVu Sans, sans-serif">&middot; start the main
+executable: </FONT>
+</P>
+<PRE STYLE="margin-left: 0.79in; margin-bottom: 0.2in"><B>prompt&gt;</B> main </PRE><P STYLE="margin-bottom: 0.2in">
+<FONT FACE="DejaVu Sans, sans-serif">It will print out following
+result:</FONT></P>
+<PRE STYLE="margin-left: 0.79in">------------------------------ all pits --------------------------
+Bird Jerry ... singing ...
+Cat Tom meow ... meow ...
+Dog Pluto bow ... wow ...
+------------------------------- all shapes -----------------------
+Circle c-r has radius length: 2
+Square a-by-a has side length: 3
+Triangle a-b-c has side lengths: 3 4 5</PRE><P>
+<A HREF="../../README.html">Back to the root page</A></P>
+</BODY>
+</HTML>

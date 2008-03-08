@@ -1,0 +1,30 @@
+include ../stdmkdir/stdmk.win
+
+all: main.exe AudioEffect$(DLL_SUFFIX) \
+     FMTransmitterReceiver$(DLL_SUFFIX) \
+     reflx$(DLL_SUFFIX)
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=AudioEffect.h -h=FMTransmitterReceiver.h setup.xml
+
+reflx$(DLL_SUFFIX): setup_reflx.obj
+	$(LINK_DLL) /OUT:$@ setup_reflx.obj $(POCO_LIBPATH) $(LIBPOCO) \
+        AudioEffect$(LIB_SUFFIX) FMTransmitterReceiver$(LIB_SUFFIX)
+
+AudioEffect.obj: AudioEffect.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL /c /Tp AudioEffect.C
+
+FMTransmitterReceiver.obj: FMTransmitterReceiver.C
+	$(CC) $(CCFLAGS) /DBUILD_DLL /c /Tp FMTransmitterReceiver.C
+
+AudioEffect$(DLL_SUFFIX): AudioEffect.obj
+	$(LINK_DLL) /OUT:$@ AudioEffect.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+FMTransmitterReceiver$(DLL_SUFFIX): FMTransmitterReceiver.obj
+	$(LINK_DLL) /OUT:$@ FMTransmitterReceiver.obj $(POCO_LIBPATH) $(LIBPOCO)
+
+main.exe: main.obj
+	$(LINK_EXE) /OUT:$@ main.obj $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML)
+
+clean:
+	del *.obj *.pdb *.lib *.exe *.dll *.exp *.cc *.exp *.ilk *.manifest

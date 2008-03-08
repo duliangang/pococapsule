@@ -1,0 +1,50 @@
+!IFNDEF POCOCAPSULE_DIR
+!MESSAGE POCOCAPSULE_DIR is not set
+!ENDIF
+
+CC = CL.exe /nologo
+LINK_EXE = LINK $(LDFLAGS)
+LINK_DLL = LINK $(LDFLAGS) /DLL
+
+POCO_PROJ=$(POCOCAPSULE_DIR:/=\)\bin\pxgenproxy -r=gather
+
+CC_MACROS = /DWIN32 /DSTRICT /DALIGNED /D_CRT_SECURE_NO_DEPRECATE
+
+CCFLAGS_COMMON = /EHsc 
+
+!IF "$(BUILD_TYPE)" == "debug" || "$(BUILD_TYPE)" == "DEBUG"
+
+DEBUG_CCFLAGS = /Zi /D_DEBUG
+THREAD_CCFLAG = /MDd
+DEBUG_LDFLAGS = /DEBUG
+LIB_SUFFIX = d.lib
+DLL_SUFFIX = d.dll
+
+!ELSE
+
+DEBUG_LDFLAGS =
+THREAD_CCFLAG = /MD
+LIB_SUFFIX = .lib
+DLL_SUFFIX = .dll
+
+!ENDIF
+
+CCFLAGS = $(CCFLAGS_COMMON) $(CC_MACROS) $(DEBUG_CCFLAGS) \
+          $(THREAD_CCFLAG) $(CCINCLUDES) 
+
+POCO_LIBPATH = /LIBPATH:$(POCOCAPSULE_DIR)/lib
+
+LIBPOCO = pococapsule$(LIB_SUFFIX)
+
+# by default, we use the Java based pocoxsl
+#LIBPOCOXML = pocoxml$(LIB_SUFFIX)
+
+CCINCLUDES = /I. /I$(POCOCAPSULE_DIR)/include 
+
+.SUFFIXES: .CPP .C .obj .h .cc .java .class
+
+.C.obj:
+	$(CC) $(CCFLAGS) /c /Tp $<
+
+.cc.obj:
+	$(CC) $(CCFLAGS) /c /Tp $<

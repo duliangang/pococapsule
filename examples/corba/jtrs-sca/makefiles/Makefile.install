@@ -1,0 +1,24 @@
+include ../makefiles/Makefile.inc
+
+FILES = \
+	README.html\
+	CF.idl\
+	sample.idl\
+	scahelper.h\
+	scahelper.C\
+	sampleImpl.h\
+	sampleImpl.C\
+	setup.xml\
+	sad.xml\
+	srv.xml\
+	sdr.jpg\
+	jtrs-sca-lite.dtd\
+	jtrs-sca-lite2poco.xsl
+
+REL_DIR = corba/jtrs-sca
+
+all:
+	$(MKDIR) $(TGT_DIR)
+	$(CP) $(FILES) $(TGT_DIR)
+	$(call INSTALL_REPL_MAIN,main.C)
+	$(call INSTALL_MK_FILE)

@@ -1,0 +1,12 @@
+include $(POCOCAPSULE_DIR)/examples/basic-ioc/stdmkdir/stdmk
+
+all: 
+	$(CC) $(LIB_CREATION_FLAG) -g TickGenImpl.C -o TickGenImpl.so
+	$(CC) $(LIB_CREATION_FLAG) -g GPSLocatorImpl.C -o GPSLocatorImpl.so
+	$(CC) $(LIB_CREATION_FLAG) -g NavDisplayImpl.C -o NavDisplayImpl.so
+	$(POCO_PROJ) -s=_reflx.cc -h=GPSLocatorImpl.h -h=NavDisplayImpl.h -h=TickGenImpl.h setup.xml
+	$(CC) $(LIB_CREATION_FLAG) $(POCO_LIBPATH) $(LIBPOCO) \
+				-g setup_reflx.cc -o reflx.so
+	$(CC) main.C $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML) -o main
+clean:
+	rm -rf *.o *_reflx.* *.so main

@@ -1,0 +1,16 @@
+include ../stdmk
+
+FILES = main$(LIB_SUFFIX) setup.ctx
+
+exe: $(FILES)
+
+all: exe 
+
+setup_reflx.cc: setup.xml
+	$(POCO_PROJ) -s=_reflx.cc -h=MyMovieFinder.h -h=MovieLister.h setup.xml
+
+main$(LIB_SUFFIX):main.o setup_reflx.o MyMovieFinder.o MovieLister.o
+	$(LINK_SLIB)
+
+clean:
+	$(RM) *.o *.cc $(FILES)

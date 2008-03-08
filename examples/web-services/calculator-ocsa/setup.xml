@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE poco-application-context 
+	SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
+
+<poco-application-context>
+   <load library="./reflx.so"/>
+   <import resource="server.config"/>
+   <import resource="calculator-by-wire.composite"/>
+</poco-application-context>

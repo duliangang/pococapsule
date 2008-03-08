@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+	Copyright 2006, by Pocomatic Software, LLC. All Rights Reserved.  
+
+	PocoCapsule/C++ IoC Container XML Beans DTD with Web Services
+	application support 
+-->
+
+<!--
+        include the poco-application-context.dtd
+-->
+<!ENTITY % include-poco-application-context-dtd
+        SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
+%include-poco-application-context-dtd;
+
+<!--
+	<ws-application> element is the root of a 
+	ws-application xml document.
+-->
+<!ELEMENT ws-application ((header|import|load|bean|web-server|web-client)*)>
+
+<!--
+	id to prevent duplicated import
+-->
+<!ATTLIST ws-application id CDATA	#IMPLIED>
+
+<!ELEMENT web-server	((bean|endpoint)*)>
+<!ATTLIST web-server	id	ID	#IMPLIED>
+<!ATTLIST web-server	config	CDATA	#IMPLIED>
+<!ATTLIST web-server	label	CDATA	#IMPLIED>
+
+<!ELEMENT endpoint	(bean|ref)>
+<!ATTLIST endpoint	id	ID	#IMPLIED>
+<!ATTLIST endpoint	label	CDATA	#IMPLIED>
+<!ATTLIST endpoint	name	CDATA	#IMPLIED>
+<!ATTLIST endpoint	wsdl	CDATA	#IMPLIED>
+
+<!-- initialize web client only -->
+<!ELEMENT web-client	EMPTY>
+<!ATTLIST web-client	config	CDATA	#IMPLIED>

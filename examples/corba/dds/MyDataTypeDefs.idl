@@ -1,0 +1,23 @@
+#include "typesupport.idl"
+
+struct Foo {
+	string a;
+	string b;
+	long   c;
+	long   d;
+};
+
+struct Bar {
+	long   a;
+	long   b;
+	string c;
+	string d;
+};
+
+//
+// To declare DDS type of an IDL struct(s)
+//
+#ifdef USE_POCO_DDS
+DDS_TYPE(Foo)
+DDS_TYPE(Bar)
+#endif

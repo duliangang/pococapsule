@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-transform type="text/xsl" href="http://www.pocomatic.com/ws2poco.xsl"?>
+
+<!DOCTYPE ws-application SYSTEM "http://www.pocomatic.com/ws-application.dtd">
+
+<ws-application>
+   <load library="./bizlogic.$dll"/>
+
+   <web-server id="my-ws" config="config.xml">
+     <endpoint name="HelloWorld"><bean class="MyHelloServiceImpl"/></endpoint>
+   </web-server>
+</ws-application>

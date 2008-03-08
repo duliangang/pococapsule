@@ -1,0 +1,96 @@
+#include "rtc_lite.idl"
+
+module sample {
+	local interface SpeedDataConsumer;
+	local interface BumperDataConsumer;
+	local interface RangeScanDataConsumer;
+	local interface ServoControl;
+	local interface ScanControl;
+	local interface LogAndDisplay;
+
+	local interface VehicleController : RTC::LightweightRTObject {
+		// receptacles
+		RTC::ReturnCode_t connect_LeftWheelControlOut(
+					in ServoControl servo);
+		RTC::ReturnCode_t connect_RightWheelControlOut(
+					in ServoControl servo);
+		RTC::ReturnCode_t connect_ScanCommandOut(
+					in ScanControl scan);
+		RTC::ReturnCode_t connect_StatusOut(
+					in LogAndDisplay log);
+
+		// facets
+		
+		// sinks
+		SpeedDataConsumer get_consumer_LeftWheelSpeedDataIn();
+		SpeedDataConsumer get_consumer_RightWheelSpeedDataIn();
+		BumperDataConsumer get_consumer_FrontBumperDataIn();
+		BumperDataConsumer get_consumer_RearBumperDataIn();
+		RangeScanDataConsumer get_consumer_RangeScanDataIn();
+		
+		// emitters
+	};
+
+	local interface ServoComponent : RTC::LightweightRTObject {
+		// receptacles 
+
+		// facet
+		ServoControl provide_Control();
+
+		// sinks
+
+		// emitters
+		RTC::ReturnCode_t connect_SpeedDataOut(in SpeedDataConsumer c);
+		SpeedDataConsumer disconnect_SpeedDataOut();
+	};
+
+	local interface RangeScannerComponent : RTC::LightweightRTObject {
+		// receptacles
+
+		// facets
+		ScanControl provide_Control();
+
+		// sinks
+
+		// emitters
+		RTC::ReturnCode_t connect_RangeScanDataOut(in RangeScanDataConsumer c);
+		RangeScanDataConsumer disconnect_RangeScanDataOut();
+	};
+
+	local interface BumperSensorComponent : RTC::LightweightRTObject {
+		// receptacles, facets, sinks
+
+		// emitters
+		RTC::ReturnCode_t connect_SensorDataOut(in BumperDataConsumer c);
+		BumperDataConsumer disconnect_SensorDataOut();
+	};
+
+	local interface LogAndDisplay : RTC::LightweightRTObject {
+		// some operations here
+	};
+
+	local interface Named {
+		string name();
+	};
+
+	local interface ServoControl : Named {
+		// some operations here
+	};
+
+	local interface ScanControl : Named {
+		// some operations here
+	};
+
+	local interface SpeedDataConsumer : Named {
+		// some operations here
+	};
+
+	local interface BumperDataConsumer : Named {
+		// some operations here
+	};
+
+	local interface RangeScanDataConsumer : Named {
+		// some operations here
+	};
+	
+};

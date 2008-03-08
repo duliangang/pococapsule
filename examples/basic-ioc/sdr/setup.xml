@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Copyright 2006 by Pocomatic Software LLC, All Rights Reserved.
+
+	This example shows how to use Pococapsule to wire up a Software
+	Defined Radio (SDR) system that comprises of 8 components and 
+	22 inter-component dependencies.
+
+	The original model of this SDR is from CRC's reference implementation 
+	(http://www.crc.ca/scari) of JTRS-SCA (Software Communication Architecture)
+-->
+
+<!DOCTYPE poco-application-context 
+	SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
+
+<poco-application-context>
+
+	<load library="./AudioEffect.$dll"/>
+	<bean id="node1-audio-device"
+	      class="AudioDevice">
+		<method-arg type="string" value="node1 audio device"/>
+
+		<ioc method="AudioOut">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="AudioIn"
+				      factory-bean="echo-resource"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="AudioOutLeftDouble">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="DoubleSeqIn"
+				      factory-bean="demodulation-FM-resource"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="AudioOutLeftDouble">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="DoubleSeqIn"
+				      factory-bean="modulation-FM-resource"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+
+	<bean id="echo-resource"
+	      class="AudioEchoResource">
+		<method-arg type="string" value="echo resource"/>
+
+		<ioc method="AudioOut">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="AudioIn"
+				      factory-bean="chorus-resource"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+
+	<bean id="chorus-resource"
+	      class="AudioChorusResource">
+		<method-arg type="string" value="chorus resource"/>
+
+		<ioc method="AudioOut">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="AudioIn"
+				      factory-bean="node1-audio-device"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+		
+	<bean id="audio-effect-controller"
+	      class="AudioEffectController"
+	      lazy-init="false">
+		<method-arg type="string" value="audio effect controller"/>
+
+		<ioc method="AudioInControl">
+			<method-arg>
+				<ref bean="node1-audio-device"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="AudioOutControl">
+			<method-arg ref="node1-audio-device"/>
+		</ioc>
+
+		<ioc method="AudioEchoControl">
+			<method-arg ref="echo-resource"/>
+		</ioc>
+
+		<ioc method="AudioChorusControl">
+			<method-arg ref="chorus-resource"/>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+
+	<bean id="modulation-FM-resource"
+	      class="ModulationFMResource">
+		<method-arg type="string" value="modulation FM resource"/>
+
+		<ioc method="DoubleSeqOut">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="AudioInLeftDouble"
+				      factory-bean="node1-audio-device"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+
+	<bean id="demodulation-FM-resource"
+	      class="DemodulationFMResource">
+		<method-arg type="string" value="demodulation FM resource"/>
+		
+		<ioc method="DoubleSeqOut">
+			<method-arg>
+				<bean class="SDR::PushPort"
+				      factory-method="AudioInRightDouble"
+				      factory-bean="node1-audio-device"/>
+			</method-arg>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+
+	<load library="./FMTransmitterReceiver.$dll"/>
+	<bean id="FM-transmitter-receiver-assembly-controller"
+	      class="FMTransmitterReceiverAssemblyController"
+	      lazy-init="false">
+		<method-arg type="string" value="FM transmitter/receiver assembly controller"/>
+
+		<ioc method="ModulationFMControl">
+			<method-arg ref="modulation-FM-resource"/>
+		</ioc>
+
+		<ioc method="DemodulationFMControl">
+			<method-arg ref="demodulation-FM-resource"/>
+		</ioc>
+
+		<ioc method="OutputDeviceControl">
+			<method-arg ref="node1-audio-device"/>
+		</ioc>
+
+		<ioc method="InputDeviceControl">
+			<method-arg ref="node1-audio-device"/>
+		</ioc>
+
+		<ioc method="logPort">
+			<method-arg ref="log"/>
+		</ioc>
+	</bean>
+
+	<bean id="log" class="LogImpl"/>
+
+	<load library="./reflx.$dll"/>
+
+</poco-application-context>
