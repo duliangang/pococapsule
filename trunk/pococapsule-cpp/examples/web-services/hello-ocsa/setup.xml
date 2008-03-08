@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE poco-application-context 
-	SYSTEM "http://www.pocomatic.com/poco-application-context.dtd">
-
-<poco-application-context>
-   <load library="./bizlogic.$dll"/>
-   <import resource="server.config"/>
-   <import resource="service.composite"/>
-</poco-application-context>

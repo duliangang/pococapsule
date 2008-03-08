@@ -1,8 +1,0 @@
-include $(POCOCAPSULE_DIR)/examples/basic-ioc/stdmkdir/stdmk
-
-all: 
-	$(POCO_PROJ) -s=_reflx.cc -h=MyMovieFinder.h -h=MovieLister.h setup.xml
-	$(CC) *.C *.cc $(POCO_LIBPATH) $(LIBPOCO) $(LIBPOCOXML) -o main
-
-clean:
-	rm -f *.o *.so main *_reflx.*

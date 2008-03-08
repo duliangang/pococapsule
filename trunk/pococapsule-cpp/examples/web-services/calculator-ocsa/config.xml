@@ -1,8 +1,0 @@
-<!-- Standalone server configuration -->
-<waspc-config xmlns:wasp='urn:WaspServer'>
-    <!-- core of server -->
-    <wasp:import ref='conf/server-core.xml'/>
-
-    <!-- HTTP Transport -->
-    <wasp:import ref='conf/http-server.xml'/>
-</waspc-config>
