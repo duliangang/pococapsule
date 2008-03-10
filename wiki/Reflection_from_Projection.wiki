@@ -4,7 +4,7 @@
 = Non-invasive IoC containers and Reflection =
 Non-invasive IoC containers support _container agnostic_ components. These components neither call back container runtime directories or contexts nor support any container pre-defined callback interfaces or operation signatures. Hence, to manipulate these components, non-invasive IoC containers have to rely on dynamic invocation proxies. Conventional IoC containers, such as Spring, PicoContainer, HiveMind, etc., use the dynamic invocation from the JavaSE reflection. However, many programming languages or environments, for instance, C, C++, JavaME CLDC, etc., do not come with this kind of language native reflection mechanism.
 
-Many attempts on implementing IoC containers in these non-reflective languages/environments were focused on meeting some phantom requirements, such as having a conventional reflection facility or support a scripting like environement. The actual purpose of IoC container, however, was largely forgotten.
+Many attempts on implementing IoC containers in these non-reflective languages/environments were focused on meeting some phantom requirements, such as having a conventional reflection facility and supporting a scripting like environement. The actual purpose of IoC container, however, was largely forgotten.
 
 The purpose of IoC container is neither to pursue a reflection engine nor to support another scripting language. Instead, IoC containers are mainly to achieve the following goals:
 
