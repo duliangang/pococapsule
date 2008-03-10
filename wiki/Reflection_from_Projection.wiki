@@ -6,7 +6,7 @@ Non-invasive IoC containers support _container agnostic_ components. These compo
 
 Many attempts on implementing IoC containers in these non-reflective languages/environments were focused on meeting a phantom requirement, namely having a conventional reflection facility. The actual purpose of IoC container, however, was largely forgotten.
 
-The purpose of IoC container is neither to pursue a reflection engine nor to support another scripting language. Instead, IoC containers are mainly to meet the following goals:
+The purpose of IoC container is neither to pursue a reflection engine nor to support another scripting language. Instead, IoC containers are mainly to achieve the following goals:
 
   * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
   * To assemble, deploy, and configure applications declaratively (by expressing what they are alike, rather than the procedures of how to build them step-by-step). Ideally, in case of configuration parameter value changes, an application should be reconfigurable by only modifying declarative descriptions and do not force code recompilations.
