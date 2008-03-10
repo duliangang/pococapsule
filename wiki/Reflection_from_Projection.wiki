@@ -20,7 +20,7 @@ Based on these considerations, PocoCapsule uses the so-called "_reflection from 
 Unlike UML or CASE tools, this _projection_ scenario does not require users to provide component definitions. Also, unlike traditional DSM tools, this _projection_ does not generate method invocation code with actual parameter values. Rather it care component wiring and configuring descriptions and only generate proxies (and necessary mate data) based on method invocation signatures referred in wiring and configuring involved components. This means users do not need to rebuild dynamic proxies in case of configuration parameter value changes.
 
 = Worse is better =
-The RfP scenario seems to be inferior than other alternatives, such as pre-generate all dynamic proxies (and all mate data) for all aspects of all involved components. However, given the C++ (and C, JavaME CLDC as well) application background, this seemingly worse solution is a better one.
+The RfP scenario seems to be inferior than other alternatives, such as pre-generate all dynamic proxies (and all mate data) for all aspects of all involved components. However, given the C++ (and C, JavaME CLDC as well) application background, this seemingly worse solution is a better one, unless one's purpose is not IoC but to pursue a full blown reflection engine or to support a scripting environment.
 
   * RfP significantly reduces the excessive footprint of reflection code and mate data.
   * RfP is straightforward on various rigorous embedded systems where developers have to compromise with very primitive and not fully standard compliant C++ compilers.
