@@ -1,5 +1,5 @@
 #summary A discussion of "Reflection from Projection"
-#labels Phase-Design
+#labels Phase-Design,Featured
 
 = Non-invasive IoC containers and Reflection =
 Non-invasive IoC containers support _container agnostic_ components. These components neither call back container runtime directories or contexts nor support any container pre-defined callback interfaces or operation signatures. Hence, to manipulate these components, non-invasive IoC containers have to rely on dynamic invocation proxies. Conventional IoC containers, such as Spring, PicoContainer, HiveMind, etc., use the dynamic invocation from the Java reflection. However, many programming languages or environments, for instance, C, C++, JavaME CLDC, etc., do not come with this kind of language native reflection mechanism.
