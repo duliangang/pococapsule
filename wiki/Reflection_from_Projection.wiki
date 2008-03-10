@@ -1,0 +1,28 @@
+#summary A discussion of "Reflection from Projection"
+#labels Phase-Design
+
+= Non-invasive IoC containers and Reflection =
+Non-invasive IoC containers support _container agnostic_ components. These components neither call back container runtime directories or contexts nor support any container pre-defined callback interfaces or operation signatures. Hence, to manipulate these components, non-invasive IoC containers have to rely on dynamic invocation proxies. Conventional IoC containers, such as Spring, PicoContainer, HiveMind, etc., use the dynamic invocation from the Java reflection. However, many programming languages or environments, for instance, C, C++, JavaME CLDC, etc., do not come with this kind of language native reflection mechanism.
+
+Many attempts on implementing IoC containers in these non-reflective languages/environments were focused on a phantom requirement, namely having a conventional reflection facility. The actual purpose of IoC container, however, was largely forgotten.
+
+The purpose of IoC container is neither to pursue a reflection engine nor to support another scripting language. Instead, IoC containers are mainly to meet following goals:
+
+  * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
+  * To assemble, deploy, and configure applications declaratively (by expressing what they are alike, rather than the procedures of how to build them step-by-step). Ideally, in case of configuration parameter value changes, an application should be reconfigurable by only modifying declarative descriptions and do not force code recompilations.
+  * To support component and declarative model-transformation based _domain-specific-modeling_ (DSM).
+
+Therefore, if you are looking for a reflection engine or a scripting language, you should stop read about IoC containers and this article.
+
+= Reflection from Projection =
+Based on these considerations, PocoCapsule uses the so-called "_reflection from projection_" (RfP) scenario to facilitate dynamic invocations. By this scenario, instead of having all aspects of all involved components to be thoroughly reflectible, users only need to extract those dynamic proxies (and other necessary mate data) that are _projected_ (i.e. going to be used) by given applications described in their setup descriptions. The development utility `pxgenproxy` is provided in PocoCapsule to perform this _projection_, namely to extract and generate dynamic invocation proxies from application setup descriptions.
+
+Unlike UML or CASE tools, this _projection_ scenario does not require users to provide component definitions. Also, unlike traditional DSM tools, this _projection_ does not generate method invocation code with actual parameter values. Rather it care component wiring and configuring descriptions and only generate proxies (and necessary mate data) based on method invocation signatures referred in wiring and configuring involved components. This means users do not need to rebuild dynamic proxies in case of configuration parameter value changes.
+
+= Worse is better =
+The RfP scenario seems to be inferior than other alternatives, such as pre-generate all dynamic proxies (and all mate data) for all aspects of all involved components. However, given the C++ (and C, JavaME CLDC as well) application background, this seemingly worse solution is a better one.
+
+  * RfP significantly reduces the excessive footprint of reflection code and mate data.
+  * RfP is straightforward on various rigorous embedded systems where developers have to compromise with very primitive and not fully standard compliant C++ compilers.
+  * Rfp works well with C++ templates and even macros.
+  * Rfp is easily applicable to other languages or environments (C, JavaME CLDC, Ada, COBOL). 
