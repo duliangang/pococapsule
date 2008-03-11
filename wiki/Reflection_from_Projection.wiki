@@ -2,9 +2,9 @@
 #labels Phase-Design,Featured
 
 = Non-invasive IoC containers and Reflection =
-Non-invasive IoC containers support _container agnostic_ components. These components neither call container runtime services (configuration directories or contexts) nor support any container pre-defined callback control interfaces or operation signatures. Hence, to manipulate these components, non-invasive IoC containers have to rely on dynamic invocation proxies. Conventional IoC containers, such as Spring, PicoContainer, HiveMind, etc., use the dynamic invocation from the JavaSE reflection. However, many programming languages or environments, for instance, C, C++, JavaME CLDC, etc., do not come with this kind of language native reflection mechanism.
+Non-invasive IoC containers support _container agnostic_ components. These components neither call container runtime services (configuration directories or contexts) nor support any container pre-defined callback control interfaces or operation signatures. Hence, instead of forcing components to be implemented to fit specific target containers, containers adapt themselve to interfaces/operations of plain-old C++/Java objects (components). Conventional IoC containers, such as Spring, PicoContainer, HiveMind, etc., use the dynamic invocation from the JavaSE reflection for this purpose. However, many programming languages, such as C and C++, or language environments, such as JavaME CLDC, do not come with this kind of language native reflection mechanism.
 
-Many attempts on implementing IoC containers in these non-reflective languages/environments were largely focused on some phantom requirements, such as having a full blown reflection facility and supporting a XML scripting environement. The actual purpose of IoC container, however, was unforturnately neglected.
+Attempts on implementing IoC containers in these non-reflective languages/environments were largely focused on phantom requirements, such as building a samiliar reflection engine and supporting a XML scripting environement. The actual purpose of IoC container, however, was unforturnately neglected.
 
 The purpose of IoC container is neither to pursue a reflection engine nor to support another scripting language. Instead, IoC containers are mainly to achieve the following goals:
 
