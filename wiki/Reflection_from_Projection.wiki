@@ -24,6 +24,6 @@ The RfP scenario seems to be inferior than other alternatives, such as pre-gener
 
   * RfP significantly reduces the excessive footprint of reflection code and mate data.
   * RfP is straightforward on various rigorous embedded systems where developers have to compromise with very primitive and not fully standard compliant C++ compilers.
-  * RfP works well with C++ templates (as well as _[http://en.wikipedia.org/wiki/C%2B%2B0x#Concepts C++0x concepts]_), inline functions, and even macros.
+  * RfP works well with C++ templates (as well as _[http://en.wikipedia.org/wiki/C%2B%2B0x C++0x]_ _[http://en.wikipedia.org/wiki/C%2B%2B0x#Concepts concepts]_), inline functions, and even macros.
   * RfP is easily applicable to other languages or environments (C, JavaME CLDC, Ada, COBOL). 
   * RfP works without requiring component implementation source code! 
