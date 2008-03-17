@@ -1,0 +1,45 @@
+#summary A brief note on type safety of PocoCapsule.
+
+== Type Safety in C++ ==
+
+Type safety in C++ means language type systems are able to detect and prohibit invalid type conversions. Some common type operations are summarized in the following table:
+
+|| *type operation* || *allowed conversion* || *note* || 
+|| implicit conversion || up type hierarchy || static and safe  ||  
+|| dynamic_cast || within type hierarchy || safe, but relies on RTTI ||
+|| static_cast || within type hierarchy || unsafe on down and horizontal cast || 
+|| C-style or reinterpret_cast || any to any || unsafe [[1]] ||
+|| C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone [[2]] ||
+
+[[1]] C-style type cast and reinterpret_cast operations allow any types to be converted to any other types. These casts include conversions up, down, and horizontal within type hierarchies, as well as out of hierarchies. For valid conversions with in type hierarchies, these casts generate correct results. However, these casts do not detect or prohibit invalid down and horizontal casts within hierarchies or type casts across hierarchies. 
+
+[[2]] C-style type cast and reinterpret_cast to/from opaque allow any types to be converted to/from opaques (such as void pointers, char or uchar pointers, integers). These casts do not detect or prohibit invalid down and horizontal casts within hierarchies or type casts across hierarchies. And worse, these casts completely bypass the language type system and could generate incorrect results even in valid type cast cases, such as up casting a multi-inherited child class to its parent classes. Unless the opaques are casted back to their exactly original casted-from types.
+
+== Type Safety in PocoCapsule == 
+
+Type safety in dependency-injection scenarios is ensured by the following two rules in PocoCapsule:
+
+ * IoC proxies only apply implicit type conversions (for non-opaques).
+ * IoC proxies use C-style type casts only to convert opaques back to their exactly original casted-from types.
+
+The above two rules ensure 100% type safety in _dependency injection_ usage scenarios, namely dependency references are injected as IoC invocation input parameters. Type conversion errors will be reported by C++ compilers on building proxies. 
+
+Type safety in directory-lookup scenarios is ensured by either of the following two rules in casting a bean reference opaque retrieved from a PocoCapsule bean directory (application context):
+
+ * The user should specifies the bean's type-id on retrieving its reference opaque from the directory. This specifies the type id of the original casted-from type. User should only cast the opaque to the exactly type before perform further casts. For instance:
+{{{
+ Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
+ if( ref == NULL ) {
+    // could be a type error ...
+ } 
+}}}
+
+ * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the type id of the original casted-from type. User should only cast the opaque to the exactly type before perform further casts.
+{{{
+ Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
+ const char* type_id = ctxt->getBeanPtrTypeId("my-foo-bean");
+ if( ref!= NULL && strcmp(type_id, "Foo*") ) {
+    // type error ...
+ } 
+}}}
+ 
