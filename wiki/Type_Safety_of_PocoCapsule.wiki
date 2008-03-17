@@ -17,14 +17,14 @@ Type safety in C++ means language type systems are able to detect and prohibit i
 
 == Type Safety in PocoCapsule == 
 
-Type safety in dependency-injection scenarios is ensured by the following two rules in PocoCapsule:
+Type safety in *_dependency-injection_* scenarios is ensured by the following two rules in PocoCapsule:
 
   * IoC proxies only apply implicit type conversions (for non-opaques).
   * IoC proxies use C-style type casts only to convert bean reference opaques back to their exactly original casted-from types (which are types declared in application descriptions).
 
 The above two rules ensure 100% type safety in _dependency injection_ usage scenarios, namely dependency references are injected as IoC invocation input parameters. Type conversion errors will be reported by C++ compilers on building proxies. 
 
-Type safety in _directory-lookup_ scenarios is ensured by either of the following two rules in casting a bean reference opaque retrieved from a PocoCapsule bean directory (application context):
+Type safety in *_directory-lookup_* scenarios is ensured by either of the following two rules in casting a bean reference opaque retrieved from a PocoCapsule bean directory (application context):
 
   * The user should specifies the bean's type-id on retrieving its reference opaque from the directory. This specifies the type id of the original declared type. User should only cast the opaque to the exactly type before perform further casts. For instance:
 {{{
