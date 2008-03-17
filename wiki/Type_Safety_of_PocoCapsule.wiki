@@ -9,12 +9,11 @@ Type safety in C++ means language type systems are able to detect and prohibit i
 || implicit conversion || up type hierarchy || static and safe  ||  
 || dynamic_cast || within type hierarchy || safe, but relies on RTTI ||
 || static_cast || within type hierarchy || unsafe on down and horizontal casts || 
-|| C-style or reinterpret_cast || any to any || unsafe [[1]] ||
-|| C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone [[2]] ||
+|| C-style or reinterpret_cast || any to any || unsafe (1) ||
+|| C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone (2) ||
 
-[[1]] C-style type cast and reinterpret_cast operations allow any types to be converted to any other types. These casts include conversions up, down, and horizontal within type hierarchies, as well as across hierarchies. For valid conversions with in type hierarchies, these casts generate correct results. However, these casts do not detect or prohibit invalid down and horizontal casts within hierarchies and wrong type casts that across hierarchies. 
-
-[[2]] C-style type cast and reinterpret_cast to/from opaque allow any types to be converted to/from opaques (such as void pointers, char or uchar pointers, integers). These casts do not detect or prohibit invalid down and horizontal casts within hierarchies and wrong type casts that across hierarchies. And worse, these casts completely bypass the language type system and could generate incorrect results even in valid type cast cases, such as up casting a multi-inherited child class to its parent classes. These two kinds of type casts are not safe in general, unless the opaques are casted back to their exactly original casted-from types without moving up or down in their hierarchies.
+ # C-style type cast and reinterpret_cast operations allow any types to be converted to any other types. These casts include conversions up, down, and horizontal within type hierarchies, as well as across hierarchies. For valid conversions with in type hierarchies, these casts generate correct results. However, these casts do not detect or prohibit invalid down and horizontal casts within hierarchies and wrong type casts that across hierarchies. 
+ # C-style type cast and reinterpret_cast to/from opaque allow any types to be converted to/from opaques (such as void pointers, char or uchar pointers, integers). These casts do not detect or prohibit invalid down and horizontal casts within hierarchies and wrong type casts that across hierarchies. And worse, these casts completely bypass the language type system and could generate incorrect results even in valid type cast cases, such as up casting a multi-inherited child class to its parent classes. These two kinds of type casts are not safe in general, unless the opaques are casted back to their exactly original casted-from types without moving up or down in their hierarchies.
 
 == Type Safety in PocoCapsule == 
 
