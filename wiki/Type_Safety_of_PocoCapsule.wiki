@@ -26,7 +26,7 @@ The above two rules ensure 100% type safety in _dependency injection_ usage scen
 
 Type safety in *_directory-lookup_* scenarios is ensured by either of the following two rules in casting a bean reference opaque retrieved from a PocoCapsule bean directory (application context):
 
-  * An user should specifies the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should only cast the returned opaque to the specified type before perform further casts. For instance:
+  * An user should specifies the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should only cast the returned opaque to the specified type before carrying out further casts (such as dynamic_cast). For instance:
 {{{
  Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
  if( ref == NULL ) {
