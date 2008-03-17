@@ -43,4 +43,9 @@ Type safety in _directory-lookup_ scenarios is ensured by either of the followin
  } 
 }}}
 
+== Miscellaneous ==
+  * Type safety is not binary compability.
+  * PocoCapsule type system treats different declared bean type ids as distinct types, without knowing C++ typedef etc.
+  * Implicit type conversions in PocoCapsule are not performed by PocoCapsule type system dynamically, but utilize C++ type system in the generated proxies. 
+
  
