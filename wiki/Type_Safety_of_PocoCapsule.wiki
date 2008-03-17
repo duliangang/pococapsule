@@ -7,7 +7,7 @@ Type safety in C++ means language type systems are able to detect and prohibit i
 || *type operation* || *allowed conversion* || *note* || 
 || implicit conversion || up type hierarchy || static and safe  ||  
 || dynamic_cast || within type hierarchy || safe, but relies on RTTI ||
-|| static_cast || within type hierarchy || unsafe on down and horizontal cast || 
+|| static_cast || within type hierarchy || unsafe on down and horizontal casts || 
 || C-style or reinterpret_cast || any to any || unsafe [[1]] ||
 || C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone [[2]] ||
 
