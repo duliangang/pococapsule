@@ -37,8 +37,8 @@ Type safety in _directory-lookup_ scenarios is ensured by either of the followin
   * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the pointer type id of the original declared type. User should only cast the opaque to the exactly type before perform further casts.
 {{{
  Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
- const char* type_id = ctxt->getBeanPtrTypeId("my-foo-bean");
- if( ref!= NULL && strcmp(type_id, "Foo*") ) {
+ const char* ptr_type_id = ctxt->getBeanPtrTypeId("my-foo-bean");
+ if( ref!= NULL && strcmp(ptr_type_id, "Foo*") ) {
     // type error ...
  } 
 }}}
