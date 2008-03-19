@@ -13,7 +13,7 @@ Type safety in C++ means language type systems are able to detect and prohibit i
 || C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone (2) ||
 
  # C-style type cast and reinterpret_cast operations allow any types to be converted to any other types. These casts include conversions up, down, and horizontal within type hierarchies, as well as across hierarchies. For valid conversions with in type hierarchies, these casts generate correct results. However, these casts do not detect or prohibit invalid down and horizontal casts within hierarchies and wrong type casts that across hierarchies. 
- # C-style type cast and reinterpret_cast to/from opaque allow any pointer types to be converted to opaques (such as void pointers, char or uchar pointers, integers) and then casted back to pointers of any other types. Like direct C-style or reinterpret_cast, these indirect (through opaque) casts do not detect or prohibit invalid end-to-end conversions neither. And worse than that, such an indirect conversion completely bypasses the C++ language type system. Therefore, it could generate incorrect results even in valid type conversion cases involving multi-inheritance, unless the opaque is casted back to the exactly original converted-from pointer type without moving up or down in its type hierarchy.
+ # C-style type cast and reinterpret_cast to/from opaque allow any pointer types to be converted to opaques (such as void pointers, char or uchar pointers, integers) and then casted back to pointers of any other types. Like direct C-style or reinterpret_cast, these indirect (through opaque) casts do not detect or prohibit invalid end-to-end conversions neither. And worse than that, such an indirect conversion completely bypasses the C++ language type system. Therefore, it could generate incorrect results even in valid type conversions involving multi-inheritance, unless the opaque is casted back to the exactly original converted-from pointer type without moving up or down in its type hierarchy.
 
 == Type Safety in PocoCapsule == 
 
@@ -26,7 +26,7 @@ The above two rules ensure 100% type safety in _dependency injection_ usage scen
 
 Type safety in *_directory-lookup_* scenarios is ensured by either of the following two rules in casting a bean reference opaque retrieved from a PocoCapsule bean directory (application context):
 
-  * An user should specifies the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should only cast the returned opaque to the specified type before carrying out further casts (such as dynamic_cast). For instance:
+  * An user should specify the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should only cast the returned opaque to the specified type before carrying out further casts (such as dynamic_cast). For instance:
 {{{
  Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
  if( ref == NULL ) {
