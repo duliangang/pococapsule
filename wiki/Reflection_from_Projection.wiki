@@ -6,7 +6,7 @@ Non-invasive IoC containers support _container agnostic_ components. These compo
 
 Attempts on implementing IoC containers in these non-reflective static languages/environments were largely driven by various phantom requirements, such as to build a Java reflection like facility, to support a XML scripting environement, and to manipulate third party components without even knowing their relevant API signatures. The very fundamental objectives of IoC containers, however, were unfortunately neglected. 
 
-IoC containers are neither to offer reflection engines nor to support another scripting language. Instead, IoC containers are mainly for the following objectives:
+IoC containers are neither to offer reflection a la Java nor to support another scripting language. Instead, IoC containers are mainly for the following objectives:
 
   * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
   * To assemble, deploy, and configure applications declaratively (by expressing what they are alike, rather than the procedures of how to build them step-by-step). Ideally, in case of configuration parameter value changes, an application should be reconfigurable by only modifying declarative descriptions and do not force code recompilations.
