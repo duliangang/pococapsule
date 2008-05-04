@@ -10,7 +10,7 @@ IoC containers are neither to offer reflection a la Java nor to support another 
 
   * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
   * To assemble, deploy, and configure applications declaratively (by expressing what they are alike, rather than the procedures of how to build them step-by-step). Ideally, in case of configuration parameter value changes, an application should be reconfigurable by only modifying declarative descriptions and do not force code recompilations.
-  * To support component and declarative model-transformation based _domain-specific-modeling_ (DSM).
+  * To support component and declarative model-transformation based _ontological_ and _domain-specific_ modeling (DSM).
 
 Therefore, if you are looking for a reflection engine or a scripting language, you should stop reading about IoC containers and this article.
 
