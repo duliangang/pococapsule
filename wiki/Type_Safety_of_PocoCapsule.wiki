@@ -33,6 +33,7 @@ Type safety in *_directory-lookup_* scenarios is ensured by either of the follow
   Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
  if( ref == NULL ) {
     // could be a type error ...
+    ...
  } 
 }}}
 
@@ -41,11 +42,13 @@ Type safety in *_directory-lookup_* scenarios is ensured by either of the follow
   Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
  if( ref == NULL ) {
    // bean does not exist ... 
+   ...
  }
-
+ 
  const char* ptr_type_id = ctxt->getBeanPtrTypeId("my-foo-bean");
  if( strcmp(ptr_type_id, "Foo*") && strcmp(ptr_type_id, "Foo_ptr") ) {
     // type error ...
+    ...
  } 
 }}}
 
