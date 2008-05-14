@@ -30,7 +30,7 @@ Type safety in *_directory-lookup_* scenarios is ensured by either of the follow
 
   * An user should specify the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should only cast the returned opaque to the specified type before carrying out further casts (such as dynamic_cast). For instance:
 {{{
- Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
+  Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
  if( ref == NULL ) {
     // could be a type error ...
  } 
@@ -38,7 +38,7 @@ Type safety in *_directory-lookup_* scenarios is ensured by either of the follow
 
   * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the pointer type id of the original declared type. User should only cast the opaque to the exactly type before perform further casts.
 {{{ 
- Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
+  Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
  if( ref == NULL ) {
    // bean does not exist ... 
  }
