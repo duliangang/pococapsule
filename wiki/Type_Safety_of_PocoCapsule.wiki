@@ -47,7 +47,7 @@ Type safety in *_directory-lookup_* scenarios is ensured by either of the follow
  
  const char* ptr_type_id = ctxt->getBeanPtrTypeId("my-foo-bean");
  if( strcmp(ptr_type_id, "Foo*") && strcmp(ptr_type_id, "Foo_ptr") ) {
-    // The type cast to Foo* (or Foo_ptr) made above may not be valid. 
+    // The type cast to Foo* made above may not be valid. 
     ...
  } 
 }}}
