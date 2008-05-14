@@ -17,7 +17,7 @@ Type safety in C++ means language type systems are able to detect and prohibit i
 
 == Type Safety in PocoCapsule == 
 
-Instead of dictating a single predefined type hierarchy, PocoCapsule supports heterogeneous user-defined type hierarchies. PocoCapsule ensures type casts made by its IoC container in performing dependency injections are always valid. PocoCapsule also provides dynamic type query mechanisms to help applications dynamically validate type casts made on opaque component references returned from directory (i.e. application context) lookup.
+Instead of dictating a single predefined type hierarchy (i.e. a common base class), PocoCapsule supports heterogeneous user-defined type hierarchies. Namely, supported components are plain-old C/C++ object (POCOs) of various user defined base types, such as class without deriving from any base class, classes with any user defined base classes, and even function types (in form of function pointers). Components of these types are internally manipulated and even returned as opaques. PocoCapsule ensures type casts to/from these opaques made by its IoC container in performing dependency injections are always valid, and invalide type casts will be reported statically. PocoCapsule also provides type verification mechanisms to help applications dynamically validate type casts made on such opaques (references of component instances) returned from directory (i.e. application context) lookup.
 
 Type safety in *_dependency-injection_* scenarios is ensured by the following two rules in PocoCapsule:
 
