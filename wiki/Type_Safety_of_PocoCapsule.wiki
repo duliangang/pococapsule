@@ -17,6 +17,8 @@ Type safety in C++ means language type systems are able to detect and prohibit i
 
 == Type Safety in PocoCapsule == 
 
+Instead of dictating a single predefined type hierarchy, PocoCapsule supports heterogeneous user-defined type hierarchies and is able to ensure type safety in both the *_dependency-injection_* and the *_directory-lookup_* usage scenarios.
+
 Type safety in *_dependency-injection_* scenarios is ensured by the following two rules in PocoCapsule:
 
   * IoC proxies only apply implicit type conversions (for non-opaques).
