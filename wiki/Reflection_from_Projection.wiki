@@ -4,8 +4,14 @@
 == Non-invasive IoC containers and Reflection ==
 Non-invasive IoC containers support _container agnostic_ components. These components neither query container runtime services (configuration directories or contexts) nor support any container pre-defined callback control interfaces or operation signatures. Hence, instead of dealing with homogeneous standardized components, these containers have to manipulate plain-old C++/Java objects (components) through their heterogeneous user-defined interfaces or function signatures. The conventional solution used by various IoC containers for static typed languages relies on reflection based dynamic invocations. However, many static typed language runtime environments, such as C, C++, and JavaME CLDC, do not come with this kind of language native reflection mechanism.
 
-In the past, attempts on implementing IoC containers in these non-reflective static languages/environments were largely misleaded by various phantom requirements that assumed the goals here were mainly to build and utilize a Java reflection alike facility, to support a XML scripting environement, and/or to manipulate third party components without even knowing their relevant API signatures. The very fundamental objectives of IoC containers, however, were unfortunately neglected. 
+== Phontom requirements ==
+In the past, attempts on implementing IoC containers in these non-reflective static languages/environments were largely misleaded by various phantom requirements that assumed the goals here were mainly to build and utilize a Java reflection alike facility, to support a XML scripting environement, and/or to manipulate third party components without even knowing their relevant API signatures (see discussions below). The very fundamental objectives of IoC containers, however, were unfortunately neglected. 
 
+For instance, it was wrongly assumed that an IoC framework should allow one to use third party components (which user defined API signatures) that do not have header files declaring their API signatures (classes). As a matter of fact, free from header files is not an intended objective of non-invasive IoC frameworks but merely a nature of specific language environments, such as Java, that have API signature declarations (as well as other matedate) built-in with their components. If the intention was merely using components without header files, then IoC frameworks in most language environments would be senseless. Because, most of these environments, such as Java, are already free from separated header files even without IoC frameworks. 
+
+Similarly, another assumption was that IoC frameworks should not involving compilation or processing with other tools on application descriptions.      
+
+== Objectives ==
 IoC containers are neither to offer reflection a la Java nor to support another scripting language. Instead, IoC containers are mainly for the following objectives:
 
   * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
