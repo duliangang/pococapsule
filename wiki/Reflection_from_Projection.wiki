@@ -9,7 +9,7 @@ In the past, attempts on implementing IoC containers in these non-reflective sta
 
 For instance, it was wrongly assumed that an IoC framework should allow one to use third party components (which user defined API signatures) that do not have header files declaring their API signatures (classes). As a matter of fact, free from header files is not an intended objective of non-invasive IoC frameworks but merely a nature of specific language environments, such as Java, that have API signature declarations (as well as other matedate) built-in with their components. If the intention was merely using components without header files, then IoC frameworks in most language environments would be senseless. Because, most of these environments, such as Java, are already free from separated header files even without IoC frameworks. 
 
-Similarly, another assumption was that IoC frameworks should not involving compilation or processing with other tools on application descriptions.      
+Similarly, another assumption was that IoC frameworks should not involving compilation or processing with other tools on application descriptions. Many existing IoC frameworks, such as PicoContainer and Spring (in its JavaConfig), simply have their application wiring written in Java code that has to be compiled. Also, even if XML descriptions were used, it wasn't uncommon that they were packaged into .ear, .war, .jar, or .ZIP files using various tools.         
 
 == Objectives ==
 IoC containers are neither to offer reflection a la Java nor to support another scripting language. Instead, IoC containers are mainly for the following objectives:
