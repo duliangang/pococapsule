@@ -19,7 +19,7 @@ IoC frameworks are neither to offer reflection a la Java nor to support another 
   * To support quick and dynamic (in non-development environments) application reconfigurations involving parameter value changes and component rewirings and replacement.
   * To support component and declarative model-transformation based _ontological_ and _domain-specific_ modeling (DSM).
 
-Therefore, if you are looking for a reflection engine or a scripting environment for C++, you should stop reading about IoC containers and this article.
+Therefore, if you are looking for a reflection engine or a scripting environment for C++, you should stop reading about IoC frameworks.
 
 == Reflection from Projection ==
 Based on these considerations, PocoCapsule uses the so-called "_reflection from projection_" (RfP) scenario to facilitate dynamic invocations. By this scenario, instead of having all aspects of all involved components to be thoroughly reflectible, users only need to extract those dynamic proxies (and other necessary mate data) that are _projected_ (i.e. going to be used) by given applications described in their setup descriptions. The development utility *pxgenproxy* is provided in PocoCapsule to perform this _projection_, namely to extract and generate dynamic invocation proxies from application setup descriptions.
