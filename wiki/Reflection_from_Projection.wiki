@@ -17,7 +17,7 @@ IoC frameworks are neither to offer reflection a la Java nor to support another 
   * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
   * To assemble, deploy, and configure applications _[http://en.wikipedia.org/wiki/Declarative_programming declaratively]_ (by expressing what they are alike, rather than the procedures of how to build them step-by-step). 
   * To support quick and dynamic (in non-development environments) application reconfigurations involving parameter value changes and component rewirings and replacement.
-  * To support _[http://en.wikipedia.org/wiki/Component-based component-based]_ _[http://en.wikipedia.org/wiki/Ontology_%28information_science%29 ontological]_ and _[http://www.pocomatic.com/docs/whitepapers/dsm domain-specific-modeling (DSM)]_.
+  * To support _[http://en.wikipedia.org/wiki/Component-based component-based]_ _[http://en.wikipedia.org/wiki/Ontology_%28information_science%29 ontological]_ and _[http://www.pocomatic.com/docs/whitepapers/dsm domain-specific-modeling (DSM)]_ and _[http://en.wikipedia.org/wiki/Model_transformation model transformation]_.
 
 Therefore, if you are looking for a reflection engine or a scripting environment for C++, you should stop reading about IoC frameworks.
 
