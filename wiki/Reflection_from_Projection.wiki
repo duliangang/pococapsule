@@ -14,7 +14,7 @@ Similarly, another popular illusion was that IoC frameworks were scripting (or g
 == Objectives ==
 IoC frameworks are neither about reflection a la Java nor meant to be another scripting language. Instead, IoC frameworks are mainly for the following objectives:
 
-  * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift them (plumbing logic) into the framework.
+  * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift these plumbing logic into non-invasive frameworks.
   * To assemble, deploy, and configure applications _[http://en.wikipedia.org/wiki/Declarative_programming declaratively]_ (by expressing what they are alike, rather than the procedures of how to build them step-by-step). 
   * To support quick and dynamic but domain-specific (or even application-specific) application on-site reconfigurations (such as component configuration parameter value changes, component rewirings, and component replacement).
   * To support _[http://en.wikipedia.org/wiki/Component-based component-based]_ _[http://en.wikipedia.org/wiki/Ontology_%28information_science%29 ontological]_ and _[http://www.pocomatic.com/docs/whitepapers/dsm domain-specific-modeling (DSM)]_ and _[http://en.wikipedia.org/wiki/Model_transformation model transformation]_.
