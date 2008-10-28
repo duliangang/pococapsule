@@ -5,13 +5,14 @@
 
 Type safety in C++ means language type systems are able to detect and prohibit invalid type conversions. Some common type operations are summarized in the following table:
 
-|| *type operation* || *allowed conversion* || *note* || 
-|| implicit conversion || up type hierarchy || static and safe  ||  
-|| dynamic_cast || within type hierarchy || safe, but relies on RTTI ||
-|| static_cast || within type hierarchy || unsafe on down and horizontal casts || 
-|| C-style or reinterpret_cast || any to any || unsafe (1) ||
-|| C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone (2) ||
+|| *type operation* || *valid conversion* || *note* || *error report* ||
+|| implicit conversion || up type hierarchy || static and safe  || compile time ||
+|| dynamic_cast || within type hierarchy || safe, but relies on RTTI || runtime ||
+|| static_cast || within type hierarchy || unsafe on down and horizontal casts || compile time (1) ||
+|| C-style or reinterpret_cast || any to any || unsafe (2) || none ||
+|| C-style or reinterpret_cast to/from opaque || any to any || unsafe and error prone (3) || none ||
 
+ # Many invalid type casts using static_cast could not be reported by compiler. For instance, static_cast across type hierarchies, static_cast from a base class implementation (that does not support the subclass) to a subclass reference, etc..  
  # C-style type cast and reinterpret_cast operations allow any types to be converted to any other types. These casts include conversions up, down, and horizontal within type hierarchies, as well as across hierarchies. For valid conversions with in type hierarchies, these casts generate correct results. However, these casts do not detect or prohibit invalid down and horizontal casts within hierarchies and wrong type casts that across hierarchies. 
  # C-style type cast and reinterpret_cast to/from opaque allow any pointer types to be converted to opaques (such as void pointers, char or uchar pointers, integers) and then casted back to pointers of any other types. Like direct C-style or reinterpret_cast, these indirect (through opaque) casts do not detect or prohibit invalid end-to-end conversions neither. And worse than that, such an indirect conversion completely bypasses the C++ language type system. Therefore, it could generate incorrect results even in valid type conversions involving multi-inheritance, unless the opaque is casted back to the exactly original converted-from pointer type without moving up or down in its type hierarchy.
 
