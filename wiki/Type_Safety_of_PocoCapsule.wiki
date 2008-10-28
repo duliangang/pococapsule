@@ -5,7 +5,7 @@
 
 Type safety in C++ means language type systems are able to detect and prohibit invalid type conversions. Some common type operations are summarized in the following table:
 
-|| *type operation* || *valid conversion* || *note* || *error report* ||
+|| *type operation* || *valid conversion* || *note* || *type check* ||
 || implicit conversion || up type hierarchy || static and safe  || compile time ||
 || dynamic_cast || within type hierarchy || safe, but relies on RTTI || runtime ||
 || static_cast || within type hierarchy || unsafe on down and horizontal casts || compile time, but limited (1) ||
