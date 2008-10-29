@@ -3,7 +3,7 @@
 
 == Type Safety in C++ ==
 
-Type safety in C++ means language type systems are able to detect and prohibit invalid type conversions. Some common type operations are summarized in the following table:
+Type safety in C++ means language type systems are able to detect and prohibit invalid type conversions. Some relevant common type operations are summarized in the following table:
 
 || *type operation* || *valid conversion* || *note* || *type check* ||
 || implicit conversion || up type hierarchy || static and safe  || compile time ||
