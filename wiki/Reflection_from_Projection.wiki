@@ -2,7 +2,7 @@
 #labels Phase-Design,Featured
 
 == Non-invasive IoC containers and Reflection ==
-Non-invasive IoC containers support _container agnostic_ components. These components neither query container runtime services (configuration directories or contexts) nor support any container pre-defined callback control interfaces or operation signatures. In another words, these components are plain-old C++/Java objects in arbitrary class/interface hierarchies without a framework pre-defined common root. Hence, instead of dealing with homogeneous standardized components, non-invasive IoC containers have to manipulate plain-old C++/Java objects (components) through their heterogeneous user-defined interfaces or function signatures. 
+Non-invasive IoC containers support _container agnostic_ components. These components neither query container runtime services (to resolve their dependencies and configurations) nor need to support any container pre-defined callback control interfaces or operation signatures. In another words, these components are plain-old C++/Java objects in arbitrary class/interface hierarchies without a framework pre-defined common root. Hence, instead of dealing with homogeneous standardized components, non-invasive IoC containers have to manipulate plain-old C++/Java objects (components) through their heterogeneous user-defined interfaces or function signatures. 
 
 The conventional solution used by various IoC containers for static typed languages relies on reflection based dynamic invocations. However, many static typed language runtime environments, such as C, C++, and JavaME CLDC, do not come with this kind of language native reflection mechanism.
 
