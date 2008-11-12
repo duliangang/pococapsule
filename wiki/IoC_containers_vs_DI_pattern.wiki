@@ -1,6 +1,4 @@
-#summary One-sentence summary of this page.
-
-= Inversion of Control Containers vs. Dependency Injection Pattern = 
+#summary Inversion of Control Containers vs. Dependency Injection Pattern
 
 == IoC containers are not about a design pattern or a programming framework ==
 
