@@ -1,4 +1,4 @@
-#summary Inversion of Control Containers vs. Dependency Injection Pattern
+#summary A whitepaper on IoC vs DI
 
 == IoC containers are not about a design pattern or a programming framework ==
 
