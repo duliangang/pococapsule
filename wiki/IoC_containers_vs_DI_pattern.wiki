@@ -1,6 +1,6 @@
 #summary A whitepaper on IoC vs DI
 
-== IoC containers are not about a design pattern or a programming framework ==
+== IoC containers are not about a design pattern or a programming library ==
 
 By a fairly popular misunderstanding, the meaning of _inversion-of-control_ (IoC) containers is summarized in the following two conclusions:
 
