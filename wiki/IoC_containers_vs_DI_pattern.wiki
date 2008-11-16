@@ -3,7 +3,7 @@
 
 == IoC containers are not about a design pattern ==
 
-There are many myths about _inversion-of-control (IoC) containers_, such as they are event-driven frameworks, they are merely the strategy pattern, one can do the same thing  (in imperative language environment) without them. The top two myths are summarized as follows:
+There are many myths about _inversion-of-control (IoC) containers_, such as: they are event-driven frameworks, they are merely the strategy pattern, one can do the same thing  (in imperative language environment) without them. The top two myths are summarized as follows:
 
 1. _inversion of control_ (IoC) is a programming design pattern also known as _dependency injection_ (DI). The objective of this design pattern is to achieve _loose coupling_ between application components by outsourcing instantiation logic of dependent components. To be specific, the loose coupling referred in this design pattern means that caller components have only interface couplings and dependency references but no implementation coupling to callee components.
 
