@@ -1,4 +1,4 @@
-#summary IoC containers vs DI design pattern
+#summary IoC containers vs the DI design pattern
 #labels Featured
 
 == IoC containers are not about a design pattern or a programming library ==
