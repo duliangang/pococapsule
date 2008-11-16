@@ -24,7 +24,7 @@ The primary focus of IoC containers is to fabricate applications, from service a
 
 - Firstly, they are *_[http://en.wikipedia.org/wiki/Declarative_programming declarative]_* and describe the architecture models (namely *_what_* are the set of involved components, their configurations, constraints, and dependency relationships) of their applications rather than the _[http://en.wikipedia.org/wiki/Imperative_programming imperative]_ procedures (namely *_how_*) to set up these architectures.
 
-- Secondly, they are *_[http://en.wikipedia.org/wiki/First-class_object first class objects]_* of of the container's framework. This means that these description modules can be manipulated (such as to be generated, transformed, refactored, aggregated, filtered, queried, and verified) explicitly by high level declarative code.
+- Secondly, they are *_[http://en.wikipedia.org/wiki/First-class_object first class objects]_* of the framework. This means that these description modules can be manipulated (such as to be generated, transformed, refactored, aggregated, filtered, queried, and verified) explicitly by high level declarative code.
 
 These two seemingly plain features not only have non-trivial and paradigm shifting implications far beyond the DI design pattern or the IoC principle itself, but also differentiate IoC containers from imperative scripting language environments.
 
