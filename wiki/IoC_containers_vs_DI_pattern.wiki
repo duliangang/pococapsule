@@ -3,11 +3,11 @@
 
 == IoC containers are not about a design pattern ==
 
-There are many myths about _inversion-of-control (IoC) containers_, such as: they are event-driven frameworks, they are merely the strategy pattern, or one can do the same thing  (in imperative language environment) without these containers. The top two myths, however, are summarized as follows:
+There are many myths about _inversion-of-control (IoC) containers_, such as: they are event-driven frameworks, they are merely the strategy pattern, or they are useless and one can do the same thing  (in imperative language environment) without them. Among them, the top two myths are summarized as follows:
 
-1. _inversion of control_ (IoC) is a programming design pattern also known as _dependency injection_ (DI). The objective of this design pattern is to achieve _loose coupling_ between application components by outsourcing instantiation logic of dependent components. To be specific, the loose coupling referred in this design pattern means that caller components have only interface couplings and dependency references but no implementation coupling to callee components.
+1. _inversion of control_ (IoC) is a programming design pattern known as the _dependency injection_ (DI) for achieving _loose coupling_ between application objects. To be specific, by externalizing object instantiation logic, this design pattern makes caller objects have only interface couplings and dependency references but no implementation coupling to callee objects.
 
-2. IoC containers (usually referred to as DI frameworks from this misunderstanding) are simply programming frameworks that do DI. To be specific, the objectives of IoC/DI containers are to handle the outsourced logic of instantiating application components and then wiring them up through DI.
+2. IoC containers (renamed as DI frameworks under thest myths) are simply programming frameworks that do DI. To be specific, the objectives of IoC/DI containers are to handle the externalized logic of instantiating application objects and then wiring them up through DI.
 
 Misleaded by these myths, many people concluded, either disappointedly or scornfully, that the IoC/DI is merely an over hyped trivial programming design pattern they have manually used for years. Consequently, the significance and implications of IoC containers are constantly speculated or neglected, as expressed in a slogan from some DI folks: _“I was expecting a paradigm shift, and all I got was a lousy constructor”_.
 
