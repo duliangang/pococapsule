@@ -3,13 +3,13 @@
 
 == IoC containers are not about a design pattern ==
 
-There are many myths about _inversion-of-control (IoC) containers_, such as: they are event-driven frameworks, they are merely the strategy pattern, one can do the same thing  (in imperative language environment) without them. The top two myths, however, are summarized as follows:
+There are many myths about _inversion-of-control (IoC) containers_, such as: they are event-driven frameworks, they are merely the strategy pattern, or one can do the same thing  (in imperative language environment) without these containers. The top two myths, however, are summarized as follows:
 
 1. _inversion of control_ (IoC) is a programming design pattern also known as _dependency injection_ (DI). The objective of this design pattern is to achieve _loose coupling_ between application components by outsourcing instantiation logic of dependent components. To be specific, the loose coupling referred in this design pattern means that caller components have only interface couplings and dependency references but no implementation coupling to callee components.
 
 2. IoC containers (usually referred to as DI frameworks from this misunderstanding) are simply programming frameworks that do DI. To be specific, the objectives of IoC/DI containers are to handle the outsourced logic of instantiating application components and then wiring them up through DI.
 
-Caught by these two myths, many people concluded, either disappointedly or scornfully, that the IoC/DI is merely an over hyped trivial programming design pattern they have manually used for years. Consequently, the significance and implications of IoC containers are constantly speculated or neglected, as expressed in a slogan from some DI folks: _“I was expecting a paradigm shift, and all I got was a lousy constructor”_.
+Misleaded by these myths, many people concluded, either disappointedly or scornfully, that the IoC/DI is merely an over hyped trivial programming design pattern they have manually used for years. Consequently, the significance and implications of IoC containers are constantly speculated or neglected, as expressed in a slogan from some DI folks: _“I was expecting a paradigm shift, and all I got was a lousy constructor”_.
 
 [http://www.betaversion.org/%7Estefano/linotype/news/38/ Stefano] once pointed out what is wrong with this misunderstanding on IoC containers: _IoC is not even a design pattern, but a general principle that separates an API from a framework, based on who is in control. Dependency Injection misses that entirely and misleads the reader to believe that this is just another way of composing objects. I don’t blame Martin Fowler for that, I blame those who came up with IoC type 1,2,3 and missed the point entirely about the fact that IoC is not what Avalon *does* (so not a design pattern), but a much more general principle that Avalon simply *used*_.  This comment is quite right. The popular misunderstanding on IoC containers is mainly wrong on confusing IoC containers with the DI design pattern.  
 
