@@ -1,4 +1,4 @@
-#summary A discussion of "Reflection from Projection"
+#summary Reflection from Projection
 #labels Phase-Design,Featured
 
 == Non-invasive IoC containers and Reflection ==
