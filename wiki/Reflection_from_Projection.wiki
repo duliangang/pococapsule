@@ -14,7 +14,7 @@ For instance, it was thought that IoC frameworks were mainly to allow third part
 Similarly, another popular illusion was that IoC frameworks were scripting (or general purpose dynamic language) environments to assemble/configure applications without involving compilers or other tools. Contrary to this illusion, many real world IoC frameworks, such as PicoContainer, SpringFramework IoC (in its Java Configuration), and Guice simply have their application wiring/configuration descriptions written in Java code that have to be compiled before use. Even if XML descriptions were used, it wasn't uncommon that they need to be packaged into .ear, .war, .jar, or .ZIP files using various tools.         
 
 == Objectives ==
-IoC frameworks are neither about reflection a la Java nor meant to be another scripting language. Instead, IoC frameworks are mainly for the following objectives (also explored in the whitepaper [IoC_containers_vs_DI_pattern IoC containers vs. Dependency Injection Pattern]):
+IoC frameworks are neither about reflection a la Java nor meant to be another scripting language. Instead, IoC frameworks are mainly for the following objectives (also explored in the whitepaper _[http://www.pocomatic.com/docs/whitepapers/ioc-vs-di IoC containers vs. Dependency Injection Pattern]_):
 
   * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift these plumbing logic into non-invasive frameworks.
   * To assemble, deploy, and configure applications _[http://en.wikipedia.org/wiki/Declarative_programming declaratively]_ (by expressing what they are alike, rather than the procedures of how to build them step-by-step). 
