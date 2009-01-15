@@ -29,28 +29,38 @@ These two rules ensure 100% type safety in _dependency injection_ usage scenario
 
 Type safety in *_directory-lookup_* scenarios is ensured by either of the following two rules in casting a bean reference opaque retrieved from a PocoCapsule bean directory (application context):
 
-  * An user should specify the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should only cast the returned opaque to the specified type before carrying out further casts (such as dynamic_cast). For instance:
+  * An user should specify the bean's type-id on retrieving its reference opaque from the directory. PocoCapsule compares this type-id with the bean's original casted-from type-id (which is the _class_ attribute declared in application description) and only returns the opaque when the comparison exactly matchs or returns NULL on failure. User should first cast the returned opaque pointer to the specified type before carrying out further casts (such as dynamic_cast). For example:
 {{{
   Foo* ref = (Foo*)ctxt->getBean("my-foo-bean", "Foo");
  if( ref == NULL ) {
-    // could be a type error ...
+    // error: either bean does not exists or it mismatch with type Foo.
     ...
  } 
+
+ // further casts
+ Foo2* ref2 = ref;
+ Foo3* ref3 = dynamic_cast<Foo3*>(ref);
+ ...
 }}}
 
-  * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the pointer type id of the original declared type. User should first cast the opaque pointer to the bean's original declared pointer type before perform further casts.
+  * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the pointer type id of the original declared type. Before perform further casts, User should first cast the opaque pointer to a pointer type that matches bean's pointer type id. For example:
 {{{ 
   Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
  if( ref == NULL ) {
-   // bean does not exist ... 
-   ...
+   // error: bean does not exist ... 
+   ... 
  }
  
  const char* ptr_type_id = ctxt->getBeanPtrTypeId("my-foo-bean");
  if( strcmp(ptr_type_id, "Foo*") && strcmp(ptr_type_id, "Foo_ptr") ) {
-    // The type cast to Foo* made above may not be valid. 
-    ...
+    // error: the bean's type mismatch with the type Foo. 
+    ... 
  } 
+
+ // further casts
+ Foo2* ref2 = ref;
+ Foo3* ref3 = dynamic_cast<Foo3*>(ref);
+ ... 
 }}}
 
 == Miscellaneous ==
