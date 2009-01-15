@@ -38,7 +38,7 @@ Type safety in *_directory-lookup_* scenarios is ensured by either of the follow
  } 
 }}}
 
-  * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the pointer type id of the original declared type. User should only cast the opaque to the exactly type before perform further casts.
+  * The user should retrieve the bean's type-id from the directory (use the getBeanPtrTypeId() method on the application context). This is the pointer type id of the original declared type. User should first cast the opaque pointer to the bean's original declared pointer type before perform further casts.
 {{{ 
   Foo* ref = (Foo*)ctxt->getBean("my-foo-bean");
  if( ref == NULL ) {
