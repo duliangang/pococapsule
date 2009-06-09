@@ -20,17 +20,19 @@
 
    % setenv JRE_CLIENT_DIR ${JRE_INSTALL_DIR}/jre/lib/i386/client
 
-5. Install the Apache Xerces and set the XERCES_DIR to the
+5. For platforms other than linux (32bites) and windows, find the installed JVM runtime library (i.e. libjvm.so) location and modify the CLNT_JVM marco in the src/xslreaders/xslreaders.C and src/tools/launchers/launcher.C accordingly.  
+
+6. Install the Apache Xerces and set the XERCES_DIR to the
 installed directory. For instance:
 
    % setenv XERCES_DIR /home/kjin101/xerces-cpp
 
-6. (*optional*) Install HP Systinet WASP and set the WASP_HOME to the installed directory. If you don't want to build the WebServices helper for Systinet WASP, remove it from the pococapsule-cpp/src/Makefile.
+7. (*optional*) Install HP Systinet WASP and set the WASP_HOME to the installed directory. If you don't want to build the WebServices helper for Systinet WASP, remove it from the pococapsule-cpp/src/Makefile.
 
-7. Change to the $POCOCAPSULE_CPP/src directory and run the make or gmake commend. for instance:
+8. Change to the $POCOCAPSULE_CPP/src directory and run the make or gmake commend. for instance:
    % cd $POCOCAPSULE_CPP/src
    % make
 
-8. As a result, the PocoCapsule runtime libraries, utility jar files,
+9. As a result, the PocoCapsule runtime libraries, utility jar files,
 user header files, and XML/DTD/XSLT source files will be copyed to the
 ${POCOCAPSULE_DIR}/lib, include, and resources directories.
