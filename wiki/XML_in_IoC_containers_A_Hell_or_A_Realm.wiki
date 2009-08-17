@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#XML in IoC containers: A Hell or A Realm?
 
 While the essence of Inversion-of-Control (IoC) container appears to be easily comprehensible and well understood, as pointed out in _[http://www.pocomatic.com/docs/whitepapers/ioc-vs-di IoC containers other than the DI pattern]_, it is subtly confusable and badly misread. One of the biggest confusing is about the use of XML. Namely, application composite wiring/configurations are programmed as XML documents (or textual strings). This practice in IoC containers, notoriously known as the "XML Hell", draws various FUD criticisms, such as:
 
