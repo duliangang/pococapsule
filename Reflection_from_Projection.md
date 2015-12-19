@@ -1,0 +1,35 @@
+## Non-invasive IoC containers and Reflection ##
+Non-invasive IoC containers support _container-agnostic_ components. These components are plain-old C++/Java objects. They neither resolve their dependencies and configurations from container served directories nor need to support any container pre-defined callback control interfaces or operation signatures. Hence, instead of dealing with homogeneous standardized components, non-invasive IoC containers have to manipulate plain-old C++/Java objects (components) through their heterogeneous user-defined interfaces or function signatures.
+
+The conventional solution used by various IoC containers for static typed languages relies on reflection based dynamic invocations. However, many static typed language runtime environments, such as C, C++, and JavaME CLDC, do not come with this kind of language native reflection mechanism.
+
+## Non-goals ##
+Other attempts of implementing IoC frameworks in these non-reflective static languages/environments were largely putting the cart before the horse and/or pursuing to meet various phantom requirements. They assumed that IoC frameworks were mainly about reflection a la Java and the goals of them were, for instance, to support a XML scripting environment and/or to manipulate third party components without even knowing their relevant application programming interface (API) signatures (see discussions below). The very fundamental objectives of IoC frameworks, however, were unfortunately neglected.
+
+For instance, it was thought that IoC frameworks were mainly to allow third party components (with heterogeneous user defined API signatures) to be used without having their API signature (classes) declaration header files. Nevertheless, just like garbage collection, platform or language neutrality, dynamic type etc. are not features introduced by IoC frameworks, freeing from header files is neither a feature nor the objective of non-invasive IoC frameworks. Rather, this feature is merely an existing nature of certain language environments, such as Java, C#, and even K&R C, that have homogeneous application binary interface (ABI) and, if needed, have sufficient API matedate embedded in application components. If the intention was merely to use components without header files, then IoC frameworks in many language environments would be unnecessary. Because, most of these environments, such as Java and C#, were already free from separated header files even without IoC frameworks.
+
+Similarly, another popular illusion was that IoC frameworks were scripting (or general purpose dynamic language) environments to assemble/configure applications without involving compilers or other tools. Contrary to this illusion, many real world IoC frameworks, such as PicoContainer, SpringFramework IoC (in its Java Configuration), and Guice simply have their application wiring/configuration descriptions written in Java code that have to be compiled before use. Even if XML descriptions were used, it wasn't uncommon that they need to be packaged into .ear, .war, .jar, or .ZIP files using various tools.
+
+## Objectives ##
+IoC frameworks are neither about reflection a la Java nor meant to be another scripting language. Instead, IoC frameworks are mainly for the following objectives (also explored in the whitepaper _[IoC containers vs. Dependency Injection Pattern](http://www.pocomatic.com/docs/whitepapers/ioc-vs-di)_):
+
+  * To separate plumbing logic (component life cycle controls, wirings, initial property settings etc.) from business logic, and shift these plumbing logic into non-invasive frameworks.
+  * To assemble, deploy, and configure applications _[declaratively](http://en.wikipedia.org/wiki/Declarative_programming)_ (by expressing what they are alike, rather than the procedures of how to build them step-by-step).
+  * To support quick and dynamic but domain-specific (or even application-specific) application on-site reconfigurations (such as component configuration parameter value changes, component rewirings, and component replacement).
+  * To support _[component-based](http://en.wikipedia.org/wiki/Component-based)_ _[domain-specific-modeling (DSM)](http://www.pocomatic.com/docs/whitepapers/dsm)_ and _[model transformation](http://en.wikipedia.org/wiki/Model_transformation)_.
+
+Therefore, if you are looking for a reflection engine or a scripting environment for C++, you should stop reading about IoC frameworks.
+
+## Reflection from Projection ##
+Based on these considerations, PocoCapsule uses the so-called "_reflection from projection_" scenario to facilitate dynamic invocations. By this scenario, instead of having all aspects of all involved components to be thoroughly reflectible, users only need to extract those dynamic proxies (and other necessary mate data) that are _projected_ (i.e. going to be used) by given applications described in their setup descriptions. The development utility **pxgenproxy** is provided in PocoCapsule to perform this _projection_, namely to extract and generate dynamic invocation proxies from application setup descriptions.
+
+Unlike UML or CASE tools, this _projection_ scenario does not require users to provide component definitions. Also, unlike traditional (non-component) DSM tools, this _projection_ does not generate method invocation code with actual parameter values. Rather it only cares component wiring and configuring descriptions and only generate proxies (and necessary mate data) based on method invocation signatures referred in wiring and configuring involved components. This means users do not need to rebuild dynamic proxies in case of configuration parameter value changes.
+
+## Worse is better ##
+The reflection-from-projection scenario seems to be inferior than other alternatives, such as pre-generate all dynamic proxies (and all mate data) for all aspects of all involved components (for instance, using GCC XML or SEAL Reflex). However, given the C++ (and C, JavaME CLDC as well) application background, this seemingly worse solution is a better one, unless one's purpose is not IoC but to pursue a full blown reflection engine or to support a scripting or debug environment.
+
+  * Reflection-from-projection significantly reduces the excessive footprint of reflection code and mate data.
+  * Reflection-from-projection is straightforward on various rigorous embedded systems where developers have to compromise with very primitive and not fully standard compliant C++ compilers.
+  * Reflection-from-projection works well with C++ templates (as well as _[C++0x](http://en.wikipedia.org/wiki/C%2B%2B0x)_ _[concepts](http://en.wikipedia.org/wiki/C%2B%2B0x#Concepts)_), inline functions, and even macros.
+  * Reflection-from-projection is easily applicable to other languages or environments (C, JavaME CLDC, Ada, COBOL).
+  * Reflection-from-projection works without requiring component implementation source code!
